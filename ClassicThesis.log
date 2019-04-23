@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000) (preloaded format=pdflatex 2019.4.10)  11 APR 2019 11:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000) (preloaded format=pdflatex 2019.4.23)  23 APR 2019 18:16
 entering extended mode
-**/home/gianluca/development/thesis/ClassicThesis.tex
-(/home/gianluca/development/thesis/ClassicThesis.tex
+**./ClassicThesis.tex
+(ClassicThesis.tex
 LaTeX2e <2018-12-01>
 (/home/gianluca/.miktex/texmfs/install/tex/latex/silence/silence.sty
 Package: silence 2012/07/02 v1.5b Selective filtering of warnings and error mes
@@ -149,7 +149,7 @@ Package tocbasic Info: omitting babel extension for `lot'
 \c@table=\count99
 Class scrreprt Info: Redefining `\numberline' on input line 6799.
 \bibindent=\dimen102
-) (/home/gianluca/development/thesis/classicthesis-config.tex
+) (classicthesis-config.tex
 (/home/gianluca/.miktex/texmfs/install/tex/latex/base/inputenc.sty
 Package: inputenc 2018/08/11 v1.3c Input encoding file
 \inpenc@prehook=\toks23
@@ -175,6 +175,9 @@ File: switch.def 2019/04/03 3.29 Babel switching mechanism
 File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of
  babel
 )
+(/home/gianluca/.miktex/texmfs/install/tex/latex/babel-english/british.ldf
+Language: british 2017/06/06 v3.3r English support from the babel system
+
 (/home/gianluca/.miktex/texmfs/install/tex/latex/babel-english/english.ldf
 Language: english 2017/06/06 v3.3r English support from the babel system
 
@@ -192,7 +195,7 @@ File: babel.def 2019/04/03 3.29 Babel common definitions
 \l@canadian = a dialect from \language\l@american 
 \l@australian = a dialect from \language\l@british 
 \l@newzealand = a dialect from \language\l@british 
-))
+)))
 (/home/gianluca/.miktex/texmfs/install/tex/latex/csquotes/csquotes.sty
 Package: csquotes 2018/04/13 v5.2d context-sensitive quotations (JAW)
 
@@ -573,10 +576,10 @@ Package: scrhack 2019/02/01 v3.26b KOMA-Script package
 
 (/home/gianluca/.miktex/texmfs/install/tex/latex/xpatch/xpatch.sty
 (/home/gianluca/.miktex/texmfs/install/tex/latex/l3kernel/expl3.sty
-Package: expl3 2019-04-06 L3 programming layer (loader) 
+Package: expl3 2019-04-21 L3 programming layer (loader) 
 
 (/home/gianluca/.miktex/texmfs/install/tex/latex/l3kernel/expl3-code.tex
-Package: expl3 2019-04-06 L3 programming layer (code)
+Package: expl3 2019-04-21 L3 programming layer (code)
 \c_max_int=\count311
 \l_tmpa_int=\count312
 \l_tmpb_int=\count313
@@ -839,7 +842,7 @@ File: lstmisc.sty 2019/02/27 1.8b (Carsten Heinz)
 (/home/gianluca/.miktex/texmfs/install/tex/latex/listings/listings.cfg
 File: listings.cfg 2019/02/27 1.8b listings configuration
 ))
-Package scrhack Info: loading listings hack on input line 139.
+Package scrhack Info: loading listings hack on input line 140.
 
 (/home/gianluca/.miktex/texmfs/install/tex/latex/koma-script/listings.hak
 File: listings.hak 2019/02/01 v3.26b KOMA-Script package (hacking package listi
@@ -879,7 +882,7 @@ File: lstlang3.sty 2019/02/27 1.8b listings language file
 (/home/gianluca/.miktex/texmfs/install/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2019/02/27 1.8b (Carsten Heinz)
 )
-(/home/gianluca/development/thesis/classicthesis.sty
+(classicthesis.sty
 Package: classicthesis 2018/06/03 v4.6 Typographic style for a classic-looking 
 thesis
 
@@ -906,11 +909,17 @@ Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
 (/home/gianluca/.miktex/texmfs/install/tex/latex/graphics/dvipsnam.def
 File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
 ))
-LaTeX Font Info:    Try loading font information for T1+pplj on input line 202.
+(/home/gianluca/.miktex/texmfs/install/tex/latex/psnfss/mathpazo.sty
+Package: mathpazo 2005/04/12 PSNFSS-v9.2a Palatino w/ Pazo Math (D.Puga, WaS) 
+\symupright=\mathgroup4
+)
+(/home/gianluca/.miktex/texmfs/install/tex/latex/bera/beramono.sty
+Package: beramono 2004/01/31 (WaS)
+)
+LaTeX Font Info:    Try loading font information for U+eur on input line 202.
 
-
-(/home/gianluca/.miktex/texmfs/install/tex/latex/psnfss/t1pplj.fd
-File: t1pplj.fd 2004/09/06 font definitions for T1/pplj.
+(/home/gianluca/.miktex/texmfs/install/tex/latex/amsfonts/ueur.fd
+File: ueur.fd 2013/01/14 v3.01 Euler Roman
 )
 (/home/gianluca/.miktex/texmfs/install/tex/latex/microtype/microtype.sty
 Package: microtype 2019/02/28 v2.7b Micro-typographical refinements (RS)
@@ -1108,7 +1117,7 @@ Package: prelim2e 2009/05/29 v1.3 prelim2e Package (MS)
 (/home/gianluca/.miktex/texmfs/install/tex/latex/ms/everyshi.sty
 Package: everyshi 2001/05/15 v3.00 EveryShipout Package (MS)
 ))
-(/home/gianluca/development/thesis/classicthesis-arsclassica.sty
+(classicthesis-arsclassica.sty
 Package: classicthesis-arsclassica 2018/05/20
 
 (/home/gianluca/.miktex/texmfs/install/tex/latex/titlesec/block.tss
@@ -1213,17 +1222,17 @@ Package hyperref Info: Option `colorlinks' set `true' on input line 679.
 Package hyperref Info: Option `linktocpage' set `true' on input line 679.
 Package hyperref Info: Option `breaklinks' set `true' on input line 679.
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 192.
-Package hyperref Info: Option `linktocpage' set `true' on input line 192.
-Package hyperref Info: Option `breaklinks' set `true' on input line 192.
-Package hyperref Info: Option `pageanchor' set `true' on input line 192.
-Package hyperref Info: Option `plainpages' set `false' on input line 192.
-Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 192.
+Package hyperref Info: Option `colorlinks' set `true' on input line 193.
+Package hyperref Info: Option `linktocpage' set `true' on input line 193.
+Package hyperref Info: Option `breaklinks' set `true' on input line 193.
+Package hyperref Info: Option `pageanchor' set `true' on input line 193.
+Package hyperref Info: Option `plainpages' set `false' on input line 193.
+Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 193.
 
-Package hyperref Info: Option `bookmarksopen' set `true' on input line 192.
-Package hyperref Info: Option `hypertexnames' set `true' on input line 192.
+Package hyperref Info: Option `bookmarksopen' set `true' on input line 193.
+Package hyperref Info: Option `hypertexnames' set `true' on input line 193.
 ) (/home/gianluca/.miktex/texmfs/install/tex/latex/roboto/roboto.sty
-Package: roboto 2019/04/05 (Bob Tennent) Supports Roboto fonts for all LaTeX en
+Package: roboto 2019/04/19 (Bob Tennent) Supports Roboto fonts for all LaTeX en
 gines.
 
 (/home/gianluca/.miktex/texmfs/install/tex/latex/xkeyval/xkeyval.sty
@@ -1416,13 +1425,18 @@ LaTeX Info: Redefining \ttfamily on input line 94.
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 Package csquotes Info: Adjusting default style.
-Package csquotes Info: Redefining alias 'default' -> 'english'.
+Package csquotes Info: Redefining alias 'default' -> 'british'.
+Package biblatex Info: Trying to load language 'british'...
+Package biblatex Info: ... file 'british.lbx' found.
+
+(/home/gianluca/.miktex/texmfs/install/tex/latex/biblatex/lbx/british.lbx
+File: british.lbx 2018/11/02 v3.12 biblatex localization (PK/MW)
 Package biblatex Info: Trying to load language 'english'...
 Package biblatex Info: ... file 'english.lbx' found.
 
 (/home/gianluca/.miktex/texmfs/install/tex/latex/biblatex/lbx/english.lbx
 File: english.lbx 2018/11/02 v3.12 biblatex localization (PK/MW)
-)
+))
 No file ClassicThesis.aux.
 \openout1 = `ClassicThesis.aux'.
 
@@ -1446,10 +1460,14 @@ LaTeX Font Info:    Try loading font information for TS1+cmr on input line 58.
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Try loading font information for T1+pplj on input line 58.
 
+(/home/gianluca/.miktex/texmfs/install/tex/latex/psnfss/t1pplj.fd
+File: t1pplj.fd 2004/09/06 font definitions for T1/pplj.
+)
 
-LaTeX Font Warning: Font shape `T1/cmr/regular/n' undefined
-(Font)              using `T1/cmr/m/n' instead on input line 58.
+LaTeX Font Warning: Font shape `T1/pplj/regular/n' undefined
+(Font)              using `T1/pplj/m/n' instead on input line 58.
 
 Package biblatex Info: Input encoding 'utf8' detected.
 Package biblatex Info: Data encoding 'ascii' specified.
@@ -1508,9 +1526,8 @@ Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
 
-(/home/gianluca/.miktex/texmfs/install/tex/latex/microtype/mt-cmr.cfg
-File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
-(RS)
+(/home/gianluca/.miktex/texmfs/install/tex/latex/microtype/mt-ppl.cfg
+File: mt-ppl.cfg 2005/11/16 v1.6 microtype config. file: Palatino (RS)
 )
 ABD: EveryShipout initializing macros
 \AtBeginShipoutBox=\box55
@@ -1552,12 +1569,12 @@ e 164.
 \openout2 = `FrontBackmatter/DirtyTitlepage.aux'.
 
 
-(/home/gianluca/development/thesis/FrontBackmatter/DirtyTitlepage.tex
+(FrontBackmatter/DirtyTitlepage.tex
 LaTeX Font Info:    Try loading font information for T1+Roboto-LF on input line
  8.
 
 (/home/gianluca/.miktex/texmfs/install/tex/latex/roboto/T1Roboto-LF.fd
-File: T1Roboto-LF.fd 2019/04/05 (autoinst) Font definitions for T1/Roboto-LF.
+File: T1Roboto-LF.fd 2019/04/19 (autoinst) Font definitions for T1/Roboto-LF.
 )
 LaTeX Font Info:    Font shape `T1/Roboto-LF/regular/n' will be
 (Font)              scaled to size 10.95pt on input line 8.
@@ -1567,8 +1584,36 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `T1/Roboto-LF/regular/sc' will be
 (Font)              scaled to size 10.95pt on input line 8.
+LaTeX Font Info:    Try loading font information for OT1+pplx on input line 8.
+
+(/home/gianluca/.miktex/texmfs/install/tex/latex/psnfss/ot1pplx.fd
+File: ot1pplx.fd 2004/09/06 font definitions for OT1/pplx.
 )
-[1
+LaTeX Font Info:    Try loading font information for OML+zplm on input line 8.
+
+(/home/gianluca/.miktex/texmfs/install/tex/latex/psnfss/omlzplm.fd
+File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
+)
+LaTeX Font Info:    Try loading font information for OMS+zplm on input line 8.
+
+(/home/gianluca/.miktex/texmfs/install/tex/latex/psnfss/omszplm.fd
+File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
+)
+LaTeX Font Info:    Try loading font information for OMX+zplm on input line 8.
+
+(/home/gianluca/.miktex/texmfs/install/tex/latex/psnfss/omxzplm.fd
+File: omxzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
+)
+LaTeX Font Info:    Try loading font information for OT1+zplm on input line 8.
+
+(/home/gianluca/.miktex/texmfs/install/tex/latex/psnfss/ot1zplm.fd
+File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
+)
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `zplm' (encoding: OT1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+) [1
 
 
 {/home/gianluca/.miktex/texmfs/data/pdftex/config/pdftex.map}] [2
@@ -1579,34 +1624,461 @@ LaTeX Font Info:    Font shape `T1/Roboto-LF/regular/sc' will be
 \openout2 = `FrontBackmatter/Acknowledgments.aux'.
 
 
-(/home/gianluca/development/thesis/FrontBackmatter/Acknowledgments.tex
-
-LaTeX Warning: Citation 'knuth:1974' on page 3 undefined on input line 11.
-
-
-LaTeX Warning: Citation 'knuth:1974' on page 3 undefined on input line 11.
-
+(FrontBackmatter/Acknowledgments.tex
+LaTeX Font Info:    Font shape `T1/pplj/m/sl' in size <10.95> not available
+(Font)              Font shape `T1/pplj/m/it' tried instead on input line 6.
 LaTeX Font Info:    Font shape `T1/Roboto-LF/regular/n' will be
-(Font)              scaled to size 14.4pt on input line 22.
+(Font)              scaled to size 14.4pt on input line 18.
 LaTeX Font Info:    Font shape `T1/Roboto-LF/regular/sc' will be
-(Font)              scaled to size 14.4pt on input line 22.
+(Font)              scaled to size 14.4pt on input line 18.
 ) [3
 
+] [4
 
-! pdfTeX error (font expansion): auto expansion is only possible with scalable 
-fonts.
-\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
-                                                  
-l.70 ...e\include{FrontBackmatter/Acknowledgments}
-                                                  
 
- 
+
+]
+\openout2 = `FrontBackmatter/Abstract.aux'.
+
+ (FrontBackmatter/Abstract.tex)
+[5
+
+] [6
+
+
+
+]
+\openout2 = `FrontBackmatter/Contents.aux'.
+
+ (FrontBackmatter/Contents.tex
+Package tocbasic Info: character protrusion at toc deactivated on input line 11
+.
+\tf@toc=\write5
+\openout5 = `ClassicThesis.toc'.
+
+
+1: section
+1: chapter
+1: chapter
+1: section
+[7
+
+
+
+]
+Package tocbasic Info: character protrusion at lof deactivated on input line 29
+.
+\tf@lof=\write6
+\openout6 = `ClassicThesis.lof'.
+
+Package tocbasic Info: character protrusion at lot deactivated on input line 39
+.
+\tf@lot=\write7
+\openout7 = `ClassicThesis.lot'.
+
+\tf@lol=\write8
+\openout8 = `ClassicThesis.lol'.
+
+) [8
+
+]
+\openout2 = `Chapters/Chapter01.aux'.
+
+ (Chapters/Chapter01.tex
+Chapter 1.
+
+Overfull \hbox (8.30545pt too wide) in paragraph at lines 6--7
+\T1/pplj/regular/n/10.95 (-20) platforms, accessible development environments, 
+and multiple
+ []
+
+[1
+
+
+
+
+
+
+
+
+]
+Overfull \hbox (5.77444pt too wide) in paragraph at lines 10--11
+\T1/pplj/regular/n/10.95 (-20) moving heavy objects, pick-and-place, inventory 
+management.
+ []
+
+
+Overfull \hbox (28.66928pt too wide) in paragraph at lines 10--11
+\T1/pplj/regular/n/10.95 (-20) In healthcare, today, surgical robots are the no
+rm, but advancement
+ []
+
+
+Overfull \hbox (9.15875pt too wide) in paragraph at lines 10--11
+\T1/pplj/regular/n/10.95 (-20) and comets. Moreover, maintenance in outer space
+ is extremely
+ []
+
+
+Overfull \hbox (1.3592pt too wide) in paragraph at lines 10--11
+\T1/pplj/regular/n/10.95 (-20) or unreachable by humans, like volcanos, mountai
+ns, disaster
+ []
+
+LaTeX Font Info:    Font shape `T1/Roboto-LF/regular/n' will be
+(Font)              scaled to size 10.0pt on input line 11.
+[2]
+Overfull \hbox (2.4404pt too wide) in paragraph at lines 12--13
+\T1/pplj/regular/n/10.95 (-20) technological advancements seems related to hard
+ware. More
+ []
+
+
+Overfull \hbox (2.19843pt too wide) in paragraph at lines 12--13
+\T1/pplj/regular/n/10.95 (-20) responsive motors, more precise and reliable sen
+sors, cheaper
+ []
+
+
+Overfull \hbox (5.76527pt too wide) in paragraph at lines 12--13
+\T1/pplj/regular/n/10.95 (-20) Research Institute Problem Solver, better known 
+by it acronym
+ []
+
+
+Overfull \hbox (9.47926pt too wide) in paragraph at lines 12--13
+\T1/pplj/regular/n/10.95 (-20) software revolved around the design of a solutio
+n to streamline
+ []
+
+[3]
+Overfull \hbox (2.76973pt too wide) in paragraph at lines 14--15
+\T1/pplj/regular/n/10.95 (-20) that separate the development environment to the
+ underlying
+ []
+
+
+Overfull \hbox (24.52887pt too wide) in paragraph at lines 14--15
+\T1/pplj/regular/n/10.95 (-20) design, development and simulation tools. Of cou
+rse smartphones
+ []
+
+[4]
+Package microtype Info: Character `029' is missing
+(microtype)             in font `T1/Roboto-LF/regular/sc/14.4'.
+(microtype)             Ignoring protrusion settings for this character.
+
+Overfull \hbox (10.67212pt too wide) in paragraph at lines 17--18
+\T1/pplj/regular/n/10.95 (-20) Middlewares and frameworks created the present d
+evelopment
+ []
+
+
+Overfull \hbox (23.08937pt too wide) in paragraph at lines 17--18
+\T1/pplj/regular/n/10.95 (-20) that a developer has total expertise on the low-
+level functionalities
+ []
+
+Package microtype Info: Character `029' is missing
+(microtype)             in font `T1/Roboto-LF/regular/sc/10.95'.
+(microtype)             Ignoring protrusion settings for this character.
+[5]
+Overfull \hbox (29.96217pt too wide) in paragraph at lines 21--22
+[]\T1/pplj/regular/n/10.95 (-20) The \T1/pplj/m/it/10.95 (-20) component develo
+per \T1/pplj/regular/n/10.95 (-20) should focus only on the implementation
+ []
+
+
+Overfull \hbox (4.36417pt too wide) in paragraph at lines 21--22
+\T1/pplj/regular/n/10.95 (-20) of the internal logic and not on the structure o
+f the component
+ []
+
+
+Overfull \hbox (18.35011pt too wide) in paragraph at lines 21--22
+\T1/pplj/regular/n/10.95 (-20) contained development space. Potentially, the lo
+gic implemented
+ []
+
+
+Overfull \hbox (22.05899pt too wide) in paragraph at lines 21--22
+\T1/pplj/regular/n/10.95 (-20) implementation, and by defining a bounded refere
+nce component
+ []
+
+
+Overfull \hbox (13.71341pt too wide) in paragraph at lines 23--24
+[]\T1/pplj/regular/n/10.95 (-20) The \T1/pplj/m/it/10.95 (-20) application deve
+loper \T1/pplj/regular/n/10.95 (-20) implements high-level functionalities,
+ []
+
+
+Overfull \hbox (27.1853pt too wide) in paragraph at lines 23--24
+\T1/pplj/regular/n/10.95 (-20) control any robot, independently from their phys
+ical configuration.
+ []
+
+
+Overfull \hbox (4.12697pt too wide) in paragraph at lines 23--24
+\T1/pplj/regular/n/10.95 (-20) achieve this it is necessary to define the conce
+pt of capabilities,
+ []
+
+[6]) [7] [8
+
+
+
+]
+LaTeX Font Info:    Font shape `T1/Roboto-LF/regular/n' will be
+(Font)              scaled to size 12.0pt on input line 90.
+LaTeX Font Info:    Font shape `T1/Roboto-LF/regular/sc' will be
+(Font)              scaled to size 12.0pt on input line 90.
+ [9
+
+
+] [10]
+\openout2 = `FrontBackmatter/Bibliography.aux'.
+
+ (FrontBackmatter/Bibliography.tex
+
+LaTeX Warning: Empty bibliography on input line 15.
+
+)
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 112.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 112.
+ (ClassicThesis.aux (FrontBackmatter/DirtyTitlepage.aux)
+(FrontBackmatter/Acknowledgments.aux) (FrontBackmatter/Abstract.aux)
+(FrontBackmatter/Contents.aux) (Chapters/Chapter01.aux)
+(FrontBackmatter/Bibliography.aux)
+
+Package mparhack Warning: Marginpars may have changed.
+(mparhack)                Rerun to get them right.
+
+)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 112.
+
+
+ *File List*
+ silence.sty    2012/07/02 v1.5b Selective filtering of warnings and error mess
+ages
+scrreprt.cls    2019/02/01 v3.26b KOMA-Script document class (report)
+scrkbase.sty    2019/02/01 v3.26b KOMA-Script package (KOMA-Script-dependent ba
+sics and keyval usage)
+ scrbase.sty    2019/02/01 v3.26b KOMA-Script package (KOMA-Script-independent 
+basics and keyval usage)
+  keyval.sty    2014/10/28 v1.15 key=value parser (DPC)
+scrlfile.sty    2019/02/01 v3.26b KOMA-Script package (loading files)
+tocbasic.sty    2019/02/01 v3.26b KOMA-Script package (handling toc-files)
+scrsize11pt.clo    2019/02/01 v3.26b KOMA-Script font size class option (11pt)
+typearea.sty    2019/02/01 v3.26b KOMA-Script package (type area)
+classicthesis-config.tex
+inputenc.sty    2018/08/11 v1.3c Input encoding file
+ fontenc.sty
+   t1enc.def    2018/08/11 v2.0j Standard LaTeX file
+   babel.sty    2019/04/03 3.29 The Babel package
+ bblopts.cfg    2005/09/08 v0.1 add Arabic and Farsi to "declared" options of b
+abel
+ british.ldf    2017/06/06 v3.3r English support from the babel system
+csquotes.sty    2018/04/13 v5.2d context-sensitive quotations (JAW)
+etoolbox.sty    2018/08/19 v2.5f e-TeX tools for LaTeX (JAW)
+csquotes.def    2018/04/13 v5.2d csquotes generic definitions (JAW)
+csquotes.cfg    
+biblatex.sty    2018/11/02 v3.12 programmable bibliographies (PK/MW)
+pdftexcmds.sty    2018/09/10 v0.29 Utility functions of pdfTeX for LuaTeX (HO)
+infwarerr.sty    2016/05/16 v1.4 Providing info/warning/error messages (HO)
+ifluatex.sty    2016/05/16 v1.4 Provides the ifluatex switch (HO)
+ ltxcmds.sty    2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+   ifpdf.sty    2018/09/07 v3.3 Provides the ifpdf switch
+kvoptions.sty    2016/05/16 v3.12 Key value format for package options (HO)
+kvsetkeys.sty    2016/05/16 v1.17 Key value parser (HO)
+etexcmds.sty    2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
+  logreq.sty    2010/08/04 v1.0 xml request logger
+  logreq.def    2010/08/04 v1.0 logreq spec v1.0
+  ifthen.sty    2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+     url.sty    2013/09/16  ver 3.4  Verb mode for urls, etc.
+  blx-dm.def    2018/11/02 v3.12 biblatex localization (PK/MW)
+blx-compat.def    2018/11/02 v3.12 biblatex compatibility (PK/MW)
+blx-bibtex.def    2018/11/02 v3.12 biblatex compatibility (PK/MW)
+biblatex.def    2018/11/02 v3.12 biblatex compatibility (PK/MW)
+blx-natbib.def    2018/11/02 v3.12 biblatex compatibility (PK/MW)
+standard.bbx    2018/11/02 v3.12 biblatex bibliography style (PK/MW)
+ numeric.bbx    2018/11/02 v3.12 biblatex bibliography style (PK/MW)
+numeric-comp.bbx    2018/11/02 v3.12 biblatex bibliography style (PK/MW)
+numeric-comp.cbx    2018/11/02 v3.12 biblatex citation style (PK/MW)
+biblatex.cfg    
+ amsmath.sty    2018/12/01 v2.17b AMS math features
+ amstext.sty    2000/06/29 v2.01 AMS text
+  amsgen.sty    1999/11/30 v2.0 generic functions
+  amsbsy.sty    1999/11/29 v1.2d Bold Symbols
+  amsopn.sty    2016/03/08 v2.02 operator names
+graphicx.sty    2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
+graphics.sty    2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
+    trig.sty    2016/01/03 v1.10 sin cos tan (DPC)
+graphics.cfg    2016/06/04 v1.11 sample graphics configuration
+  pdftex.def    2018/01/08 v1.0l Graphics/color driver for pdftex
+ scrhack.sty    2019/02/01 v3.26b KOMA-Script package 
+  xpatch.sty    2012/10/02 v0.3 Extending etoolbox patching commands
+   expl3.sty    2019-04-21 L3 programming layer (loader) 
+expl3-code.tex    2019-04-21 L3 programming layer 
+l3pdfmode.def    2019-04-06 v L3 Experimental driver: PDF mode
+  xparse.sty    2019-03-05 L3 Experimental document command parser
+  xspace.sty    2014/10/28 v1.13 Space after command names (DPC,MH)
+ acronym.sty    2015/03/21 v1.41 Support for acronyms (Tobias Oetiker)
+  suffix.sty    2006/07/15 1.5a Variant command support
+ xstring.sty    2019/02/06 v1.83 String manipulations (CT)
+ relsize.sty    2013/03/29 ver 4.1
+tabularx.sty    2016/02/03 v2.11b `tabularx' package (DPC)
+   array.sty    2018/12/30 v2.4k Tabular extension package (FMi)
+  subfig.sty    2005/06/28 ver: 1.3 subfig package
+ caption.sty    2018/10/06 v3.3-154 Customizing captions (AR)
+caption3.sty    2018/09/12 v1.8c caption3 kernel (AR)
+listings.sty    2019/02/27 1.8b (Carsten Heinz)
+ lstmisc.sty    2019/02/27 1.8b (Carsten Heinz)
+listings.cfg    2019/02/27 1.8b listings configuration
+listings.hak    2019/02/01 v3.26b KOMA-Script package (hacking package listings
+)
+lstlang1.sty    2019/02/27 1.8b listings language file
+lstlang2.sty    2019/02/27 1.8b listings language file
+lstlang3.sty    2019/02/27 1.8b listings language file
+lstlang1.sty    2019/02/27 1.8b listings language file
+lstlang2.sty    2019/02/27 1.8b listings language file
+lstlang3.sty    2019/02/27 1.8b listings language file
+lstlang1.sty    2019/02/27 1.8b listings language file
+lstlang2.sty    2019/02/27 1.8b listings language file
+lstlang3.sty    2019/02/27 1.8b listings language file
+ lstmisc.sty    2019/02/27 1.8b (Carsten Heinz)
+classicthesis.sty    2018/06/03 v4.6 Typographic style for a classic-looking th
+esis
+ ifxetex.sty    2010/09/12 v0.6 Provides ifxetex conditional
+  xcolor.sty    2016/05/11 v2.12 LaTeX color extensions (UK)
+   color.cfg    2016/01/02 v1.6 sample color configuration
+dvipsnam.def    2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
+mathpazo.sty    2005/04/12 PSNFSS-v9.2a Palatino w/ Pazo Math (D.Puga, WaS) 
+beramono.sty    2004/01/31 (WaS)
+    ueur.fd    2013/01/14 v3.01 Euler Roman
+microtype.sty    2019/02/28 v2.7b Micro-typographical refinements (RS)
+microtype-pdftex.def    2019/02/28 v2.7b Definitions specific to pdftex (RS)
+microtype.cfg    2019/02/28 v2.7b microtype main configuration file (RS)
+mparhack.sty    2005/04/17 v1.4 (T. Sgouros and S. Ulrich)
+booktabs.sty    2005/04/14 v1.61803 publication quality tables
+textcase.sty    2004/10/07 v0.07 Text only upper/lower case changing (DPC)
+scrlayer-scrpage.sty    2019/02/01 v3.26b KOMA-Script package (end user interfa
+ce for scrlayer)
+scrlayer.sty    2019/02/01 v3.26b KOMA-Script package (defining layers and page
+ styles)
+titlesec.sty    2016/03/21 v2.10.2 Sectioning titles
+ tocloft.sty    2017/08/31 v2.3i parameterised ToC, etc., typesetting
+ scrtime.sty    2019/02/01 v3.26b KOMA-Script package (time of LaTeX run)
+prelim2e.sty    2009/05/29 v1.3 prelim2e Package (MS)
+everyshi.sty    2001/05/15 v3.00 EveryShipout Package (MS)
+classicthesis-arsclassica.sty    2018/05/20
+   block.tss    2016/03/15
+hyperref.sty    2018/11/30 v6.88e Hypertext links for LaTeX
+hobsub-hyperref.sty    2016/05/16 v1.14 Bundle oberdiek, subset hyperref (HO)
+hobsub-generic.sty    2016/05/16 v1.14 Bundle oberdiek, subset generic (HO)
+  hobsub.sty    2016/05/16 v1.14 Construct package bundles (HO)
+  ifvtex.sty    2016/05/16 v1.6 Detect VTeX and its facilities (HO)
+ intcalc.sty    2016/05/16 v1.2 Expandable calculations with integers (HO)
+kvdefinekeys.sty    2016/05/16 v1.4 Define keys (HO)
+pdfescape.sty    2016/05/16 v1.14 Implements pdfTeX's escape features (HO)
+bigintcalc.sty    2016/05/16 v1.4 Expandable calculations on big integers (HO)
+  bitset.sty    2016/05/16 v1.2 Handle bit-vector datatype (HO)
+uniquecounter.sty    2016/05/16 v1.3 Provide unlimited unique counter (HO)
+letltxmacro.sty    2016/05/16 v1.5 Let assignment for LaTeX macros (HO)
+ hopatch.sty    2016/05/16 v1.3 Wrapper for package hooks (HO)
+xcolor-patch.sty    2016/05/16 xcolor patch
+atveryend.sty    2016/05/16 v1.9 Hooks at the very end of document (HO)
+atbegshi.sty    2016/06/09 v1.18 At begin shipout hook (HO)
+refcount.sty    2016/05/16 v3.5 Data extraction from label references (HO)
+ hycolor.sty    2016/05/16 v1.8 Color options for hyperref/bookmark (HO)
+ auxhook.sty    2016/05/16 v1.4 Hooks for auxiliary files (HO)
+  pd1enc.def    2018/11/30 v6.88e Hyperref: PDFDocEncoding definition (HO)
+hyperref.cfg    2002/06/06 v1.2 hyperref configuration of TeXLive
+ hpdftex.def    2018/11/30 v6.88e Hyperref driver for pdfTeX
+rerunfilecheck.sty    2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
+  roboto.sty    2019/04/19 (Bob Tennent) Supports Roboto fonts for all LaTeX en
+gines.
+ xkeyval.sty    2014/12/03 v2.7a package option processing (HA)
+ xkeyval.tex    2014/12/03 v2.7a key=value parser (HA)
+textcomp.sty    2018/08/11 v2.0j Standard LaTeX package
+  ts1enc.def    2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
+  ts1enc.dfu    2018/10/05 v1.2f UTF-8 support for inputenc
+ fontenc.sty
+fontaxes.sty    2014/03/23 v1.0d Font selection axes
+mweights.sty    2017/03/30 (Bob Tennent) Support package for multiple-weight fo
+nt packages. 
+ english.lbx    2018/11/02 v3.12 biblatex localization (PK/MW)
+ british.lbx    2018/11/02 v3.12 biblatex localization (PK/MW)
+  ts1cmr.fd    2014/09/29 v2.5h Standard LaTeX font definitions
+  t1pplj.fd    2004/09/06 font definitions for T1/pplj.
+supp-pdf.mkii
+epstopdf-base.sty    2016/05/15 v2.6 Base part for package epstopdf
+  grfext.sty    2016/05/16 v1.2 Manage graphics extensions (HO)
+  mt-ppl.cfg    2005/11/16 v1.6 microtype config. file: Palatino (RS)
+ nameref.sty    2016/05/21 v2.44 Cross-referencing by name of section
+gettitlestring.sty    2016/05/16 v1.5 Cleanup title references (HO)
+bookmark.sty    2016/05/17 v1.26 PDF bookmarks (HO)
+bkm-pdftex.def    2016/05/17 v1.26 bookmark driver for pdfTeX (HO)
+FrontBackmatter/DirtyTitlepage.tex
+T1Roboto-LF.fd    2019/04/19 (autoinst) Font definitions for T1/Roboto-LF.
+ ot1pplx.fd    2004/09/06 font definitions for OT1/pplx.
+ omlzplm.fd    2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
+ omszplm.fd    2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
+ omxzplm.fd    2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
+ ot1zplm.fd    2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
+FrontBackmatter/Acknowledgments.tex
+FrontBackmatter/Abstract.tex
+FrontBackmatter/Contents.tex
+Chapters/Chapter01.tex
+FrontBackmatter/Bibliography.tex
+ ***********
+
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 112.
+
+Package rerunfilecheck Warning: File `ClassicThesis.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `ClassicThesis.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  D41D8CD98F00B204E9800998ECF8427E;0.
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package biblatex Warning: Please (re)run BibTeX on the file(s):
+(biblatex)                ClassicThesis
+(biblatex)                and rerun LaTeX afterwards.
+
+Package logreq Info: Writing requests to 'ClassicThesis.run.xml'.
+\openout1 = `ClassicThesis.run.xml'.
+
+ ) 
 Here is how much of TeX's memory you used:
- 34712 strings out of 494853
- 647145 string characters out of 3177714
- 1251762 words of memory out of 3000000
- 37909 multiletter control sequences out of 15000+200000
- 589691 words of font info for 92 fonts, out of 3000000 for 9000
+ 35143 strings out of 494853
+ 654533 string characters out of 3177714
+ 1255346 words of memory out of 3000000
+ 38071 multiletter control sequences out of 15000+200000
+ 644496 words of font info for 268 fonts, out of 3000000 for 9000
  0 hyphenation exceptions out of 8191
- 58i,20n,77p,9126b,1382s stack positions out of 5000i,500n,10000p,200000b,50000s
-!  ==> Fatal error occurred, no output PDF file produced!
+ 69i,22n,91p,9094b,2277s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/home/gianluca/.miktex/texmfs/install/fonts/enc/dvips/roboto/rbto_hsw3yt.enc
+}{/home/gianluca/.miktex/texmfs/install/fonts/enc/dvips/base/8r.enc}{/home/gian
+luca/.miktex/texmfs/install/fonts/enc/dvips/roboto/rbto_xyzkxs.enc}</home/gianl
+uca/.miktex/texmfs/install/fonts/type1/google/roboto/Roboto-Regular.pfb></home/
+gianluca/.miktex/texmfs/install/fonts/type1/public/amsfonts/euler/eurb10.pfb></
+home/gianluca/.miktex/texmfs/install/fonts/type1/public/fpl/fplrc8a.pfb></home/
+gianluca/.miktex/texmfs/install/fonts/type1/urw/palatino/uplr8a.pfb></home/gian
+luca/.miktex/texmfs/install/fonts/type1/urw/palatino/uplri8a.pfb>
+Output written on ClassicThesis.pdf (18 pages, 101500 bytes).
+PDF statistics:
+ 157 PDF objects out of 1000 (max. 8388607)
+ 30 named destinations out of 1000 (max. 500000)
+ 46169 words of extra memory for PDF output out of 51595 (max. 10000000)
+
