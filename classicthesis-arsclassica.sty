@@ -65,18 +65,17 @@
    {\formatchapter}
 % sections
 \titleformat{\section}%
-	 {\normalfont\Large\sffamily}{\textsc%
+  {\normalfont\Large\sffamily}{\textsc%
   {\MakeTextLowercase{\thesection}}}%
   {1em}{\spacedlowsmallcaps}
 % subsections
 \titleformat{\subsection}%
-  {\normalfont\sffamily\bfseries}{\textsc{\MakeTextLowercase%
-  {\thesubsection}}}{1em}{\normalsize}
+  {\normalfont\sffamily}{}{0em}{\spacedlowsmallcaps}
 % subsubsections
 \titleformat{\subsubsection}%
-  {\normalfont\sffamily\bfseries\itshape}{\textsc%
-  {\MakeTextLowercase{\thesubsubsection}}}%
-  {1em}{\normalsize\itshape}
+%   {\normalfont\sffamily\bfseries\itshape}{\textsc%
+  {\normalfont\sffamily\itshape}{}%
+  {0em}{\normalsize\itshape}
 % paragraphs
 \titleformat{\paragraph}[runin]%
   {\normalfont\normalsize\sffamily\bfseries}{\textsc%
