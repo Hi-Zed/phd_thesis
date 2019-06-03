@@ -1,7 +1,19 @@
 %************************************************
-\chapter{Modelling}\label{ch:Modelling}
+\chapter[Modelling]{Modelling}\label{ch:Modelling}
 %************************************************
-Some general introduction on the concept of modelling.
+
+\begin{flushright}{\slshape the sciences do not try to explain, they hardly even try to interpret, they mainly make models. By a model is meant a mathematical construct which, with the addition of certain verbal interpretations, describes observed phenomena.} \\ \medskip
+    --- John  von Neumann
+\end{flushright}
+
+As said by von Neumann, science is about making models. They can be used to simplify a phenomena and make it easier to understand and define, moreover, a model can be used to quantify or visualise reality. Knowledge extracted by the process of modelling can be reused to create a simulation (\ie, another form of modelling) of the system under analysis. For all these reasons, and because is one of the most innate ability of humans, modelling has always been the cornerstone of science, engineering and arts.
+
+Modelling in engineering is an essential tool for design, analysis and simulation, models have different characteristics and take various shapes. A collection of mathematical formulas can be used to describe a physical phenomena (\eg, friction between the ground and the wheels), or the behaviour of a system (\eg, a control system). Differently, a flow chart is a graphical model of an execution process, while pseudo-code is a textual one. A 3D model capture the physical shape of an object and can be used to study the design or the space occupancy.
+
+This chapter presents various modelling techniques that we used to describe multiple aspect of the architecture of a robot. First, an introduction to the  Architecture Analysis \& Design Language (AADL), a description of the concepts behind the language and how it can be used to model complex system. Then, how the language is exploited to model robotic system and more in particular ROS-based architectures.  Lastly, since AADL is not a data modelling language, we present two approaches based on Abstract Syntax Notation One (ASN.1) and JavaScript Object Notation (JSON) to model the data exchanged in the system (\ie, ROS messages) and the internal state of each component.
+
+\minitoc
+\newpage
 
 \section{Architecture Analysis \& Design Language}
 General introduction on AADL
