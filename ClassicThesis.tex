@@ -34,7 +34,7 @@
     \WarningFilter{titlesec}{Non standard sectioning command detected}
 \documentclass[ twoside,openright,titlepage,numbers=noenddot,%1headlines,
                 headinclude,footinclude,cleardoublepage=empty,abstract=on,
-                BCOR=5mm,paper=a5,fontsize=11pt
+                BCOR=5mm,paper=a5,fontsize=10pt
                 ]{scrreprt}
 
 %********************************************************************
@@ -87,8 +87,10 @@
 \cleardoublepage
 \include{Chapters/Chapter01}
 \cleardoublepage
-\part{It begins}\label{pt:first}
+\setcounter{mtc}{2}
+\part{Modelling and Code Generation}\label{pt:first}
 \include{Chapters/Modelling}
+\include{Chapters/CodeGeneration}
 %\addtocontents{toc}{\protect\clearpage} % <--- just debug stuff, ignore
 %\include{Chapters/Chapter03}
 %\include{multiToC} % <--- just debug stuff, ignore for your documents
