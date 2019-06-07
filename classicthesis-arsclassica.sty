@@ -70,7 +70,7 @@
   {1em}{\spacedlowsmallcaps}
 % subsections
 \titleformat{\subsection}%
-  {\normalfont\sffamily}{}{0em}{\spacedlowsmallcaps}
+  {\normalfont\sffamily\bfseries}{}{0em}{\spacedlowsmallcaps}
 % subsubsections
 \titleformat{\subsubsection}%
 %   {\normalfont\sffamily\bfseries\itshape}{\textsc%
@@ -78,14 +78,15 @@
   {0em}{\normalsize\itshape}
 % paragraphs
 \titleformat{\paragraph}[runin]%
-  {\normalfont\normalsize\sffamily\bfseries}{\textsc%
+  {\normalfont\normalsize\sffamily}{\textsc%
   {\MakeTextLowercase{\theparagraph}}}%
-  {0pt}{\spacedlowsmallcaps}
+  {0pt}{\spacedlowsmallcaps}[ --]
 % descriptionlabels
 \renewcommand{\descriptionlabel}[1]{\hspace*{\labelsep}\bfseries\spacedlowsmallcaps{#1}}
 
 \titlespacing*{\chapter}{0pt}{1\baselineskip}{2\baselineskip}
 \titlespacing*{\section}{0pt}{2\baselineskip}{.8\baselineskip}[\marginparsep]
 \titlespacing*{\subsection}{0pt}{1.5\baselineskip}{.8\baselineskip}[\marginparsep]
-\titlespacing*{\paragraph}{0pt}{1\baselineskip}{1\baselineskip}
+\titlespacing*{\paragraph}{0pt}{*2}{\wordsep}
+%{0pt}{1\baselineskip}{1\baselineskip}
 %************************************************************
