@@ -1,6 +1,31 @@
 %************************************************
-\chapter{Code Generation}\label{ch:code-gen}
+\chapter{Automatic programming}\label{ch:code-gen}
 %************************************************
-Some general introduction on why automatic code generation is important
+
+\begin{flushright}{\slshape Writing machine code involved several tedious steps—breaking down a process into discrete instructions, assigning specific memory locations to all the commands, and managing the I/O buffers. [...] We needed to understand how we might reuse tested code and have the machine help in programming. [...] This led to the development of interpreters, assemblers, compilers, and generators—programs designed to operate on or produce other programs, that is, automatic programming.} \\ \medskip
+    --- Mildred ``Milly'' Kross
+\end{flushright}
+
+Creating a computer program is a challenging and engaging experience, it requires expertise, brilliance and ingenuity. At the same time, writing code is a mundane and dull activity, it requires to complete repetitive tasks, to manage multiple small issues and to deal with problems unrelated with the main project.
+
+Thankfully, today, we are not dealing with the same difficulties that Mildred Kross faced when working on the UNIVAC I. Multiple technological advancements and progresses in Computer Science gave us compilers, high-level programming languages, design paradigms, frameworks, middleware, integrated development environments, and more. All these tools exist to make computer programming more about designing and developing a program than writing code. 
+
+During Computer Science history, the concept of automatic programming changed to adapt to the expectation of the time. Originally, it was the automation of the process of punching paper tape, later it became the transformation of high-level programming languages (\eg, Fortran and ALGOL) to machine code, a task that, nowadays, is integral part of the build process. Today, automatic programming mostly refers to the automatic generation of executable code from representations that are not programming languages. These representation may have different level of abstraction, from the closest to the target (\eg, domain specific languages, flowcharts, \etc) to the furthest (\eg, graphical representations, models, \etc).
+
+%TODO complete after the end of the chapter
+This chapter presents our approach to automatically generate ROS code from the AADL model.
+
+\minitoc
+\newpage
+
+\section{Generating ROS artefacts}
+Before starting any code generation activity, it is necessary to specify a target.
+
+\section{Basic ROS node}
+
+\subsection{Internal state}
+
+\subsection{Life cycle}
+
 
 %*****************************************
