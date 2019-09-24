@@ -1,0 +1,43 @@
+%************************************************
+\chapter[Abstracting the robot]{Abstracting the robot}\label{ch:capabilities}
+%************************************************
+
+\begin{flushright}{\slshape The essence of abstractions is preserving information that is relevant in a given context, and forgetting information that is irrelevant in that context.} \\ \medskip
+    ---  John V. Guttag
+\end{flushright}
+
+In the previous chapters we discussed extensively how to capture all the details of a robotic architecture, how to codify not only the topology of the components, but also their inner functionalities. We defined a collection of tools to help the \textit{system designer} and the \textit{component developer} in describing, designing, realising and implementing their vision. However, this is only the starting point of a process to modernise the development of software for robots, to make the creation of robotic applications as accessible as developing a mobile app, a web page or a video game.
+
+The shortest path to make a technology more accessible is through abstraction. Robot software development has already benefited from this approach with the introduction of robotic middleware and frameworks, for example, the ROS computational graph creates an abstraction layer between the underlying hardware and the components. This made robotics more accessible and triggered a process that resulted in vast repositories of components efficiently implementing basic robot functionalities (\eg, navigation, perception, manipulation). 
+
+However, the key element of abstraction is the context. Not every approach is useful to achieve a specific result. Technologies like ROS or other robotic middleware and frameworks are useful to streamline the development of components, but a different level of abstraction is needed to implement application at an higher level. Because of the success of component-based approaches, robotic system are becoming more complex and richer in functionalities attracting experts with diverse backgrounds that are more interested in the high-level capabilities expressed by the robot as as system, instead of focusing on the low-level functionalities implemented by each component.
+
+These \textit{application developers} need a different type of abstraction that goes beyond the one provided by middleware and frameworks. In this chapter we tackle the problem of analysing the robot a system to capture the significant high-level functionalities and to create an abstraction that can be exploited to develop complex applications. First by defining an ontology that captures the structure of robot system, then using this framework to identify robot capabilities. These capabilities are the access point for creating an abstraction layer between a set of APIs and the underlying robot system. Lastly, we give an overview on how the model-based approach presented before can be used as a support for the concept of robot capabilities.
+
+\minitoc
+\newpage
+
+\section{Ontology representation}
+Creating new abstractions layers on top of an existing technology is not a difficult task, multiple approaches can be used: programming interfaces, libraries, frameworks, middleware, domain-specific languages, and more. For example programming interfaces usually remain in the same context of the abstracted technology and only provides controlled access to the underlying functionalities, their aim is to hide the complexity of the implementation, not to create a decoupling layer.  A similar overview can be done of libraries, they aggregate multiple simple functionalities in a single structured interface, but, again, the abstraction does not change the nature of the technology, it provides only a different way to interact with it. Frameworks push the abstraction a bit further, not only it hides the inner functioning of the system but provides entry points that a developer can use to extend the framework functionalities and create complex applications exploiting it. The aims of a middleware are similar: provide structure, give to developers basic functionalities, create an environment that can be used to implement application. However, the decoupling introduced between the developer and the underlying system is more significant (\eg, ROS supports both Python and C++ to implement the nodes). Domain-specific languages represent a more agnostic form of abstraction, since they present a completely different interface with respect to the target  technology, however, by definition, they are created with a narrow scope. In conclusion, most of these solutions have the downside of being focused vertically (\eg, programming interfaces and libraries) or horizontally (\eg, middleware and domain specific languages), since the abstraction they provide is usually created to target a specific category of user.
+
+In an effort to achieve a more generalised abstraction from the underlying robot system, we decide to base our abstraction on an ontology. Ontologies have been successfully used to limit the complexity of the domain and to organise the information into data and knowledge.
+
+\subsection{ROS description}
+
+
+\subsection{Capabilities extraction}
+
+\section{Robot APIs} 
+
+\subsection{Local python interface}
+
+\subsection{Remote python interface} 
+
+\subsection{Web interface}
+
+\section{Bridge models and capabilities}
+
+\subsection{Automatic functionality checker}
+
+\subsection{Automatic architecture builder}
+%*****************************************

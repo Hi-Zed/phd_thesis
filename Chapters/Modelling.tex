@@ -202,6 +202,7 @@ The architecture includes a virtual bus representing ROS topics, all virtual con
 \end{figure}
 
 \section{Modelling templates}
+\label{sec:template}
 With the model definition presented in the previous sections and the ROS-specific models introduced in Section~\ref{sec:ros-arch}, a designer has all the necessary tools to model a functional complete ROS architecture. However, this result does not come without complications, assuming a person is already familiar with AADL, the process of modelling a single architecture is quite tedious and prone to errors, especially replicate the same basic design for all ROS nodes. Moreover, this model aims to be a stepping stone for automatic code generation, for this reason it is necessary the structure of the model is consistent. In summary, there are few issues that need to be addressed:
 \begin{enumerate*}[label={\alph*)}]
 \item make the modelling approach more accessible, so it can be a reasonable alternative to the current development process for ROS,
