@@ -36,7 +36,7 @@
   linedheaders=false,       % chaper headers will have line above and beneath
   floatperchapter=true,     % numbering per chapter for all floats (i.e., Figure 1.1)
   eulermath=false,  % use awesome Euler fonts for mathematical formulae (only with pdfLaTeX)
-  beramono=true,    % toggle a nice monospaced font (w/ bold)
+  beramono=false,    % toggle a nice monospaced font (w/ bold)
   palatino=true,    % deactivate standard font for loading another one, see the last section at the end of this file for suggestions
   style=arsclassica % classicthesis, arsclassica
 }{classicthesis}
@@ -171,6 +171,8 @@
 \usepackage{rotating}
 \usepackage{pdflscape}
 \usepackage{lipsum}
+\usepackage{multirow}
+
 % ********************************************************************
 % Her Majesty herself
 % ********************************************************************
@@ -251,10 +253,9 @@
 % ********************************************************************
 % Using different fonts
 % ********************************************************************
-%\usepackage{noto}
-%\usepackage[T1]{fontenc}
-%\usepackage[sfdefault]{roboto}
 \usepackage{roboto}
+%\usepackage[sfdefault,light]{roboto}
+\usepackage[scale=0.9]{inconsolata}
 %\usepackage[oldstylenums]{kpfonts} % oldstyle notextcomp
 % \usepackage[osf]{libertine}
 %\usepackage[light,condensed,math]{iwona}

@@ -280,25 +280,23 @@ After all systems have been parsed and the queue is empty, the saving routine st
 
 \paragraph{Custom Messages And Services} In ROS it is possible to define a new custom message that relies on basic datatypes or on already existing ROS messages, and the same applies to services. To take advantage of these functionalities, we used a data modelling language called ASN.1. ASN.1 is an interface description language used to define data structures which can be easily serialised and deserialized. The code generator, is thus able to read and parse an ASN.1 description and to produce a working representation of a custom message or service, ensuring it is ROS-compatible. In ROS, message-only packages may exist, the code generator cover this case by creating the relative relative package with the \textit{CMakeLists.txt} during custom messages generation.
 
-\subsection{Use Case: Publisher - Subscriber Example} \label{sec:use-case}
+\section{A complete example} \label{sec:pub-sub}
 
-This section demonstrates a real use case of the customised Ocarina backend \textit{aadl\_aaxml} and code generator, when applied to a simple publisher-subscriber architecture. %The goal is to demonstrate that our toolchain is able to produce a good quality code.
-We firstly introduce the publisher-subscriber model to then analyse its correspondence with the generated ROS package. To make the example more complete, we include the exchange of a custom message between the two nodes.
+This section demonstrates a real use case of the customised Ocarina backend \textit{aadl\_aaxml} and code generator, when applied to a simple publisher-subscriber architecture. We firstly introduce the publisher-subscriber model to then analyse its correspondence with the generated ROS package. To make the example more complete, we include the exchange of a custom message between the two nodes.
 
-The AADL model represented in Listing~\ref{snippet:aadl_pub_sub_system}, shows a main system is called \textit{container} and its containing package \textit{pub\_sub}. Note that the latter package name will be reused as ROS package name. 
-We refrain from reiterating all relevant definitions already introduced in Section~\ref{sec:background}, and discuss only the \textit{properties} associated to publisher-subscriber connection. Broadly, the publisher and the subscriber need to exchange messages on the same topic, where topics are identified by their name, e.g.,  \textit{``/pubsub"} in this case. The topic name is attached to the existing connection between the two, or, in other words, defined at the system level. In fact, placeholders for the topic should be specified within the process rather than as part of any other component of the system, in order to produce a functioning node.
+The AADL model represented in Listing~\ref{snippet:aadl_pub_sub_system}, shows a main system is called \textit{container} and its containing package \textit{pub\_sub}. Note that the latter package name will be reused as ROS package name. Broadly, the publisher and the subscriber need to exchange messages on the same topic, where topics are identified by their name, e.g.,  \textit{``/pubsub"} in this case. The topic name is attached to the existing connection between the two, or, in other words, defined at the system level. In fact, placeholders for the topic should be specified within the process rather than as part of any other component of the system, in order to produce a functioning node.
 
-% \begin{figure}[t]
-% \centering
-% \includegraphics[width=0.95\hsize]{usecase-publisher}
-% \caption{\label{fig:usecase-publisher}AADL graphical representation of a node including a publisher functionality (\textit{thread}).}
-% \end{figure}
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\textwidth]{gfx/usecase-publisher}
+\caption{TODO}\label{fig:usecase-publisher}
+\end{figure}
 
-% \begin{figure}[t]
-% \centering
-% \includegraphics[width=0.9\hsize]{usecase-subscriber}
-% \caption{\label{fig:usecase-subscriber}AADL graphical representation of how a \textit{process} (node) including a subscriber \textit{thread} (functionality) looks like.}
-% \end{figure}
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\textwidth]{gfx/usecase-subscriber}
+\caption{TODO}\label{fig:usecase-subscriber}
+\end{figure}
 
 In Fig.~\ref{fig:usecase-publisher} and Fig.~\ref{fig:usecase-subscriber} are represented, respectively, the publisher and the subscriber models, except for their \textit{properties}. In both cases we have the following \textit{properties}:
 \begin{itemize}
@@ -312,27 +310,6 @@ Models in Fig.~\ref{fig:usecase-publisher} and Fig.~\ref{fig:usecase-subscriber}
 
 In addition, the two figures show the common base model under each node. As stated in in~\cite{Bardaro2017}, the model of the base node contains a state machine, with four different states: \textit{init}, \textit{running}, \textit{closing} and \textit{error}. In AADL, each transition has to be triggered by an event; an event data port on the process models any external signal to force the shutdown of the node (i.e. SIGINT signal) and various ports on the main thread trigger the transition from a state to another. The current node state is saved \textit{data} element called \textit{internal\_state}. For each existing element of the model (i.e. threads, subprograms, connections, ports, etc.) it is possible to define in which state they are active, and this defines a specific workflow and a strict initialization procedure of the node.
 
-In Listing~\ref{snippet:aadl_pub_sub_publisher} we present the code only for the publisher, but extending the same concepts can be easily extended the subscriber case:
-
-\begin{lstlisting}[frame=tb,caption={AADL model for a simple process (node) implementing a publisher feature},label=snippet:aadl_pub_sub_publisher]
-process talker extends ros::node
-	features
- 		msg_out: out data port custom_msgs::Complex;
-end talker;
-
-process implementation talker.impl extends ros::node.impl
- 	subcomponents
- 		publisher: thread ros::publisher.impl (message => data custom_msgs::Complex);
- 	connections
- 		chatter: port publisher.msg -> msg_out;
- 	properties
- 		Source_Text => ("Publisher.h") applies to publisher.function;
- 		Source_Name => "publisher_function" applies to publisher.function;
- 		topic_properties::Default_Name => "/out_topic" applies to msg_out;
- 		Period => 10 ms applies to publisher;
- end talker.impl;
- \end{lstlisting}
-
 The above example includes all the already cited components, as well as the thread output port, connected to the process port and the associated properties. It may be worth taking a closer look at how the datatype of the exchanged message is actually defined: the type is associated to the process output port and specified as a prototype of the thread. This ensures the thread type to match the process-level type.
 In our example, the message is of \textit{Complex} type defined inside the package \textit{custom\_msgs}. Its definition is shown in Listing~\ref{lst:aadl_custom_msgs}. However, the actual implementation of said definition is enclosed in the \textit{``custom\_msg.asn''} linked file, in ASN.1 language.
 
@@ -345,55 +322,49 @@ end Complex;
 
 
 Based on this model, the ROS packages generated by our toolchain have the following structure:
-% \begin{itemize}
-
-% \item[] \includegraphics[width=0.3cm]{folder.png} pubsub
-% \begin{itemize}
-% \item[] \includegraphics[width=0.3cm]{file_txt.png} CMakeLists.txt
-
-% \item[] \includegraphics[width=0.3cm]{folder.png} include
-% \begin{itemize}
-% \item[] \includegraphics[width=0.3cm]{folder.png} pubsub
-% \begin{itemize}
-% \item[] \includegraphics[width=0.3cm]{file_cpp.png} Publisher.h
-% \item[] \includegraphics[width=0.3cm]{file_cpp.png} Subscriber.h
-% \end{itemize}
-% \end{itemize}
-
-% \item[] \includegraphics[width=0.3cm]{folder.png} launch
-% \begin{itemize}
-% \item[] \includegraphics[width=0.3cm]{file_xml.png} container.impl.launch
-% \end{itemize}
-
-% \item[] \includegraphics[width=0.3cm]{file_xml.png} package.xml
-
-% \item[] \includegraphics[width=0.3cm]{folder.png} src
-% \begin{itemize}
-% \item[] \includegraphics[width=0.3cm]{file_cpp.png} Publisher.cpp
-% \item[] \includegraphics[width=0.3cm]{file_cpp.png} Subscriber.cpp
-% \end{itemize}
-
-% \end{itemize}
-
-% \item[] \includegraphics[width=0.3cm]{folder.png} custom\_msgs
-% \begin{itemize}
-% \item[] \includegraphics[width=0.3cm]{file_txt.png} CMakeLists.txt
-
-% \item[] \includegraphics[width=0.3cm]{file_xml.png} package.xml
-
-% \item[] \includegraphics[width=0.3cm]{folder.png} msg
-% \begin{itemize}
-% \item[] \includegraphics[width=0.3cm]{file_txt.png} Complex.msg
-% \end{itemize}
-
-% \end{itemize}
-% \end{itemize}
+\begin{itemize}
+\item[] \includegraphics[width=0.3cm]{gfx/tree/folder.png} pubsub
+\begin{itemize}
+\item[] \includegraphics[width=0.3cm]{gfx/tree/file_txt.png} CMakeLists.txt
+\item[] \includegraphics[width=0.3cm]{gfx/tree/folder.png} include
+\begin{itemize}
+\item[] \includegraphics[width=0.3cm]{gfx/tree/folder.png} pubsub
+\begin{itemize}
+\item[] \includegraphics[width=0.3cm]{gfx/tree/file_cpp.png} Publisher.h
+\item[] \includegraphics[width=0.3cm]{gfx/tree/file_cpp.png} Subscriber.h
+\end{itemize}
+\end{itemize}
+\item[] \includegraphics[width=0.3cm]{gfx/tree/folder.png} launch
+\begin{itemize}
+\item[] \includegraphics[width=0.3cm]{gfx/tree/file_xml.png} container.impl.launch
+\end{itemize}
+\item[] \includegraphics[width=0.3cm]{gfx/tree/file_xml.png} package.xml
+\item[] \includegraphics[width=0.3cm]{gfx/tree/folder.png} src
+\begin{itemize}
+\item[] \includegraphics[width=0.3cm]{gfx/tree/file_cpp.png} Publisher.cpp
+\item[] \includegraphics[width=0.3cm]{gfx/tree/file_cpp.png} Subscriber.cpp
+\end{itemize}
+\end{itemize}
+\item[] \includegraphics[width=0.3cm]{gfx/tree/folder.png} custom\_msgs
+\begin{itemize}
+\item[] \includegraphics[width=0.3cm]{gfx/tree/file_txt.png} CMakeLists.txt
+\item[] \includegraphics[width=0.3cm]{gfx/tree/file_xml.png} package.xml
+\item[] \includegraphics[width=0.3cm]{gfx/tree/folder.png} msg
+\begin{itemize}
+\item[] \includegraphics[width=0.3cm]{gfx/tree/file_txt.png} Complex.msg
+\end{itemize}
+\end{itemize}
+\end{itemize}
 
 \textit{Publisher.h} and \textit{subscriber.h} can be used as a guideline to implement the application-specific interface. The provided files, already import all the necessary libraries. Further, it is also important to note that decoupling these files from the rest of the ROS nodes, allows developers to test the implemented functions without launching the whole ROS environment at each iteration. This feature 
 % simplifies both the developing and testing phases significantly, reducing the computational complexity of the underlying code.
 
 
 %TODO update this figure to include the GSM
+
+\chapter{The PMK use case}
+\label{sec:pmk}
+
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.95\textwidth]{gfx/pmk/pmk_plat}
@@ -401,9 +372,6 @@ Based on this model, the ROS packages generated by our toolchain have the follow
 \label{fig:pmk}
 \end{figure}
 
-
-\section{The PMK use case}
-\label{sec:pmk}
 In this section we give a detailed description of a test use case where a model-based approach has been used to replicate and reimplement an existing architecture developed with traditional techniques. We decided to start from an already implemented and fully functional system, to show that is possible to achieve the same level of functionalities of the original application with a model-based design combined with automatic programming.
 
 The target robot is an electric wheelchair modified to be controlled with a computer, and equipped with various sensors to achieve levels of autonomy and teleoperation. The wheelchair used as the starting platform is a commercial model (\textit{Twist T4 2x2}) produced by Degonda Rehab SA; it is suitable for both indoor and outdoor usage and it has high manoeuvrability thanks to the two-wheeled dynamics. The conversion from traditional electric wheelchair to autonomous robotic platform is achieved using the Personal Mobility Kit (PMK), which consists in four elements.
@@ -435,7 +403,7 @@ These are all the main functionalities of the electric wheelchair when equipped 
 \end{landscape}
 
 
-\subsection{Model}
+\section{Model}
 \label{sec:pmk-model}
 The first step of the design of an architecture is to create the model. We did so by following the definitions and meta-models introduced in Chapter~\ref{ch:Modelling}. Figure~\ref{fig:pmk-model} shows a graphical representation of the complete model of the architecture of the robotic wheelchair. To organise and generalise the architecture we exploited the nesting capability of AADL by creating a hierarchical structure of system of systems. Each subsystem capture a specific functionality of the robot, and they are meant to be modular parts of the design that can be replaced when necessary. For example, going from laser scanner to cameras, or replacing the navigation system based on \textit{move\_base} with a custom one, or using a different electric wheelchair as platform.
 
@@ -456,7 +424,7 @@ The first step of the design of an architecture is to create the model. We did s
 
 \paragraph{Main system} To increase clarity and use the model to evoke the modularity of the architecture, we modelled it with different subsystems. However, in AADL it is necessary to define a root system to encapsulate everything, moreover, some part of the architecture are too general to be fitted in a specific subsystem. For this architecture, three components fall in this category: the \textit{ROS communication} virtual bus, the \textit{overseer} node and the global state machine. In the same way as physical buses are used in the teleoperation and platform subsystems, the \textit{ROS communication} virtual bus is necessary to identify which connections model ROS communication protocols (\ie, topics or services), this is done by binding them to it. As originally introduced in Section~\ref{sec:ros-in-aadl} and, later, detailed in Section~\ref{sec:ros-node}, the engineered nodes are designed with a strict life cycle, and they natively support a notification system to monitor the evolution of their state. The \textit{overseer} node is in charge of collecting all the notification coming from the custom nodes, moreover it has a list of all the critical nodes (\ie, nodes that are subject to a liveness check) and trigger a transition on the global state machine if one of them stops working. The last element is the data component representing the shared memory area containing the global state machine. In the implementation, the global state machine is instantiated by the \textit{overseer}, while all the nodes in the architecture can read or modify the current state by accessing the shared memory directly, it is also possible to interact with the global state machine through a ROS service interface mediated by the \textit{overseer} (see Figure~\ref{fig:pmk-gsm}). The different approach used can be encoded in the model (\ie, connected through a data access or a subprogram call) however, in the implementation, it is determined at deployment time. In practice if the node runs on the same physical machine of the global state machine, then a shared memory approach is used, otherwise the interaction happens using ROS. 
 
-\subsection{Automatic code generation}
+\section{Automatic code generation}
 In the previous section, we gave an overview of the model of the architecture by describing in details the subsystems and which functionalities they evoke. While the graphical representation of Figure~\ref{fig:pmk-model} provides a general understanding of the topology of the architecture and gives some insights on the nature of the components, it does not capture all the details necessary to correctly perform automatic code generation. First of all, nodes belongs to three main categories: already implemented nodes, they are legacy nodes previously developed, they may come from the standard ROS repositories (\eg, \textit{move\_base}) or be part of the original architecture (\eg, \textit{laser\_merger}), custom nodes, they are completely modelled and will be automatically generated (\eg, \textit{odom}), special custom nodes, they are modelled correctly, but they contain unique implementation patterns that are not supported by the code generator (\eg, \textit{ratp\_node}). This last category will be covered in details in Section~\ref{sec:special-node}. 
 
 As discussed in Section~\ref{sec:ros-arch}, managing existing nodes in the architecture model is extremely important, since they are an invaluable resource provided by the ROS community. During the automatic code generation, existing nodes are ignored, since they do not provide any internal implementation but are described only as interfaces, however, they are correctly included in the generation of launch files describing the current configuration of the system. Moreover, connections between components can be specialised using properties to exploit topic remapping and define the runtime name of each topic, included those of already implemented nodes. Currently, the code generator does not support the use of neither ASN.1 nor JSON schema to define the parameters of the legacy nodes, however,  it is possible to use properties to specify a standard ROS YAML file to be automatically included in the launch file as the parameter configuration of a specific node.
@@ -470,7 +438,7 @@ To automatically generate custom nodes that are compilation-ready, it is necessa
 \label{fig:pmk-ratp}
 \end{figure}
 
-\subsection{Special nodes}
+\section{Special nodes}
 \label{sec:special-node}
 Since all the problem-specific logic was already implemented in the original architecture, every element of the new system is generated using the automatic programming approach. There is only one exception: the \textit{ratp\_node}; this node is the device driver connecting the low-level electronics of the wheelchair to the ROS-based architecture. It implements a unique interface between ROS messages and custom data streams defined by the PGDT bus, therefore it is very challenging to automatically generate the source code using an automatic programming approach. Since this node is an hybrid between a ROS-based (\ie, receiving set-points and publishing the current speed and status) and an hardware-specific (\ie, interfacing with the PMK) implementation, we can partially exploit the code generator to define a node skeleton to be refined by the developer. There are two key challenges when using this approach: first, to have a model expressive enough to capture the peculiar design of the component, and second, to generate a node in such a way that the hardware-specific functionalities can be integrated without major modifications.
 
@@ -515,7 +483,7 @@ In conclusion, while this node requires a direct intervention of the developer t
 \label{fig:path}
 \end{figure}
 
-\subsection{Comparison}
+\section{Comparison}
 The aim of this use case was to showcase how a complete and functional architecture can be designed and developed entirely using a model-based approach combined with automatic code generation. Starting from an existing architecture was useful for multiple reasons: clear use case and requirements for the robot, existing implementations for all the problem-specific features, precise target functionalities, reference benchmark for the behaviour of the autonomous wheelchair. It was important for us to be able to compare the result of our approach to an existing implementation. In this section, we will analyse the original architecture to show the parallels with the automatic generated one and to highlight existing problems that were solved using a model-based design approach.
 
 First of all, we have to compare the design of the architecture of the wheelchair according to the documentation (Figure~\ref{fig:pmk-doc}) with the runtime computation graph generated by ROS (Figure~\ref{fig:pmk-graph}). With a quick analysis it is possible to see that they do not match, some nodes mentioned in the documentation are not present in the graph (\eg, \textit{dcled\_node}) or vice versa (\eg, \textit{scanner\_multi\_merger\_center}), while others have been replaced (\eg, the standard \textit{map\_server} in place of the custom \textit{map\_server\_pmk}). This is not surprising, the PMK is an ongoing research project where multiple people with varying experience contributed to it. As a result, features were added directly to the codebase without propagating them in the documentation or in the original design. As the project progressed, some of the features were removed, but they left some dangling dependencies behind, in the form of design choices and components. This problem is exacerbated by the fact that ROS does not provide any tool to visualise and analyse the complete architecture before runtime, the only way is to run the entire system and then view the computational graph using tools like \textit{rqt\_graph}. However, even this approach is limited, since it only shows topics, but no services or actions. Of course, a model-based approach does not automatically solve all these problems, since a developer can, and sometimes needs to, directly modify the codebase; however, by combining models and automatic code generation we can create an environment where good practices and designs are encouraged and more natural.
