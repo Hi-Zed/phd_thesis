@@ -234,22 +234,27 @@ end componentA.impl;
 \label{sec:xml-cpp}
 The second step of the code generation is a model-to-text transformation. Differently from the first step where the original AADL model was converted in a different format, here multiple models (\ie, AADL and ANS.1 or JSON schema) are combined to create code artefacts. In particular, the output of the code generation after this step will be a single ROS package that contains all the custom messages, services and actions (if they exists), the source code of all the nodes modelled combined with any already existing problem-specific implementation, all the necessary build and configuration files, and the launch files matching the deployment configuration specified in the model.
 
+The AAXML to C++ module is developed entirely in Python 3, exploiting the lxml XML toolkit~\cite{lxml}, a Pythonic binding for the C libraries \textit{libxml2} and \textit{libxslt}, to parse and manipulate the XML-based input. This module is designed and developed based on a nested structure, similarly to a recursive approach, elements call each others in chain, and then the model-to-text transformation is executed from the most nested element to the root. More in details, each target ROS/C++ artefact (\eg, methods, classes, variables, \etc) has its own managing class in the Python implementation. Depending on the structure of the code to be generated, each of these classes contains all the necessary subclasses to define the correct output source code. Figure~\ref{fig:russiandoll} shows a contained example following this approach, it presents the classes and their interactions to create the signature of a method. A C++ method signature is defined by the name, the list of parameter and the return type, the Python class managing the method contains the necessary code to output the name, but relies on other classes (\ie, \textit{Type} and \textit{Variable}) to generate the remaining components.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.8\textwidth]{gfx/russiandoll}
+    \caption{TODO}\label{fig:russiandoll}
+\end{figure}
+
+Differently from the first code generation step, the model-to-text does not output a single file, but it generates multiple artefacts. For this reason, the process is divided in multiple phases. The first phase is the set up of all the basic elements of the ROS package, with all the folder in place, it can create the launch files. Messages, services and actions are next in the list, when this phase is complete, the process looks for all the nodes and generates them. The last step is executed concurrently with the nodes generations, since it requires to incrementally fill all the configuration and build files.
+
+\paragraph{Package set up}
+
+\paragraph{Launch files}
+
+\paragraph{Messages}
+
+\paragraph{Nodes}
+
+\paragraph{Package completion}
 
 
-
-
-\textcolor{red}{
-The code generator discussed in this work, takes the AAXML model produced by the customised back-end as input and translates it into a working ROS C++ environment, i.e., a set of one or more ROS packages equipped with all the necessary configuration files for compiling (e.g., the \textit{CMakeLists.txt} and \textit{package.xml} files, the custom messages and services, launch files, etc.). Each one of these packages also includes a programmatic list of all method interfaces declared by the developer within the model, making the output code application-specific.}
-
-%We introduced two steps in our toolchain to exploit the already available XML parsers. 
-The code generation module was developed entirely in Python 3, hence exploiting the \textit{lxml}~\cite{lxml} pythonic binding for the C libraries \textit{libxml2} and \textit{libxslt} (also integrating the XPath syntax~\cite{websiteXPath}), as XML Manipulation Toolkit.
-
-For designing this code generator, we followed a Russian doll pattern, where elements call each others in chain until the final code is generated, as shown in Figure~\ref{fig:codegenerator-russiandollpattern}.
-
-Each element in C++ to be generated has its own managing class in Python. For example, a variable in C++ is managed by a Python class which contains all the elements and the methods to represent the functionalities and properties of that C++ variable. The same goes for a C++ method, where a specific Python class manages it. Since a method can have variables as input, the corresponding managing Python class can contain an instance of the Python class dedicated to variables. Each of these variables has a specific type, which is managed by the \textit{type} class. When generating the C++ method code, the input parameter objects are triggered to generate their own code and together they cooperate to produce the complete method code.  Figure~\ref{fig:codegenerator-russiandollpattern} shows this exact example.
-
-The entire code generation workflow is detailed throughout the remainder of this Section, accompanying each description with graph visuals.
-%We will now go through the entire structure of the code generator detailing the code generator normal flow, summarizing with graphs the entire procedure.
 
 \paragraph{Initialisation} The initialisation phase consists of some basic set-up instructions and the top-down reading of the AAXML tree. We used the \textit{XMLTags} module in Python for reading the tree, exposing all the AAXML tags produced by the Ocarina backend \textit{aadl\_aaxml} as a result. %Any change to the used tags in the first step of the toolchain is automatically reflected to the second step.
 To accommodate for the main structure of AADL models being a \textit{system}, we also incorporated a \textit{SystemsManager} class in our code generator, to manage all the AADL \textit{system-level} components, represented instances of the Python \textit{System} class.
@@ -280,7 +285,7 @@ After all systems have been parsed and the queue is empty, the saving routine st
 
 \paragraph{Custom Messages And Services} In ROS it is possible to define a new custom message that relies on basic datatypes or on already existing ROS messages, and the same applies to services. To take advantage of these functionalities, we used a data modelling language called ASN.1. ASN.1 is an interface description language used to define data structures which can be easily serialised and deserialized. The code generator, is thus able to read and parse an ASN.1 description and to produce a working representation of a custom message or service, ensuring it is ROS-compatible. In ROS, message-only packages may exist, the code generator cover this case by creating the relative relative package with the \textit{CMakeLists.txt} during custom messages generation.
 
-\section{A complete example} \label{sec:pub-sub}
+\section{A complete example}
 
 This section demonstrates a real use case of the customised Ocarina backend \textit{aadl\_aaxml} and code generator, when applied to a simple publisher-subscriber architecture. We firstly introduce the publisher-subscriber model to then analyse its correspondence with the generated ROS package. To make the example more complete, we include the exchange of a custom message between the two nodes.
 
