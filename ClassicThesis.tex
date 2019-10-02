@@ -85,24 +85,22 @@
 %\setcounter{page}{90}
 % use \cleardoublepage here to avoid problems with pdfbookmark
 \cleardoublepage
-\include{Chapters/Chapter01}
+\include{Chapters/Introduction}
 \cleardoublepage
-%\part{Background materials}\label{pt:background}
-\include{Chapters/AADL}
-%\part{Modelling and Automatic programming}\label{pt:modelling}
+\setcounter{mtc}{2}
+\include{Chapters/Related}
 \setcounter{mtc}{3}
-\include{Chapters/Modelling}
+\include{Chapters/Background}
 \setcounter{mtc}{4}
+\include{Chapters/Modelling}
+\setcounter{mtc}{5}
 \include{Chapters/CodeGeneration}
-%\part{Abstraction}\label{pt:abstraction}
 \setcounter{mtc}{6}
 \include{Chapters/Capabilities}
-%\part{Considerations and conclusions}\label{pt:conclusions}
-%\include{Chapters/Bridge}
+\setcounter{mtc}{7}
+\include{Chapters/Experiment}
 \include{Chapters/Conclusions}
-%\addtocontents{toc}{\protect\clearpage} % <--- just debug stuff, ignore
-%\include{Chapters/Chapter03}
-%\include{multiToC} % <--- just debug stuff, ignore for your documents
+
 % ********************************************************************
 % Backmatter
 %*******************************************************
