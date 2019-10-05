@@ -12,8 +12,7 @@ Thankfully, today, we are not dealing with the same difficulties that Mildred Kr
 
 During Computer Science history, the concept of automatic programming changed to adapt to the expectation of the time. Originally, it was the automation of the process of punching paper tape, later it became the transformation of high-level programming languages (\eg, Fortran and ALGOL) to machine code, a task that, nowadays, is integral part of the build process. Today, automatic programming mostly refers to the automatic generation of executable code from representations that are not programming languages. These representation may have different level of abstraction, from the closest to the target (\eg, domain specific languages, flowcharts, \etc) to the furthest (\eg, graphical representations, models, \etc).
 
-%TODO complete after the end of the chapter
-This chapter presents our approach to automatically generate ROS code from the AADL model.
+Here we present our approach to automatically generate a ROS architecture from an AADL model combined with a data description model. The chapter starts with a description of our target, specifically, an engineered version of a ROS nodes including advanced functionalities. Then the automatic programming process is presented with its two-steps approach. The chapter closes with an example going from model to code.
 
 \minitoc
 \newpage
@@ -112,27 +111,27 @@ This is the first step of the code generation approach, it is a model-to-model t
 
 Listing~\ref{lst:comp-aadl} shows a small example of a system containing a single process as subcomponent, this is the minimal AADL architecture that we can model and instantiate. In Listing~\ref{lst:comp-aaxml} presents the AAXML counterpart of the model, where the properties described are encoded in an XML-based format. In this minimal structure, no information is lost when converting the model from AADL to AAXML.
 
-\begin{lstlisting}[frame=tb,caption={TODO caption},label=lst:comp-aadl]
+\begin{lstlisting}[language=AADL,caption={TODO caption},label=lst:comp-aadl]
 system root_system
 end root_system;
 
 system implementation root_system.impl
-  subcomponents
-  main_process: process custom_process.impl;
+	subcomponents
+		main_process: process custom_process.impl;
 end root_system.impl;
 \end{lstlisting}
 
-\begin{lstlisting}[frame=tb,caption={TODO caption},label=lst:comp-aaxml]
+\begin{lstlisting}[language=XML,caption={TODO caption},label=lst:comp-aaxml]
 <system>
-	<type>root_system.impl</type>
-	<category>system</category>
-	<namespace>aadl_xml</namespace>
+	<type> root_system.impl </type>
+	<category> system </category>
+	<namespace> aadl_xml </namespace>
 	<subcomponents>
 		<component>
-			<name>main_process</name>
-			<type>custom_process.impl</type>
-			<category>process</category>
-			<namespace>aadl_xml</namespace>
+			<name> main_process </name>
+			<type> custom_process.impl </type>
+			<category> process </category>
+			<namespace> aadl_xml </namespace>
 		</component>
 	</subcomponents>
 </system>
@@ -142,24 +141,24 @@ end root_system.impl;
 
 Listing~\ref{lst:feature-aadl} show the interface model of the component included in the system presented in Listing~\ref{lst:comp-aadl}. It defines a single event data port exchanging messages with a specific data type. Given this definition the AAXML file can be extended as shown in Listing~\ref{lst:feature-aaxml}, the \textit{features} tag is a child of the \textit{component} tag, while this replicates the feature information in multiple places in the file, it also streamlines the code generation process in the next phase.
 
-\begin{lstlisting}[frame=tb,caption={TODO caption},label=lst:feature-aadl]
+\begin{lstlisting}[language=AADL,caption={TODO caption},label=lst:feature-aadl]
 process custom_process
 	features
 		a_port: out event data port pkg::some_data;
 end custom_process;
 \end{lstlisting}
 
-\begin{lstlisting}[frame=tb,caption={TODO caption},label=lst:feature-aaxml]
+\begin{lstlisting}[language=XML,caption={TODO caption},label=lst:feature-aaxml]
 <component>
 	[...]
 	<features>
 		<feature>
-			<name>a_port</name>
-			<direction>out</direction>
-			<type>event_data</type>
-			<datatype>some_data</datatype>
-			<datatype_namespace>pkg</datatype_namespace>
-			<category>K_PORT_SPEC_INSTANCE</category>
+			<name> a_port </name>
+			<direction> out </direction>
+			<type> event_data </type>
+			<datatype> some_data </datatype>
+			<datatype_namespace> pkg </datatype_namespace>
+			<category> K_PORT_SPEC_INSTANCE </category>
 		<feature>
 	<features>
 </component>
@@ -169,7 +168,7 @@ end custom_process;
 
 Listing~\ref{lst:con-aadl} shows the modelling of the implementation of a system where two processes are connected, one with an output port and the other with an input port. Listing~\ref{lst:con-aaxml} presents how this connection is mapped on the AAXML file, since the system is the root of the hierarchy, the \textit{connections} tag is defined directly as a child of the root \textit{system} tag.
 
-\begin{lstlisting}[frame=tb,caption={TODO caption},label=lst:con-aadl]
+\begin{lstlisting}[language=AADL,caption={TODO caption},label=lst:con-aadl]
 system implementation root_system.impl
 	subcomponents
 		cmpA: process pkg::processA;
@@ -179,21 +178,21 @@ system implementation root_system.impl
 end root_system.impl;
 \end{lstlisting}
 
-\begin{lstlisting}[frame=tb,caption={TODO caption},label=lst:con-aaxml]
+\begin{lstlisting}[language=XML,caption={TODO caption},label=lst:con-aaxml]
 <system>
 	[...]
 	<connections>
 	<connection>
-		<name>con1</name>
-		<kind>K_CONNECTION_INSTANCE</kind>
-		<category>CT_PORT_CONNECTION</category>
+		<name> con1 </name>
+		<kind> K_CONNECTION_INSTANCE </kind>
+		<category> CT_PORT_CONNECTION </category>
 		<port_info>
-			<source>out</source>
-			<dest>in</dest>
-			<parent_source>processA</parent_source>
-			<parent_source_name>cmpA</parent_source_name>
-			<parent_dest>processB.impl</parent_dest>
-			<parent_dest_name>cmpB</parent_dest_name>
+			<source> out </source>
+			<dest> in </dest>
+			<parent_source> processA </parent_source>
+			<parent_source_name> cmpA </parent_source_name>
+			<parent_dest> processB.impl </parent_dest>
+			<parent_dest_name> cmpB </parent_dest_name>
 		</port_info>
 	</connection>
 	</connections>
@@ -204,7 +203,7 @@ end root_system.impl;
 
 Listing~\ref{lst:pro-aadl} shows a definition of the implementation of a process component, it has a thread as a subcomponent and this thread has an output port on his frontier. As said before, it is possible, in the properties section of the process to specify both the properties of the subcomponent (\ie, \textit{Period}) and of the feature (\ie, \textit{Queue\_size}). Listing~\ref{lst:pro-aaxml} presents a portion of the AAXML file modelling the properties, while they were defined in the property section of the process, the \textit{component} tag in the listing references the thread, since it is the owner of both the feature and the \textit{Period} property. 
 
-\begin{lstlisting}[frame=tb,caption={TODO caption},label=lst:pro-aadl]
+\begin{lstlisting}[language=AADL,caption={TODO caption},label=lst:pro-aadl]
 process implementation componentA.impl
 	[...]
 	properties
@@ -213,19 +212,19 @@ process implementation componentA.impl
 end componentA.impl;
 \end{lstlisting}
 
-\begin{lstlisting}[frame=tb,caption={TODO caption},label=lst:pro-aaxml]
+\begin{lstlisting}[language=XML,caption={TODO caption},label=lst:pro-aaxml]
 <component>
 	[...]
 	<features><feature>
 	<properties><property>
-		<name>Queue_size</name>
-		<value>1</value>
+		<name> Queue_size </name>
+		<value> 1 </value>
 	</property></properties>
 	</feature></features>
 	<properties><property>
-		<name>Period</name>
-		<value>50</value>
-		<unit>ms</unit>
+		<name> Period </name>
+		<value> 50 </value>
+		<unit> ms </unit>
 	</property></properties>
 </component>
 \end{lstlisting}
@@ -244,46 +243,39 @@ The AAXML to C++ module is developed entirely in Python 3, exploiting the lxml X
 
 Differently from the first code generation step, the model-to-text does not output a single file, but it generates multiple artefacts. For this reason, the process is divided in multiple phases. The first phase is the set up of all the basic elements of the ROS package, with all the folder in place, it can create the launch files. Messages, services and actions are next in the list, when this phase is complete, the process looks for all the nodes and generates them. The last step is executed concurrently with the nodes generations, since it requires to incrementally fill all the configuration and build files.
 
-\paragraph{Package set up}
+\paragraph{Package definition} When implementing ROS nodes by hand, the first step is the creation of the containing package. The same process is followed by the code generator. By parsing the AAXML file, it can detect the definition of the AADL package and use it to create the corresponding ROS one. There is an important parallel between ROS and our AADL definition that makes the creation of packages easier; in ROS, a package is the minimal release unit, this means that all dependencies are package-based, this is true also for AADL, where elements can be defined in different packages and included at the beginning using the \texttt{with} keyword. In summary, from the name of the AADL package the code generator derives the name of the ROS package, and from the the \texttt{with} clause it creates all the necessary package-level dependencies.
 
-\paragraph{Launch files}
+Most of the package-creation process is the same for all packages. It defines the correct folder structure (see Section~\ref{sec:ros}), and creates the \textit{package.xml} and \textit{CMakeLists.txt} files. These two files are initially created using all the dependencies information derived from the \texttt{with} clause, and they are later updated incrementally depending on the existence of custom messages and the number of custom nodes.
 
-\paragraph{Messages}
+\paragraph{Launch files} The second set of artefacts created by the model-to-text process are the launch files. In order to create a launch file, it is not necessary for the nodes to exist, for each process only the type (\ie, the compile-time name of the node), the package and the instance name are necessary to setup the structure. All this information is available in the AAXML file before generating any source file.
 
-\paragraph{Nodes}
+In our model, we defined a relationship between the hierarchical topology defined by AADL systems, and the structure of launch files. Therefore, the code generator parse the AAXML file looking for nested systems, and each one is converted in a launch file. Starting from the deepest child, the launch files are filled with all the necessary nodes, using the AADL instance name as runtime name, the AADL type as reference type, and, if present, the AADL package as the ROS package. To avoid unnecessary clutter in the architecture, only the connected processes are included in the launch files. Of course this is not limited to connections representing topics, but includes any kind of virtual or physical connection that justifies the role of the component in the system.
 
-\paragraph{Package completion}
+The following step of the launch file creation is the remapping of topics. In our model we distinguish between two different naming conventions both defined using properties. One is a port property, it is used during the generation of the source code and specifies the default (\ie, written in the source code) name of the topic. The other is a connection property, it is used when creating launch files to define the runtime name of the communication channel.
 
+Last step is the assignment of parameters. If the designer used AADL properties to specify a configuration file, it is converted in YAML and assigned to the correct node in the launch files.
+  
+\paragraph{Messages} The next phase of the model-to-text process is the generation of messages. Message types are modelled in AADL by a single data component augmented with a property that specifies its internal structure using ASN.1 or JSON Schema. Data types related to messages are not used in the model as instances, but only to specify the type of a communication, hence they only exist in the package definition. This ``out-of-system'' use makes the code generation process simpler.
 
+The package is analysed to detect all the data component; if they are associated with a message description, the file specified in the property is parsed by the specific code generator (\ie, ASN.1 or JSON Schema) to create in the \texttt{msg} folder of the package all the necessary ROS messages files. While creating the message files, the code generator also updates \textit{package.xml} and \textit{CMakeLists.txt} to include all the necessary messages dependencies and the modules to generate and build ROS message files.
 
-\paragraph{Initialisation} The initialisation phase consists of some basic set-up instructions and the top-down reading of the AAXML tree. We used the \textit{XMLTags} module in Python for reading the tree, exposing all the AAXML tags produced by the Ocarina backend \textit{aadl\_aaxml} as a result. %Any change to the used tags in the first step of the toolchain is automatically reflected to the second step.
-To accommodate for the main structure of AADL models being a \textit{system}, we also incorporated a \textit{SystemsManager} class in our code generator, to manage all the AADL \textit{system-level} components, represented instances of the Python \textit{System} class.
+\paragraph{Nodes} The last step of the model-to-text process is the generation of the source code of the nodes. The complexity of this step is significantly reduced by our design of the meta-model. We defined a node in AADL as a process that uses threads as subcomponents evoking specific ROS functionalities. In particular, the \textit{main\_thread} characterises a process as a ROS node, this means that during the automatic code generation process the code generator can easily differentiate between ROS nodes and any other process by identifying the \textit{main\_thread} as a subcomponent.
 
-\paragraph{The System Loop} In AADL it is possible to define additional systems as system subcomponents. As a result, the code inspection and generation routine had to keep this factor into account. After the main system root (i.e., the outermost container) is retrieved, subsystems are lined up in a loop queue of type FIFO (i.e., First In First Out). Figure~\ref{fig:codegenerator-systemsloop} demonstrates how a \textbf{system loop} is formed: each highlighted block is the main actor of the following phases, where each system is analyzed and its code generated.
-%This has to be treated accordingly by running the full code inspection and generation also over it; this chain can be as deep as one wants. 
-%After gathering the main system root, namely the outer system, a loop queue is instantiated where new systems are added at the end, the already queued are popped one by one and examined. 
-%This \textbf{system loop}. is shown visually in Fig.: the block highlighted is the main actor of the following phases, where each system is analyzed and its code generated.
-
-\paragraph{Code Generation} The code generation process summarised in Figure \ref{fig:codegenerator-systemsloop} is quite straightforward. First, a new \textit{System} object is created, with all information relative to the current analyzed system (i.e., also including the launch file and the \textit{CMakeLists.txt} file ultimately required to compile and run the generated nodes). Both files are consistently updated by the code generator as the process goes on, this is necessary, since crucial information to be inserted these files (e.g., adding library dependency to ROS \textit{tf}) may only appear later in the code generation process.
-
-Then, all the AADL processes in the \textit{system} are visited one at a time, in search for specific thread components that trigger the start of code generation. As thread components are identified by their type and, in this phase, a RegEx check is used to look for the target Python class matching the detected thread type. If a thread type is not recognised, it will simply be ignored and skipped by the code generator. In fact, in an AADL \textit{process}, threads can be associated to known types or marked as 'unknown'. This implementation strategy allows for the code generator to only look for supported parts, without limiting the completeness and expressive power of the input model. This may happen, for example, when modelling a sensor driver, which does not use publishers or subscribers to communicate with the hardware, but unique approaches, not identifiable by the code generator.
-
-The currently supported thread types are six, reflecting the custom functionalities introduced in Section \ref{sec:transformation-rules}:
+The code generator analyses the package for any process definition including the \textit{main\_thread} as a subcomponent. For each one starts the process of creating all the necessary source files. Most of the basic C++ code is already defined in the engineered node superclass, therefore it is included directly in the automatic generated node. What the code generator needs to do, is to identify all the potential inner functionalities (\ie, publishers, subscribers and timers) of the node, to do so it uses a AADL thread-based approach. Currently the AAXML to ROS/C++ code generator is implemented to identify five different threads corresponding to specific designs:
 \begin{itemize}
-\item{ \textbf{main\_loop.impl} identifies the main thread behind every single node. A node without this thread cannot work and it is skipped by the code generator.}
-\item {\textbf{publisher.impl} identifies a thread with publishing capabilities. It is a generalised description, that needs some configuration parameters (e.g., message type, rate, topic name) to work properly and also a connection to specify where to send the published message.}
-\item \textbf{callback.impl} is related to subscriber threads. As for its counterpart that publishes messages, a \textit{callback.impl} thread needs configuration parameters (e.g., message type, topic name) to be functional.
-\item the \textbf{call\_pub.impl} thread receives a message in input and re-publishes it with some modifications. In a sense, it merges subscriber and publisher functionalities in one place.
-\item \textbf{service\_provider.impl} indicates that the considered thread provides a service functionality
-\item \textbf{timer.impl}, is the identifier used for threads that implement only timers and their callbacks.
+\item \textit{publisher.impl}. It correspond to the \textit{source} component behaviour. In our  engineered ROS node, it is implemented by a periodic timer that calls a publisher at the end. Given this design, the code generator has to generate both the timer with its callback and the declaration of the publisher.
+\item \textit{callback.impl}. It represent the \textit{sink} component behaviour. In this case there is no special design, as in any other ROS node, it is a subscriber that trigger a callback. The code generator needs to declare the subscriber, register it to the correct topic, define the callback method and bind it.
+\item \textit{call\_pub.impl}. This thread combines the previous two to evoke a \textit{filter} component behaviour. Since it is a combination of a subscriber that call a publisher in its callback, the code generator needs to define and generate all the previous elements.
+\item \textit{service\_provider.impl}. This thread is used to define a \textit{reactive} component behaviour. The code generator needs to declare a service, advertise correctly and then declare the method used as callback.
+\item \textit{timer.impl}. This last thread does not correspond to any component behaviour, since it is not use for external interactions. However, ROS timers are useful to define the internal behaviour of the node, thus they are one of the potential thread identified by the code generator. Timers are defined similarly to the other elements, and trigger a callback when they expire.
 \end{itemize}
+If a component contains a thread of an unknown type, the code generation process continues by ignoring it. Often, the designer needs to include threads implementing special interfaces, for example a device driver may use a custom thread to interface with low-level hardware. Since it is impossible to predict all the possible configurations of a node, we decide to use an approach where the designer still has the flexibility of modelling a complete component, while the code generator will only perform a model-to-text transformation for known designs.
 
-%At this stage, the code generator starts looking for the known thread types and generates the relative code. 
-The main thread is a required component for the process not to be ignored by the code generator. After the main thread is detected, the module analyses all the remaining threads. As flexibility is a requirement for future extension to new thread types, the thread libraries (i.e. the python classes \textit{Publisher}, \textit{MainThread}, \textit{Timer}) are imported at runtime only if used. This was achieved through the Python module \textit{importlib}. Defining and supporting a new thread type becomes then extremely easy and is done by simply extending the base class \textit{AADLThread} (which implements all said functionalities) and by adding an additional regular expression to map the newly-created class to its related thread type.
+The code generator will create multiple files for the same node. All the implementation relative to the functionalities evoked by the threads is in the main source file of the node placed in the \texttt{src} folder of the package. To complete the generation of the main source file, it is necessary to add two more elements: the decoupled functionalities and the parameter initialisation process.
 
-After all systems have been parsed and the queue is empty, the saving routine starts. In this phase, the launch file created at the very beginning is finally populated. Then, each node is saved and its executable name added to the \textit{CMakeLists.txt}, calling the instance of class \textit{CMakeLists} that manages it. Since the same node design can be reused inside the model, nodes sharing the same design, but with different functionalities, are generated. To overcome the problem of linking the correct node source to the node name in the launch file, after the node source is actually generated and saved, the equivalent entry in the launch file is updated if necessary. After the nodes and all their universe have been generated, it is the turn of custom messages and services.
+In both our model and in the generated code, we try to push the decoupling between the domain-specific implementation and the middleware-related code. In the model we achieve this by specifying subprograms as subcomponents of threads and then using the \textit{Source\_Text} properties to include the specific implementation of the subprogram. The code generation will retrieve this implementation and call it in the timer or subscriber callbacks as an external function. However, if the property is not specified, or the file referenced by it does not exist, the code generator will automatically create a corresponding header file that the developer can fill at a later stage. The inclusion of any external function or library is propagated by the code generator to the \textit{CMakeLists.txt} file to maintain the package compilation-ready.
 
-\paragraph{Custom Messages And Services} In ROS it is possible to define a new custom message that relies on basic datatypes or on already existing ROS messages, and the same applies to services. To take advantage of these functionalities, we used a data modelling language called ASN.1. ASN.1 is an interface description language used to define data structures which can be easily serialised and deserialized. The code generator, is thus able to read and parse an ASN.1 description and to produce a working representation of a custom message or service, ensuring it is ROS-compatible. In ROS, message-only packages may exist, the code generator cover this case by creating the relative relative package with the \textit{CMakeLists.txt} during custom messages generation.
+The last step of the node generation process is the definition of the internal state. This is done in a separate file that contains the \textit{parameters} and \textit{variables} structures as defined using ANS.1 or JSON Schema. Since they are basic types, parameters are completely defined and initialised using the default values provided, moreover, they are propagated in the main source filed to setup their interface to the parameters server. Variables are declared in their own structure, and initialised if they have a default value and a basic type. However, if they are a complex variables (see Section~\ref{sec:data}), they are only declared and their complex type is included in the header and propagated in the \textit{CMakeLists.txt} file.
 
 \section{A complete example}
 
@@ -303,68 +295,84 @@ The AADL model represented in Listing~\ref{snippet:aadl_pub_sub_system}, shows a
 \caption{TODO}\label{fig:usecase-subscriber}
 \end{figure}
 
-In Fig.~\ref{fig:usecase-publisher} and Fig.~\ref{fig:usecase-subscriber} are represented, respectively, the publisher and the subscriber models, except for their \textit{properties}. In both cases we have the following \textit{properties}:
+In Figure~\ref{fig:usecase-publisher} and Figure~\ref{fig:usecase-subscriber} are represented, respectively, the publisher and the subscriber models, except for their \textit{properties}. In both cases we have the following \textit{properties}:
 \begin{itemize}
 \item \textit{Source\_Text} and \textit{Source\_Name}: the first identifies the file where the application specific code will be placed, while the second represents the name of the function that will be called. In the publisher case, this function will return the message to be sent, while, for the subscriber, it will have as input the received message to be processed.
-\item \textit{topic\_properties::Default\_Name}: it is the topic name placeholder in order to generate correctly the node. It can be different for the publisher and the subscriber, since the binding between them is done at system’s connections level and it is represent as a \textit{remap} in the ROS launch file.
+\item \textit{topic\_properties::Default\_Name}: it is the topic name placeholder in order to generate correctly the node. It can be different for the publisher and the subscriber, since the binding between them is done at system's connections level and it is represent as a \textit{remap} in the ROS launch file.
 \end{itemize}
 
 Moreover, the publisher has a specific property, called \textit{Period}, where the frequency of the publisher is defined. The subscriber also has its own specific property called \textit{Queue\_size}, representing the maximum size of the subscriber message buffer.
 
 Models in Fig.~\ref{fig:usecase-publisher} and Fig.~\ref{fig:usecase-subscriber} have the mandatory main thread implementation; it is important to see that the two threads inside the process, namely \textit{main\_thread} and \textit{publisher} or \textit{subscriber}, need to have their ports connected to the process’ ports, thus, at \textit{process} level, we have \textit{connections} and \textit{features} definitions.
 
-In addition, the two figures show the common base model under each node. As stated in in~\cite{Bardaro2017}, the model of the base node contains a state machine, with four different states: \textit{init}, \textit{running}, \textit{closing} and \textit{error}. In AADL, each transition has to be triggered by an event; an event data port on the process models any external signal to force the shutdown of the node (i.e. SIGINT signal) and various ports on the main thread trigger the transition from a state to another. The current node state is saved \textit{data} element called \textit{internal\_state}. For each existing element of the model (i.e. threads, subprograms, connections, ports, etc.) it is possible to define in which state they are active, and this defines a specific workflow and a strict initialization procedure of the node.
+In addition, the two figures show the common base model under each node. The model of the base node contains a state machine, with four different states: \textit{init}, \textit{running}, \textit{closing} and \textit{error}. In AADL, each transition has to be triggered by an event; an event data port on the process models any external signal to force the shutdown of the node (i.e. SIGINT signal) and various ports on the main thread trigger the transition from a state to another. The current node state is saved \textit{data} element called \textit{internal\_state}. For each existing element of the model (i.e. threads, subprograms, connections, ports, etc.) it is possible to define in which state they are active, and this defines a specific workflow and a strict initialization procedure of the node.
 
 The above example includes all the already cited components, as well as the thread output port, connected to the process port and the associated properties. It may be worth taking a closer look at how the datatype of the exchanged message is actually defined: the type is associated to the process output port and specified as a prototype of the thread. This ensures the thread type to match the process-level type.
 In our example, the message is of \textit{Complex} type defined inside the package \textit{custom\_msgs}. Its definition is shown in Listing~\ref{lst:aadl_custom_msgs}. However, the actual implementation of said definition is enclosed in the \textit{``custom\_msg.asn''} linked file, in ASN.1 language.
 
-\begin{lstlisting}[frame=tb,caption={AADL representation of a custom message},label=lst:aadl_custom_msgs]
-data Complex
+\begin{lstlisting}[language=AADL,caption={AADL representation of a custom message},label=lst:aadl_custom_msgs]
+data ChitChat
  	properties
- 		Source_Text => ("custom_msg.asn");
-end Complex;
+ 		Source_Text => ("ChitChat.schema.json");
+end ChitChat;
+\end{lstlisting}
+
+\begin{lstlisting}[language=AADL,caption={TODO},label=lst:sys-properties]
+topic_properties::Name => "/chatter" applies to chatter;
+Source_Text => ("talker.json") applies to talker;
+Source_Text => ("listener.json") applies to listener;
+\end{lstlisting}
+
+\begin{lstlisting}[language=AADL,caption={TODO},label=lst:lst-properties]
+Queue_size => 1 applies to subscriber.msg;
+topic_properties::Default_Name => "/in_chat" applies to msg_in;
+Source_Text => ("listener.schema.json") applies to internal_state;
+Source_Text => ("listener.h") applies to subscriber.function;
+Source_Name => "listen" applies to subscriber.function;
+\end{lstlisting}
+
+\begin{lstlisting}[language=AADL,caption={TODO},label=lst:tlk-properties]
+Period => 10 ms applies to publisher;
+topic_properties::Default_Name => "/out_chat" applies to msg_out;
+Source_Text => ("talker.schema.json") applies to internal_state;
+Source_Text => ("talker.h") applies to publisher.function;
+Source_Name => "talk" applies to publisher.function;
 \end{lstlisting}
 
 
 Based on this model, the ROS packages generated by our toolchain have the following structure:
 \begin{itemize}
-\item[] \includegraphics[width=0.3cm]{gfx/tree/folder.png} pubsub
-\begin{itemize}
-\item[] \includegraphics[width=0.3cm]{gfx/tree/file_txt.png} CMakeLists.txt
-\item[] \includegraphics[width=0.3cm]{gfx/tree/folder.png} include
-\begin{itemize}
-\item[] \includegraphics[width=0.3cm]{gfx/tree/folder.png} pubsub
-\begin{itemize}
-\item[] \includegraphics[width=0.3cm]{gfx/tree/file_cpp.png} Publisher.h
-\item[] \includegraphics[width=0.3cm]{gfx/tree/file_cpp.png} Subscriber.h
-\end{itemize}
-\end{itemize}
-\item[] \includegraphics[width=0.3cm]{gfx/tree/folder.png} launch
-\begin{itemize}
-\item[] \includegraphics[width=0.3cm]{gfx/tree/file_xml.png} container.impl.launch
-\end{itemize}
-\item[] \includegraphics[width=0.3cm]{gfx/tree/file_xml.png} package.xml
-\item[] \includegraphics[width=0.3cm]{gfx/tree/folder.png} src
-\begin{itemize}
-\item[] \includegraphics[width=0.3cm]{gfx/tree/file_cpp.png} Publisher.cpp
-\item[] \includegraphics[width=0.3cm]{gfx/tree/file_cpp.png} Subscriber.cpp
-\end{itemize}
-\end{itemize}
-\item[] \includegraphics[width=0.3cm]{gfx/tree/folder.png} custom\_msgs
-\begin{itemize}
-\item[] \includegraphics[width=0.3cm]{gfx/tree/file_txt.png} CMakeLists.txt
-\item[] \includegraphics[width=0.3cm]{gfx/tree/file_xml.png} package.xml
-\item[] \includegraphics[width=0.3cm]{gfx/tree/folder.png} msg
-\begin{itemize}
-\item[] \includegraphics[width=0.3cm]{gfx/tree/file_txt.png} Complex.msg
-\end{itemize}
-\end{itemize}
+	\item[] \includegraphics[width=0.3cm]{gfx/tree/folder.png} complete\_example
+	\begin{itemize}
+	\item[] \includegraphics[width=0.3cm]{gfx/tree/file_txt.png} CMakeLists.txt
+	\item[] \includegraphics[width=0.3cm]{gfx/tree/folder.png} include
+	\begin{itemize}
+	\item[] \includegraphics[width=0.3cm]{gfx/tree/folder.png} complete\_example
+	\begin{itemize}
+	\item[] \includegraphics[width=0.3cm]{gfx/tree/file_cpp.png} listener.h
+	\item[] \includegraphics[width=0.3cm]{gfx/tree/file_cpp.png} listener\_configuration.h
+	\item[] \includegraphics[width=0.3cm]{gfx/tree/file_cpp.png} talker.h
+	\item[] \includegraphics[width=0.3cm]{gfx/tree/file_cpp.png} talker\_configuration.h
+	\end{itemize}
+	\end{itemize}
+	\item[] \includegraphics[width=0.3cm]{gfx/tree/folder.png} launch
+	\begin{itemize}
+	\item[] \includegraphics[width=0.3cm]{gfx/tree/file_xml.png} talker.ros.launch
+	\end{itemize}
+	\item[] \includegraphics[width=0.3cm]{gfx/tree/file_xml.png} package.xml
+	\item[] \includegraphics[width=0.3cm]{gfx/tree/folder.png} src
+	\begin{itemize}
+	\item[] \includegraphics[width=0.3cm]{gfx/tree/file_cpp.png} publisher.cpp
+	\item[] \includegraphics[width=0.3cm]{gfx/tree/file_cpp.png} subscriber.cpp
+	\end{itemize}
+	\item[] \includegraphics[width=0.3cm]{gfx/tree/folder.png} msg
+	\begin{itemize}
+	\item[] \includegraphics[width=0.3cm]{gfx/tree/file_txt.png} ChitChat.msg
+	\end{itemize}
+	\end{itemize}
 \end{itemize}
 
 \textit{Publisher.h} and \textit{subscriber.h} can be used as a guideline to implement the application-specific interface. The provided files, already import all the necessary libraries. Further, it is also important to note that decoupling these files from the rest of the ROS nodes, allows developers to test the implemented functions without launching the whole ROS environment at each iteration. This feature 
 % simplifies both the developing and testing phases significantly, reducing the computational complexity of the underlying code.
-
-
-%TODO update this figure to include the GSM
 
 %*****************************************

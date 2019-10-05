@@ -1,0 +1,204 @@
+\definecolor{gray}{rgb}{0.4,0.4,0.4}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
+\definecolor{cyan}{rgb}{0.0,0.6,0.6}
+
+%\lstset{
+%  keywordstyle=\color{RoyalBlue},%\bfseries,
+%  basicstyle=\small\ttfamily,
+%  %identifierstyle=\color{NavyBlue},
+%  commentstyle=\color{Green}\ttfamily,
+%  stringstyle=\rmfamily,
+%  numbers=none,%left,%
+%  numberstyle=\scriptsize,%\tiny
+%  stepnumber=5,
+%  numbersep=8pt,
+%  showstringspaces=false,
+%  breaklines=true,
+%  %frameround=ftff,
+%  %frame=single,
+%  belowcaptionskip=.75\baselineskip
+%  %frame=L
+%}
+
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color
+  basicstyle=\footnotesize\ttfamily,        % size of fonts used for the code
+  breaklines=true,                 % automatic line breaking only at whitespace
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  %keywordstyle=\color{blue},       % keyword style
+  showstringspaces=false,
+  tabsize=4,
+  columns=flexible,
+  numbers=none,
+  frame=tb,
+  belowcaptionskip=.75\baselineskip
+}
+
+%%%%%%%%%%%
+%%% XML %%%
+%%%%%%%%%%%
+
+\lstdefinelanguage{XML}
+{
+    morestring=[b]",
+    morestring=[s]{>}{<},
+    morecomment=[s]{<?}{?>},
+    stringstyle=\color{black},
+    identifierstyle=\color{darkblue},
+    keywordstyle=\color{cyan},
+    %morekeywords={xmlns,version,type},% list your attributes here
+    showstringspaces=false
+}
+
+%%%%%%%%%%%%
+%%% BASH %%%
+%%%%%%%%%%%%
+
+\lstdefinelanguage{bash_c}
+{
+    stringstyle=\color{blue},
+    keywordstyle=\color{blue},
+    %morekeywords={cd, git, clone, sudo, python},% list your attributes here
+    showstringspaces=false,
+    language=bash
+}
+
+%%%%%%%%%%%%
+%%% AADL %%%
+%%%%%%%%%%%%
+
+\definecolor{aadl_comment_green}{rgb}{0.25,0.49,0.37}
+\definecolor{aadl_keywords_purple}{rgb}{0.49,0.03,0.32}
+
+\lstdefinelanguage{AADL}
+{
+	sensitive = true,
+	keywords={},
+	otherkeywords={},% Operators
+  	keywords = [2]{package, public, system, end, implementation, subcomponents, process, connections, properties, port, features, in, out, event, data, thread, subprogram, group, processor, memory, device, bus, extends, access, applies, to},
+  	keywordstyle=\color{blue},
+  	keywordstyle=[2]\color{aadl_keywords_purple},% for example
+  	showstringspaces=false,
+  	breaklines=true,
+  	comment=[l]{--},
+  	%morecomment=[s]{/*}{*/},
+  	commentstyle=\color{aadl_comment_green}\ttfamily,
+  	stringstyle=\color{red}\ttfamily,
+  	morestring=[b]',
+  	morestring=[b]"
+}
+
+\newcommand{\aadl}[1]{\lstinline[language=AADL]{#1}}
+
+%%%%%%%%%%%
+%%% C++ %%%
+%%%%%%%%%%%
+
+\definecolor{ros_keyword}{rgb}{0.61,0.0,0.03}
+\definecolor{ros_string}{rgb}{0.0,0.25,0.49}
+
+
+\lstdefinelanguage{ROS}
+{
+	sensitive = true,
+	keywords={},
+	otherkeywords={},% Operators
+  	keywords = [2]{},
+  	keywordstyle=\color{ros_keyword},
+  	keywordstyle=[2]\color{ros_keyword},% for example
+  	numbers=left,
+  	numberstyle=\scriptsize,
+  	stepnumber=1,
+  	numbersep=8pt,
+  	showstringspaces=false,
+  	breaklines=true,
+  	frame=tb,
+  	comment=[l]{//},
+  	morecomment=[s]{/*}{*/},
+  	commentstyle=\color{aadl_comment_green}\ttfamily,
+  	stringstyle=\color{ros_string}\ttfamily,
+  	morestring=[b]',
+  	morestring=[b]",
+    morestring=[b]{<}{>},
+    language=C
+}
+
+\newcommand{\ros}[1]{\lstinline[language=ROS]{#1}}
+
+%%%%%%%%%%%%%
+%%% ASN.1 %%%
+%%%%%%%%%%%%%
+
+\definecolor{aadl_comment_green}{rgb}{0.25,0.49,0.37}
+\definecolor{aadl_keywords_purple}{rgb}{0.49,0.03,0.32}
+
+\lstdefinelanguage{ASN1}
+{
+	sensitive = true,
+	keywords={},
+	otherkeywords={::=},% Operators
+  	keywords = [2]{DEFINITIONS, BEGIN, END, UTF8String, INTEGER, BOOLEAN, SET, SEQUENCE, PRINTABLESTRING, REAL, STRING, geometry_msgs, Pose},
+  	keywordstyle=\color{ros_keyword},
+  	keywordstyle=[2]\color{ros_string},% for example
+  	showstringspaces=false,
+  	breaklines=true,
+  	comment=[l]{--},
+  	%morecomment=[s]{/*}{*/},
+  	commentstyle=\color{aadl_comment_green}\ttfamily,
+  	stringstyle=\color{red}\ttfamily,
+  	morestring=[b]',
+  	morestring=[b]"
+}
+
+\newcommand{\asn}[1]{\lstinline[language=ASN1]{#1}}
+
+%%%%%%%%%%%%%%
+%%% PYTHON %%%
+%%%%%%%%%%%%%%
+
+\lstdefinelanguage{{}}
+{
+	language=Python,
+    %morestring=[b]``,
+    stringstyle=\color{black},
+    %identifierstyle=\color{darkblue},
+    keywordstyle=\color{darkblue},
+    %morekeywords={xmlns,version,type},% list your attributes here
+    showstringspaces=false,
+    frame=tb,
+    numbers=left,
+    numberstyle=\scriptsize,
+    stepnumber=1,
+    numbersep=8pt
+}
+
+\newcommand{\py}[1]{\lstinline[language=Pythone]{#1}}
+
+%%%%%%%%%%%%%
+%%% RegEx %%%
+%%%%%%%%%%%%%
+
+\lstdefinelanguage{RegEx}
+{
+	sensitive = true,
+	keywords={},
+	otherkeywords={*},% Operators
+  	keywords = [2]{},
+    %morekeywords=[s]{[}{]},
+  	keywordstyle=\color{darkblue},
+  	keywordstyle=[2]\color{ros_string},% for example
+  	numbers=left,
+  	numberstyle=\scriptsize,
+  	stepnumber=1,
+  	numbersep=8pt,
+  	showstringspaces=false,
+  	breaklines=true,
+  	frame=tb,
+  	comment=[l]{--},
+  	morecomment=[s]{[}{]},
+  	commentstyle=\color{darkblue}\ttfamily,
+  	stringstyle=\color{red}\ttfamily,
+  	morestring=[b]',
+  	morestring=[b]"
+}

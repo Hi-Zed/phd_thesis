@@ -1,13 +1,17 @@
 %************************************************
-\chapter[Background]{Background}\label{ch:AADL}
+\chapter[Background]{Background}\label{ch:Background}
 %************************************************
 
 \begin{flushright}{\slshape Nicholas of Morimondo: ``We no longer have the learning of the ancients, the age of giants is past!'' \\
 William of Baskerville: ``We are dwarfs, but dwarfs who stand on the shoulders of those giants, and small though we are, we sometimes manage to see farther on the horizon than they.''} \\ \medskip
-    ---  The name of the rose, Umberto Eco
+    ---  The Name of the Rose, Umberto Eco
 \end{flushright}
 
-\lipsum[2-4]
+Since the beginning of this work, the aim was always to avoid ``reinventing the wheel''. By doing our initial analysis of the state of the art in robotic software development, software engineering, embedded system, modelling languages and formal methods, we realised that most of the necessary tooling was already available. The effort was in combining the existing technology to produce a result that is greater than the parts. Our target was to enhance robot software development by integrating methods, techniques and technologies from other fields.
+
+This section provides to the reader all the necessary background to understand the technologies and the tools that will be used in this work. First, we present the Robot Operating System by giving an overview of its main elements, functionalities and structure. Then we move to modelling languages. The first one is the Architecture Analysis and Design Language (AADL), the main modelling language that we will use to design and describe robot architectures. We present the main components and their significance to our work. Moreover, we provide graphical and textual examples on how to represent basic AADL elements. To conclude, we give a brief description of the two data modelling languages used in this work: Abstract Syntax Notation One and JSON in combination with JSON schema.
+
+\newpage
 
 \minitoc
 \newpage
@@ -19,7 +23,10 @@ William of Baskerville: ``We are dwarfs, but dwarfs who stand on the shoulders o
 \end{figure}
 
 \section{Robot Operating System}
-The Robot Operating System, as the name suggests, is an open source, meta-operating system (or middleware) designed to develop robot software. Since it is now a framework, 
+\label{sec:ros}
+The Robot Operating System, as the name suggests, is an open source, meta-operating system (or middleware) designed to develop robot software. By creating a meta level on top of the operating system, ROS provides a series of functionalities to implement its distributed architecture, including  hardware abstraction, low-level device control, implementation of commonly-used functionality, message-passing between processes, and package management. It also provides tools and libraries for obtaining, building, writing, and running software across multiple platforms.
+
+The main goal of ROS is to support code reuse in robotic. This is achieved by following the philosophy of giving great freedom to the developers and support them by providing a robust and flexible communication architecture, by developing a collection of tools and by creating a thriving community. Figure~\ref{fig:ros} perfectly synthesize what ROS is, it is not a framework, it does not provide libraries, guidelines, or developing rules. ROS is a communication infrastructure, a distributed network of processes to be individually designed and loosely coupled at runtime. A set of tools, ROS provides multiple interfaces to inspect (\eg, \texttt{rviz}, \texttt{rqt\_graph}) the system, log (\eg, \texttt{rosbag}) the output, organise (\eg, \texttt{roslaunch}) the components, visualise (\eg, \texttt{rqt\_plot}, \texttt{image\_view}) data streams, navigate (\eg, \texttt{rospack}, \texttt{roscd}) the file system, build (\eg, \texttt{catkin}) the environment, and more. A repository of already available software modules implementing functionalities from low-level device drivers, to high-level planning, navigation, or manipulation algorithms. Lastly, ROS is the engaging community created thousand of developer around all world working toghether to develop ROS packages and sharing them using the ROS Wiki\footnote{http://wiki.ros.org/} and supporting each other through ROS Question \& Answers\footnote{https://answers.ros.org/questions/}.
 
 \begin{figure}[t]
     \centering
@@ -106,6 +113,11 @@ To maintain ha consistent transformation tree, the developer can use the many ac
 
 When a node needs to query \textit{tf} to request a specific transform, it can do that by declaring a \textit{tf} listener. The listener can be used to receive any kind of coordinate frame at any point in time, by specifying during the invocation a parent frame, a child frame and a timestamp. While there is no central location containing all the coordinate systems, and \textit{tf} uses a distributed architecture to store and share them, most of the actual computation happens in a ``transformations buffer'' embedded inside the listener. This means that while, theoretically, it is possible for \textit{tf} to unravel the entire history of a coordinate system, in practice this is limited by the buffer created by the specific listener. However, present-time transform are always available at any depth of the transformation tree. In summary, \textit{tf} is one of the most powerful tool provided by ROS, since it removes a significant burden to the developer when designing and implementing complex interconnected robotic systems.
 
+\paragraph{Launch files} The Master, together with the Parameter server, are run by the \texttt{roscore} command, nodes are activated using the \texttt{rosrun} command and \textit{tf} provides a special command to broadcast static transforms. When an architecture grows, so does the complexity of executing all its elements in the correct order and with the right configuration. In order to alleviate this burden ROS provides a system called \texttt{roslaunch}.
+
+A launch file processed by \texttt{roslaunch} is an XML file containing a list of the elements that needs to be run for a specific architecture. The Master and the Parameter server are run automatically when executing the \texttt{roslaunch}, hence by writing a complete enough launch file it is possible to execute the entire architecture with a single command.
+
+A launch file is highly configurable. Using the XML tags, a developer can: rename nodes, remap topics, provide command line configuration, include complete parameter profiles through YAML files, define global parameters, enable node restart and include other launch files. The potentially hierarchical structure of launch files can be used to obtain a partial description of the runtime topology of the architecture, however, currently there is not tool in ROS to provide this kind of visualisation.
 
 \subsection{Communication}
 As any graph, the ROS runtime graph is composed by vertices and edges. In the previous section, we discussed the main processing elements, the vertices, while in this section we cover all the communication protocols, the edges. One of the main characteristics of ROS is its distributed architecture, nodes can be executed on different machines, but the complexity of transmitting messages through multiple physical mediums is hidden by the middleware functionalities. Communication in ROS happens mostly through a very flexible protocol based on a publish/subscribe approach: the topics. While this one-size-fits-all approach works for most situation, ROS also provides alternative solutions like services and actions.
@@ -155,17 +167,26 @@ While not all topics are used directly, to implement the action protocol, the de
 \item Result: this field return the result of the task and represent the end of the action. Its synchronous counterpart is the service response provided by the server. A result message is sent only once by \textit{ActionServer} to the \textit{ActionClient} upon completion of the goal. In the example of a complex navigation task the result is not particularly meaningful, however, it is significant, for instance, when the task of the action is to calculate a complex behaviour for the robot. In this case, the result message contains the resulting behaviour.
 \end{itemize}
 
-\subsection{Deployment}
+\subsection{Filesystem}
+Given its nature as a middleware and meta-operating system, additionally to all the communication and execution functionalities, ROS also provides a filesystem on top of the original provided by the native OS. It is possible to navigate this ROS filesystem using a series of commands, for instance, \texttt{roscd} to move to a specific folder, or \texttt{rospack depends} to list all the dependencies of a specific component, and many more.
 
-\subsection{Additional tools}
+Central to the design of the ROS filesystem is the concept of packages. A package might contain nodes, a ROS-independent library, a dataset, configuration files, a third-party software, or anything that can be logically considered part of a module. The goal of these packages is to provide useful functionalities in an easy-to-consume manner, to promote software re-usability. In general, ROS packages follow a "Goldilocks" principle: enough content to be functionally complete, but without overloading the package which become heavyweight and difficult to manage.
 
-\paragraph{rviz}
-\paragraph{rqt}
+The build process of ROS is atomic with respect of packages, this means, for instance, that is not possible to build a stand-alone node, or a loose message. This approach is connected to the naming system of ROS, where any entity (\eg, nodes, messages, services, \etc) is identified by a combination of entity name plus container package name. Being the atomic unit of build, a packages is also the target container for release and deployment.
 
-\subsection{ROS2}
-
+Packages are easy to create by hand since the only requirement is to include a \textit{package.xml} file. However, tools exist to support this procedure, like \texttt{catkin\_create\_pkg}. While only one file is required to define a package, usually they follow a standardised structure:
+\begin{itemize}
+\item \texttt{include/pkg\_name}: folder dedicated to C++ include headers;
+\item \texttt{msg}: here all the \textit{msg} files used to declare messages are contained;
+\item \texttt{srv}: service counterpart of the \texttt{msg} folder, it contains all the service definition files;
+\item \texttt{src}: main folder containing the node implementation, it is usually dedicated to the C++ source files;
+\item \texttt{scripts}: secondary folder for the node implementation. It contains all the source files that do not require compilation, it is usually dedicated to the Python implementation; 
+\item \texttt{CMakeLists.txt}: CMake build file;
+\item \texttt{package.xml}: the only mandatory file, it contains package specifications and meta-data.
+\end{itemize} 
 
 \section{Architecture Analysis \& Design Language}
+\label{sec:AADL}
 
 The Architecture Analysis \& Design Language is a very powerful modelling language designed to capture the architecture of embedded systems by using architectural models that provide a well-defined and semantically rich description of the runtime architecture. This description encompasses multiple aspects of the system: hardware components, to encode the underlying physical layer of the system, software components, to define the runtime behaviour of the architecture, the interaction between them, for example deployment of software on specific hardware and communication between different execution units, and the defining properties of each modelled element, to better characterise any particular system.
 
@@ -247,7 +268,7 @@ These categories are used to model the resources of the computer system and the 
 
 \paragraph{Device} It represents entities that interface with or are part of the external environment, such as sensors (\eg, cameras, laser rangefinder, GPS), actuators (\eg, motors, valves, pumps), or peripheral I/O. A device component has a dual software and hardware nature, since, as an abstraction, it can be used to model the physical component together with its driver; this means that a device support both ports and subprogram accesses to communicate with software components and bus accesses to interact with hardware components. The subcomponents available for the device are used to better describe the interaction between the external element and the system; a virtual bus can be used to specify the protocol of the communication, a bus to model the physical connection provided and a data component to capture the type of the data exchanged.
 
-\subsection[Composite and generic components]{Composite and generic\\components}
+\subsection[Composite and generic components]{Composite and generic components}
 System and abstract component categories are not directly associated neither to software nor to hardware components, they are used to define conceptual and generic constructs. They provide to AADL the tools necessary to support modular and reusable models, by aggregating component together and by providing partially defined interfaces that can be refined during successive design phases.
 
 \paragraph{System} It is an abstraction that represent a composite component (\ie, a container for other components). It can include software, execution platform or other system components with no restrictions. This means that it is possible to create system containing only hardware components (\eg, a processor board), only software components (\eg, a software control system), a combination of software and hardware (\eg, a complete embedded system),  or a combination of all these as direct subcomponents or as contained in other systems. Even the extreme case of a system consisting only of system components can be used as a generic representation of a component-based architecture. Given its nature as a container and aggregator, any type of component is an admitted subcomponent of a system. Although the aggregation defined by the system is only conceptual, it creates an actual frontier between the subcomponents inside and those outside; this means that any communication needs to go through features (\ie ports and accesses) defined on the system.

@@ -1,6 +1,11 @@
 %************************************************
 \chapter{Introduction}\label{ch:introduction}
 %************************************************
+
+\begin{flushright}{\slshape The story so far: In the beginning the Universe was created. This has made a lot of people very angry and been widely regarded as a bad move.} \\ \medskip
+    ---  The Restaurant at the End of the Universe, Douglas Adams 
+\end{flushright}
+
 Robotics popularity is growing everywhere. Not only in the academic world, where a lot of research is now applied to robotics, but also in the industrial world, where new companies are providing commercial solutions involving robots. Even the general public is now more used to a society where robot coexist and collaborate with humans. The first model of iRobot Roomba was introduced in 2002, this means that today there are young adults that only know a world where robots in the household are the norm.
 
 The current evolution of robotics as a field is similar, in a way, to the growth in popularity of mobile phones, first, and smartphones, later.  Originally, the idea of a personal wireless communication system was only possible in science fiction, then scientific progress and new technologies made it possible. At fist only for very few applications, \ie, the military, the railroad system, but later it grew exponentially and today it is part of our everyday life. Many factors made this leap possible: first of all, technological advancements, like miniaturisation, battery life extension, increase in display quality, cheaper computational power, additionally, a sense of need, people felt that a mobile phone was a great addition to their life, lastly, standardization, shared communication platforms, accessible development environments, and multiple abstraction layers.
@@ -9,7 +14,9 @@ The same was for robots, originally no more than toys, mechanical puppets and my
 
 In the last two decades, robotics have been applied in numerous fields and robots assumed a myriad of shapes and functionalities. In industry, robots are used for welding, painting, drilling, cutting, handling dangerous materials, moving heavy objects, pick-and-place, inventory management. In healthcare, today, surgical robots are the norm, but advancement in soft robotics made robots suitable for rehabilitation and elderly care. Most of the recent discoveries of planetary science exist thanks to rovers, autonomous mobile robots that can, unassisted, explore the surface of planets, asteroids and comets. Moreover, maintenance in outer space is extremely dangerous for humans and often impossible, only robotic arms and autonomous probes can perform them. Back on Earth, in our houses and cities, robots are not an unusual sight. There are robotic vacuum cleaners and lawn mowers,  autonomous robots deliver packages directly to the front door and self-driving public transportation is a reality in various cities. Fully autonomous cars are still only prototypes, however not because of technological limitations, but mostly for economical, social and legal reasons. Thanks to the recent progresses in human-robot interaction, the sight of a robotic waiter or concierge, while marvellous, is not completely unexpected. Lastly, unmanned autonomous vehicles, \eg, off-road vehicles, drones, boats, submarines,  have been used successfully in search and rescue missions and to operate in dangerous environments or unreachable by humans, like mountain peaks, volcanos, disaster zones, and contaminated areas.
 
-In this brief history of robots, most of the progress and technological advancements seems related to hardware. More responsive motors, more precise and reliable sensors, cheaper electronic and computational power. All these advancements contributed to what is robotics today. However, software has always been one of the main concerns of any roboticist. The implementation, the logic, is what makes the difference between a mechanism and an intelligent robot. Since their inception, robots have spawned a series of software solutions to implement their functionalities. For example, the Stanford Research Institute Problem Solver, better known by it acronym STRIPS, is an automated planner developed for Shakey that became the foundation of modern action languages. Modern robots have software architecture far more complex than Shakey, they coordinate multiple sensors and actuators, moreover they implement different functionalities and are expected to operate in real time. This is why, more recently, \ie, the last twenty-five years, a lot of efforts in robotic software revolved around the design of a solution to streamline and simplify the development process. The answer was the introduction of robotic middlewares and frameworks and to rely on component-based designs. This approach fits perfectly the necessities of robotics, components encapsulate functionalities and promote reusability, while a pre-defined communication layer frees the developer from the burden of micromanaging the low-level interactions. After the first wave of ad hoc implementations, few frameworks rose in popularity and become standard de-facto for robotic software development. Today, depending on the specific application, a developer can choose various framework or middleware: OROCOS (or its derivation RoCK), for hard real-time application, SmartMDSD, for a more complete and structured development environment, YARP, for a more light-weight and data-centric approach, or ROS, for more extensive support and development freedom.
+In this brief history of robots, most of the progress and technological advancements seems related to hardware. More responsive motors, more precise and reliable sensors, cheaper electronic and computational power. All these advancements contributed to what is robotics today. However, software has always been one of the main concerns of any roboticist. The implementation, the logic, is what makes the difference between a mechanism and an intelligent robot. Since their inception, robots have spawned a series of software solutions to implement their functionalities. For example, the Stanford Research Institute Problem Solver, better known by it acronym STRIPS, is an automated planner developed for Shakey that became the foundation of modern action languages. Modern robots have software architecture far more complex than Shakey, they coordinate multiple sensors and actuators, moreover they implement different functionalities and are expected to operate in real time.
+
+This is why, more recently, more or less in the last twenty-five years, a lot of efforts in robotic software revolved around the design of a solution to streamline and simplify the development process. The answer was the introduction of robotic middlewares and frameworks and to rely on component-based designs. This approach fits perfectly the necessities of robotics, components encapsulate functionalities and promote reusability, while a pre-defined communication layer frees the developer from the burden of micromanaging the low-level interactions. After the first wave of ad hoc implementations, few frameworks rose in popularity and become standard de-facto for robotic software development. Today, depending on the specific application, a developer can choose various framework or middleware: OROCOS (or its derivation RoCK), for hard real-time application, SmartMDSD, for a more complete and structured development environment, YARP, for a more light-weight and data-centric approach, or ROS, for more extensive support and development freedom.
 
 Middlewares and frameworks have fuelled the progress of robotic systems, creating the current scenario of robot design and development. Hundreds of components are already available to anyone who wants to implement his own robot and experts can setup the most common functionalities (\ie, teleoperation, mapping, indoor localization and navigation) of a new system in a matter of days. However, the learning curve to reach this kind of expertise is quite steep and extending the functionalities of a robot beyond what is currently available requires a considerable effort not strictly related to the new functionality itself.  By doing again the parallel between robotics and smartphones, we are currently in robotics in the same situation developers were before the standardization introduced by Android. Today, an Android developer can bootstrap and deploy a new application on millions of devices in few steps, thanks to abstraction layers that separate the development environment to the underlying hardware and operating system and thanks to advanced design, development and simulation tools. Of course smartphones are not robots, while there is a great variability from one device to another (\eg, screen size, quality and number of cameras, sensors availability, type of mobile network, \etc), they cannot be compared to the incredible range of sensors, actuators, shapes and functionalities that exist in robotics. For this reason, while robotics can aim to achieve the same streamlined development of smartphones, the approach needs to be different.
 
@@ -34,53 +41,37 @@ Lastly, for the \textit{application developer} we developed the concept of robot
 Even if it is not evident at first glance, all these approaches, techniques, standards and tools are all part of a continuous design and development process. The \textit{system designer} uses the modelling tools and templates to define the architecture of the system. He can embed directly the reference to the source code developed by the \textit{domain expert}, and, using properties, even enrich the component with their evoked capability. Through automatic code generation most of the source code is already available with minimal effort, at this point the \textit{component developer} can finalise the implementation by adding anything that cannot be automatically generated, for example special interfaces with the hardware components or specific initialization and shutdown procedures. The result is a robust system where all the components are known, well designed and well implemented, this is the suitable starting point for an \textit{application developer} to exploit safely the abstraction layer defined using robot capabilities.
 
 \section{Thesis outline}
-I am not yet sure about the outline of the thesis (\ie, number of parts and chapters). There is a list in the abstract that represent more of less the content of the thesis. The rough idea is to divide it in three or four part. I will have, for sure, one part with the background and state of the art. Possible content of Part I:
+This thesis is divided in eight chapters:
 \begin{itemize}
-\item Software engineering
-	\begin{itemize}
-	\item Component-Based Software Engineering
-	\item Software Product Lines
-	\item Model driven software development
-	\item Automatic code generation
-	\end{itemize}
-\item System Design and Modelling
-	\begin{itemize}
-	\item General Purpose Modelling Languages
-		\begin{itemize}
-		\item UML
-		\item AADL
-		\end{itemize}
-	\item Data modelling languages
-		\begin{itemize}
-		\item ASN.1
-		\item JSON and JSON-schema
-		\end{itemize}
-        	\item Ontologies
-	\end{itemize}
-\item Domain specific approaches
-	\begin{itemize}
-	\item Automotive
-	\item Smartphones
-	\item Space
-	\end{itemize}
-\item Software development in robotics
-	\begin{itemize}
-	\item Middlewares and frameworks
-	\item Robot Operating System
-	\item Development tools
-	\item Code generation
-	\item Best practices and model based approaches
-	\end{itemize}
-\end{itemize} 
+\item Chapter~\ref{ch:Related}
+\item Chapter~\ref{ch:Background}
+\item Chapter~\ref{ch:Modelling}
+\item Chapter~\ref{ch:code-gen}
+\item Chapter~\ref{ch:capabilities}
+\item Chapter~\ref{ch:Experiment}
+\item Chapter~\ref{ch:Conclusions}
+\end{itemize}
 
-
-
-
-
-
-
-
-
-
+\section{Publications}
+\begin{itemize}
+\item \textbf{G. Bardaro}, M. Matteucci \\
+Using AADL to model and develop ROS-based robotic application~\cite{bardaro2017using} \\
+\textit{International Conference on Robotic Computing (IRC)}, 2017
+\item \textbf{G. Bardaro}, A. Semprebon, M. Matteucci \\
+AADL for robotics: a general approach for system architecture modeling and code generation~\cite{bardaro2017aadl} \\
+\textit{Journal of Software Engineering for Robotics (JOSER)}, 2017
+\item I. Tiddi, E. Bastianelli, \textbf{G. Bardaro}, M. d'Aquin, E. Motta \\
+An ontology-based approach to improve the accessibility of ROS-based robotic systems~\cite{tiddi2017ontology} \\
+\textit{Knowledge Capture Conference (KCap)}, 2018 \\
+\item I. Tiddi, E. Bastianelli, \textbf{G. Bardaro}, E Motta \\
+A User-friendly Interface to Control ROS Robotic Platforms~\cite{tiddi2018user} \\
+\textit{International Semantic Web Conference (ISWC)}, 2018
+\item \textbf{G. Bardaro}, A. Semprebon, M. Matteucci \\
+A use case in model-based robot development using AADL and ROS~\cite{bardaro2018use} \\
+\textit{International Workshop on Robotics Software Engineering (RoSE)}, 2018
+\item \textbf{G. Bardaro}, A. Semprebon, A. Chiatti, M. Matteucci \\
+From Models to Software Through Automatic Transformations: An AADL to ROS End-to-End Toolchain~\cite{bardaro2019models} \\
+\textit{International Conference on Robotic Computing (IRC)}, 2019
+\end{itemize}
 
 %*****************************************
