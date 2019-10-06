@@ -260,7 +260,7 @@ In ASN.1 a communication protocol is defined in a module, inside, each element o
 
 Messages are the most straightforward to define, since they do not have any internal structure other than the message itself. The are defined directly using a ANS.1 type and the fields uses the same basic types expected in a normal ROS messages, value ranges (\eg, \texttt{INTEGER(1 .. 10)} and \texttt{INTEGER(-10 .. 200)}) can be used to automatically identify the correct size of the target type (\eg, \texttt{uint8} and \texttt{int16}). Arrays can be defined using the keyword \texttt{SEQUENCE OF}, eventually specifying a minimum and maximum size. One of the characteristics of ROS messages is their hierarchical definition, they can always include other messages defined in the workspace, one typical example is the header used to timestamp messages. This is possible in ANS.1 using the \texttt{IMPORTS} keyword at the beginning of the module definition, and then declare a field of a type to be of the imported definition. Of course this raises the problem of creating all the ANS.1 definitions for ROS messages, however, given the simplicity of the message definition language used in ROS, it is a task that can be easily automated to generate all the necessary files for the entire workspace. Internally, service definition is identical to message definition, the same rules are used to define basic types, arrays an to include existing types. The difference is in the structure of the ANS.1 type, for service it is necessary to differentiate between \textit{request} and \textit{response}, in the former, the developer describes the content of the request message sent by the client to the server, the latter contains the expected answer. The description of actions is similar, in this case the type is divided in three subsections: \textit{goal}, \textit{result}, and \textit{feedback}. Each subsection can have an arbitrary number of field defined as basic types or existing types from other packages. For both services and actions, it is possible, in ROS, to send empty messages, for example a service used to trigger a functionality has an empty request, but the result of the functionality as a response. Empty sequences are supported by ASN.1, therefore, the correct way to model a service or an action with empty interactions is to define the subsection but leave it empty, as seen in Listing~\ref{lst:asn1-ros} for the feedback of the action.
 
-\begin{lstlisting}[float,caption={Internal state of a node modelled using ASN.1},label=lst:asn1-ros-is]
+\begin{lstlisting}[float,language=ASN1,caption={Internal state of a node modelled using ASN.1},label=lst:asn1-ros-is]
 InternalState DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 	Complex ::= SEQUENCE {
 		type	UTF8String,
@@ -280,7 +280,7 @@ InternalState DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 END
 \end{lstlisting}
 
-\begin{lstlisting}[float,caption={TODO},label=lst:asn1-ros-is1]
+\begin{lstlisting}[float,language=ASN1,caption={TODO},label=lst:asn1-ros-is1]
 params Parameters ::= {
 	size 2, 
 	dimensions { height 2.0, width 3.0 }

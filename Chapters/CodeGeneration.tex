@@ -263,11 +263,11 @@ The package is analysed to detect all the data component; if they are associated
 
 The code generator analyses the package for any process definition including the \textit{main\_thread} as a subcomponent. For each one starts the process of creating all the necessary source files. Most of the basic C++ code is already defined in the engineered node superclass, therefore it is included directly in the automatic generated node. What the code generator needs to do, is to identify all the potential inner functionalities (\ie, publishers, subscribers and timers) of the node, to do so it uses a AADL thread-based approach. Currently the AAXML to ROS/C++ code generator is implemented to identify five different threads corresponding to specific designs:
 \begin{itemize}
-\item \textit{publisher.impl}. It correspond to the \textit{source} component behaviour. In our  engineered ROS node, it is implemented by a periodic timer that calls a publisher at the end. Given this design, the code generator has to generate both the timer with its callback and the declaration of the publisher.
-\item \textit{callback.impl}. It represent the \textit{sink} component behaviour. In this case there is no special design, as in any other ROS node, it is a subscriber that trigger a callback. The code generator needs to declare the subscriber, register it to the correct topic, define the callback method and bind it.
-\item \textit{call\_pub.impl}. This thread combines the previous two to evoke a \textit{filter} component behaviour. Since it is a combination of a subscriber that call a publisher in its callback, the code generator needs to define and generate all the previous elements.
-\item \textit{service\_provider.impl}. This thread is used to define a \textit{reactive} component behaviour. The code generator needs to declare a service, advertise correctly and then declare the method used as callback.
-\item \textit{timer.impl}. This last thread does not correspond to any component behaviour, since it is not use for external interactions. However, ROS timers are useful to define the internal behaviour of the node, thus they are one of the potential thread identified by the code generator. Timers are defined similarly to the other elements, and trigger a callback when they expire.
+\item \texttt{ros::publisher.impl}. It correspond to the \textit{source} component behaviour. In our  engineered ROS node, it is implemented by a periodic timer that calls a publisher at the end. Given this design, the code generator has to generate both the timer with its callback and the declaration of the publisher.
+\item \texttt{ros::callback.impl}. It represent the \textit{sink} component behaviour. In this case there is no special design, as in any other ROS node, it is a subscriber that trigger a callback. The code generator needs to declare the subscriber, register it to the correct topic, define the callback method and bind it.
+\item \texttt{ros::call\_pub.impl}. This thread combines the previous two to evoke a \textit{filter} component behaviour. Since it is a combination of a subscriber that call a publisher in its callback, the code generator needs to define and generate all the previous elements.
+\item \texttt{ros::service\_provider.impl}. This thread is used to define a \textit{reactive} component behaviour. The code generator needs to declare a service, advertise correctly and then declare the method used as callback.
+\item \texttt{ros::timer.impl}. This last thread does not correspond to any component behaviour, since it is not use for external interactions. However, ROS timers are useful to define the internal behaviour of the node, thus they are one of the potential thread identified by the code generator. Timers are defined similarly to the other elements, and trigger a callback when they expire.
 \end{itemize}
 If a component contains a thread of an unknown type, the code generation process continues by ignoring it. Often, the designer needs to include threads implementing special interfaces, for example a device driver may use a custom thread to interface with low-level hardware. Since it is impossible to predict all the possible configurations of a node, we decide to use an approach where the designer still has the flexibility of modelling a complete component, while the code generator will only perform a model-to-text transformation for known designs.
 
@@ -278,10 +278,7 @@ In both our model and in the generated code, we try to push the decoupling betwe
 The last step of the node generation process is the definition of the internal state. This is done in a separate file that contains the \textit{parameters} and \textit{variables} structures as defined using ANS.1 or JSON Schema. Since they are basic types, parameters are completely defined and initialised using the default values provided, moreover, they are propagated in the main source filed to setup their interface to the parameters server. Variables are declared in their own structure, and initialised if they have a default value and a basic type. However, if they are a complex variables (see Section~\ref{sec:data}), they are only declared and their complex type is included in the header and propagated in the \textit{CMakeLists.txt} file.
 
 \section{A complete example}
-
-This section demonstrates a real use case of the customised Ocarina backend \textit{aadl\_aaxml} and code generator, when applied to a simple publisher-subscriber architecture. We firstly introduce the publisher-subscriber model to then analyse its correspondence with the generated ROS package. To make the example more complete, we include the exchange of a custom message between the two nodes.
-
-The AADL model represented in Listing~\ref{snippet:aadl_pub_sub_system}, shows a main system is called \textit{container} and its containing package \textit{pub\_sub}. Note that the latter package name will be reused as ROS package name. Broadly, the publisher and the subscriber need to exchange messages on the same topic, where topics are identified by their name, e.g.,  \textit{``/pubsub"} in this case. The topic name is attached to the existing connection between the two, or, in other words, defined at the system level. In fact, placeholders for the topic should be specified within the process rather than as part of any other component of the system, in order to produce a functioning node.
+Now that we have completely defined how to model a ROS architecture with a combination of AADL and a data modelling language, and we presented our approach to automatic code generation, we can show a complete example, going from the model to the source code. In this section, we will model a basic architecture composed by two nodes interacting to each other, and show the structure of the output package generated by the automatic programming toolchain.
 
 \begin{figure}[t]
 \centering
@@ -289,47 +286,7 @@ The AADL model represented in Listing~\ref{snippet:aadl_pub_sub_system}, shows a
 \caption{TODO}\label{fig:usecase-publisher}
 \end{figure}
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.95\textwidth]{gfx/usecase-subscriber}
-\caption{TODO}\label{fig:usecase-subscriber}
-\end{figure}
-
-In Figure~\ref{fig:usecase-publisher} and Figure~\ref{fig:usecase-subscriber} are represented, respectively, the publisher and the subscriber models, except for their \textit{properties}. In both cases we have the following \textit{properties}:
-\begin{itemize}
-\item \textit{Source\_Text} and \textit{Source\_Name}: the first identifies the file where the application specific code will be placed, while the second represents the name of the function that will be called. In the publisher case, this function will return the message to be sent, while, for the subscriber, it will have as input the received message to be processed.
-\item \textit{topic\_properties::Default\_Name}: it is the topic name placeholder in order to generate correctly the node. It can be different for the publisher and the subscriber, since the binding between them is done at system's connections level and it is represent as a \textit{remap} in the ROS launch file.
-\end{itemize}
-
-Moreover, the publisher has a specific property, called \textit{Period}, where the frequency of the publisher is defined. The subscriber also has its own specific property called \textit{Queue\_size}, representing the maximum size of the subscriber message buffer.
-
-Models in Fig.~\ref{fig:usecase-publisher} and Fig.~\ref{fig:usecase-subscriber} have the mandatory main thread implementation; it is important to see that the two threads inside the process, namely \textit{main\_thread} and \textit{publisher} or \textit{subscriber}, need to have their ports connected to the process’ ports, thus, at \textit{process} level, we have \textit{connections} and \textit{features} definitions.
-
-In addition, the two figures show the common base model under each node. The model of the base node contains a state machine, with four different states: \textit{init}, \textit{running}, \textit{closing} and \textit{error}. In AADL, each transition has to be triggered by an event; an event data port on the process models any external signal to force the shutdown of the node (i.e. SIGINT signal) and various ports on the main thread trigger the transition from a state to another. The current node state is saved \textit{data} element called \textit{internal\_state}. For each existing element of the model (i.e. threads, subprograms, connections, ports, etc.) it is possible to define in which state they are active, and this defines a specific workflow and a strict initialization procedure of the node.
-
-The above example includes all the already cited components, as well as the thread output port, connected to the process port and the associated properties. It may be worth taking a closer look at how the datatype of the exchanged message is actually defined: the type is associated to the process output port and specified as a prototype of the thread. This ensures the thread type to match the process-level type.
-In our example, the message is of \textit{Complex} type defined inside the package \textit{custom\_msgs}. Its definition is shown in Listing~\ref{lst:aadl_custom_msgs}. However, the actual implementation of said definition is enclosed in the \textit{``custom\_msg.asn''} linked file, in ASN.1 language.
-
-\begin{lstlisting}[language=AADL,caption={AADL representation of a custom message},label=lst:aadl_custom_msgs]
-data ChitChat
- 	properties
- 		Source_Text => ("ChitChat.schema.json");
-end ChitChat;
-\end{lstlisting}
-
-\begin{lstlisting}[language=AADL,caption={TODO},label=lst:sys-properties]
-topic_properties::Name => "/chatter" applies to chatter;
-Source_Text => ("talker.json") applies to talker;
-Source_Text => ("listener.json") applies to listener;
-\end{lstlisting}
-
-\begin{lstlisting}[language=AADL,caption={TODO},label=lst:lst-properties]
-Queue_size => 1 applies to subscriber.msg;
-topic_properties::Default_Name => "/in_chat" applies to msg_in;
-Source_Text => ("listener.schema.json") applies to internal_state;
-Source_Text => ("listener.h") applies to subscriber.function;
-Source_Name => "listen" applies to subscriber.function;
-\end{lstlisting}
+The micro architecture in question is the first introductory tutorial provided by the ROS wiki\footnote{http://wiki.ros.org/ROS/Tutorials}, slightly modified to include a custom message: a talker node implementing a publisher and a listener node implementing a subscriber connected through a topic and exchanging messages. Figure~\ref{fig:usecase-publisher} show the graphical representation of the model of the \textit{talker} ROS node. It evokes a \textit{source} component behaviour by generating messages and publishing them on a topic. Additionally to the recurring subcomponents identifying our engineered ROS node (\ie, state machine, main thread and internal state), it models a publisher thread of type \texttt{ros::publisher.impl} communicating with the external environment using a data port specified by the message type. Not visible from the graphical representation are the properties of the node, they are shown in Listing~\ref{lst:tlk-properties}.
 
 \begin{lstlisting}[language=AADL,caption={TODO},label=lst:tlk-properties]
 Period => 10 ms applies to publisher;
@@ -339,11 +296,53 @@ Source_Text => ("talker.h") applies to publisher.function;
 Source_Name => "talk" applies to publisher.function;
 \end{lstlisting}
 
+\textit{Period} defines the frequency of the publication, the thread will generate a message every 10 ms, this is used by the code generator to define the period of the corresponding ROS timer. \textit{topic\_properties::Default\_Name} represent the name assigned to the topic during implementation when declaring the publisher. There are two \textit{Source\_Text} properties, one for the internal state, to define the structure of parameters and variables, and one points to the header included by the code generator to define the specific functionality of the publisher. This last property is combined with \textit{Source\_Name} to identify the specific function that will output the message to be generated.
 
-Based on this model, the ROS packages generated by our toolchain have the following structure:
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\textwidth]{gfx/usecase-subscriber}
+\caption{TODO}\label{fig:usecase-subscriber}
+\end{figure}
+
+Figure~\ref{fig:usecase-subscriber} presents the \textit{listener} ROS node graphical AADL model. Since it receives the messages produced by the \textit{talker}, it implements a \textit{sink} component behaviour. As before, the model is composed by the elements characterising the engineered ROS node plus a subscriber thread of type \texttt{ros::callback.impl} receiving data from outside the component through an event data port that triggers the execution of the thread and it is specialised by a specific data component. As for the \textit{talker} node, properties are used to refine the definition of the process, they are detailed in Listing~\ref{lst:lst-properties}
+
+\begin{lstlisting}[language=AADL,caption={TODO},label=lst:lst-properties]
+Queue_Size => 1 applies to subscriber.msg;
+topic_properties::Default_Name => "/in_chat" applies to msg_in;
+Source_Text => ("listener.schema.json") applies to internal_state;
+Source_Text => ("listener.h") applies to subscriber.function;
+Source_Name => "listen" applies to subscriber.function;
+\end{lstlisting}
+
+The properties of \textit{listener} and \textit{talker} are very similar. \textit{Source\_Text} and \textit{Source\_Name} have the same role: defining the internal state of the component and specifying the function to be called during the callback, in this case. Since the subscriber reacts to the messages received, the \textit{Period} property is replaced by \textit{Queue\_Size} that specify the size of the message queue, in this case only the newest message is available. As before, there is a property that defines the name of the topic at compile time, this is the reference name used by the code generator when it creates the definition of the subscriber. It is important to note that the default topic name is different in the two nodes.
+
+Listing~\ref{lst:system} shows the missing element necessary to complete the architecture. At the beginning, the definition of the data component representing the ROS message. The \textit{ChitChat} component is only an interface, its internal structure is defined through a property that points to the JSON schema file used by the code generator to create the ROS message. Follows the implementation of the container, since this is a small architecture with only two components, the root is also the only system. Here the two process instances are declared as subcomponent of the \textit{talking.ros} system, moreover their topic communication is defined using a connection going from the output port of the \textit{talker} to the input port of the \textit{listener}. The properties of the system are used to define the specific runtime configuration of the architecture. \textit{topic\_properties::Name} applied to the connection specifies the remapping of the topic from the original default name used in the implementations. The two \textit{Source\_Text} properties applied directly to the processes are used to define a JSON file that contains a node configuration matching the schema applied in the definition of the components. 
+
+\begin{lstlisting}[language=AADL,caption={TODO},label=lst:system]
+data ChitChat
+	properties
+		Source_Text => ("ChitChat.schema.json");
+	end ChitChat;
+	
+system implementation talking.ros
+	subcomponents
+		talker: process talker.impl;
+		listener: process listener.impl;
+	connections
+		chatter: port talker.msg_out -> listener.msg_in;
+	properties
+		topic_properties::Name => "/chatter" applies to chatter;
+		Source_Text => ("talker.json") applies to talker;
+		Source_Text => ("listener.json") applies to listener;
+end talking.ros;
+\end{lstlisting}
+
+The AADL model, combined with all the necessary JSON and JSON schema files, is then parsed by the automatic programming toolchain. Since our model included also the source files containing the implementation of the functionalities of the nodes (\ie, \textit{talker.h} and \textit{listener.h}), the output of the process is a complete package ready for compilation. The structure of the package is the following:
+
 \begin{itemize}
 	\item[] \includegraphics[width=0.3cm]{gfx/tree/folder.png} complete\_example
 	\begin{itemize}
+	\item[] \includegraphics[width=0.3cm]{gfx/tree/file_xml.png} package.xml
 	\item[] \includegraphics[width=0.3cm]{gfx/tree/file_txt.png} CMakeLists.txt
 	\item[] \includegraphics[width=0.3cm]{gfx/tree/folder.png} include
 	\begin{itemize}
@@ -355,15 +354,19 @@ Based on this model, the ROS packages generated by our toolchain have the follow
 	\item[] \includegraphics[width=0.3cm]{gfx/tree/file_cpp.png} talker\_configuration.h
 	\end{itemize}
 	\end{itemize}
-	\item[] \includegraphics[width=0.3cm]{gfx/tree/folder.png} launch
-	\begin{itemize}
-	\item[] \includegraphics[width=0.3cm]{gfx/tree/file_xml.png} talker.ros.launch
-	\end{itemize}
-	\item[] \includegraphics[width=0.3cm]{gfx/tree/file_xml.png} package.xml
 	\item[] \includegraphics[width=0.3cm]{gfx/tree/folder.png} src
 	\begin{itemize}
 	\item[] \includegraphics[width=0.3cm]{gfx/tree/file_cpp.png} publisher.cpp
 	\item[] \includegraphics[width=0.3cm]{gfx/tree/file_cpp.png} subscriber.cpp
+	\end{itemize}
+	\item[] \includegraphics[width=0.3cm]{gfx/tree/folder.png} params
+	\begin{itemize}
+	\item[] \includegraphics[width=0.3cm]{gfx/tree/file_txt.png} listener.yaml
+	\item[] \includegraphics[width=0.3cm]{gfx/tree/file_txt.png} talker.yaml
+	\end{itemize}
+	\item[] \includegraphics[width=0.3cm]{gfx/tree/folder.png} launch
+	\begin{itemize}
+	\item[] \includegraphics[width=0.3cm]{gfx/tree/file_xml.png} talker.ros.launch
 	\end{itemize}
 	\item[] \includegraphics[width=0.3cm]{gfx/tree/folder.png} msg
 	\begin{itemize}
@@ -371,8 +374,5 @@ Based on this model, the ROS packages generated by our toolchain have the follow
 	\end{itemize}
 	\end{itemize}
 \end{itemize}
-
-\textit{Publisher.h} and \textit{subscriber.h} can be used as a guideline to implement the application-specific interface. The provided files, already import all the necessary libraries. Further, it is also important to note that decoupling these files from the rest of the ROS nodes, allows developers to test the implemented functions without launching the whole ROS environment at each iteration. This feature 
-% simplifies both the developing and testing phases significantly, reducing the computational complexity of the underlying code.
 
 %*****************************************
