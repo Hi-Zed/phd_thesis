@@ -9,7 +9,8 @@ William of Baskerville: ``We are dwarfs, but dwarfs who stand on the shoulders o
 
 Since the beginning of this work, the aim was always to avoid ``reinventing the wheel''. By doing our initial analysis of the state of the art in robotic software development, software engineering, embedded system, modelling languages and formal methods, we realised that most of the necessary tooling was already available. The effort was in combining the existing technology to produce a result that is greater than the parts. Our target was to enhance robot software development by integrating methods, techniques and technologies from other fields.
 
-This section provides to the reader all the necessary background to understand the technologies and the tools that will be used in this work. First, we present the Robot Operating System by giving an overview of its main elements, functionalities and structure. Then we move to modelling languages. The first one is the Architecture Analysis and Design Language (AADL), the main modelling language that we will use to design and describe robot architectures. We present the main components and their significance to our work. Moreover, we provide graphical and textual examples on how to represent basic AADL elements. To conclude, we give a brief description of the two data modelling languages used in this work: Abstract Syntax Notation One and JSON in combination with JSON schema.
+This section provides to the reader all the necessary background to understand the technologies and the tools that will be used in this work. First, we present the Robot Operating System by giving an overview of its main elements, functionalities and structure. Then we move to modelling languages. The first one is the Architecture Analysis and Design Language (AADL), the main modelling language that we will use to design and describe robot architectures. We present the main components and their significance to our work. Moreover, we provide graphical and textual examples on how to represent basic AADL elements. 
+%To conclude, we give a brief description of the two data modelling languages used in this work: Abstract Syntax Notation One and JSON in combination with JSON schema.
 
 \newpage
 
@@ -305,10 +306,5 @@ As described before, a subprogram represent a unit of executable code, however a
 
 \paragraph{Feature groups}
 They represent a collection of component features or other feature groups. Feature group types, \ie, a set of component features, defines the internal structure of the group, they can be composed of any type of feature with any direction (\ie, any in and out port and any provides and requires access). Feature groups have multiple applications, for example can be used to simplify the model at higher level of details, or to model multiple communication channel always operating together, or to provide an abstract definition of a component to be refined later. On the component frontier, only the feature group is visible, and connection can be defined only between groups with the same type. Inside the component, the feature group acts as a reducing interface where all the compatible internal features converge.
-
-\section{Abstract Syntax Notation One}
-
-\section{JSON and JSON schema}
-
 
 %*****************************************
