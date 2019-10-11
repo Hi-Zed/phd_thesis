@@ -1,0 +1,11 @@
+3.3 master interaction, put together material from ROS website
+4.1 simple C/C architecture: line following + teleoperation (use osate?)
+4.2 make from scratch, connection mapping between ROS e AADL
+4.7 ROS version of figure 4.1 (use osate?)
+4.8 inheritance between C/C and ROS (quite simple)
+5.1 Usual process describing the code generation
+5.3 State machine
+6.1 Fix up the ontologies
+6.2 Fix up this one too
+6.3 More fixing
+6.4 Structure of APIs, use powerpoint or something

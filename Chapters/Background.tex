@@ -20,7 +20,7 @@ This section provides to the reader all the necessary background to understand t
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.95\textwidth]{gfx/ros/ros_equation}
-    \caption{TODO}\label{fig:ros}
+    \caption{The ``ROS Equation''. It shows the key element composing the ROS environment. }\label{fig:ros}
 \end{figure}
 
 \section{Robot Operating System}
@@ -32,7 +32,7 @@ The main goal of ROS is to support code reuse in robotic. This is achieved by fo
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.8\textwidth]{gfx/ros/graph}
-    \caption{TODO}\label{fig:ros-graph}
+    \caption{The ROS Computation Graph.}\label{fig:ros-graph}
 \end{figure}
 
 \subsection{Computation graph}
@@ -97,7 +97,7 @@ ROS is designed to be a meta-operating system, and its focus is on accessibility
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.5\textwidth]{gfx/ros/tf_frames}
-    \caption{TODO}\label{fig:ros-tf}
+    \caption{A graphical representation of all the coordinate frames necessary to completely describe the structure of the THORMANG3}\label{fig:ros-tf}
 \end{figure}
 
 \paragraph{Transformation frames} When describing the physical structure of a robot, the position of each element has to be defined with respect to the others. For example, to estimate the position of a mobile robot though vision, it is necessary to know where the camera is located on the robot, to estimate then the expected position of some reference points and translate it back to the base of the robot. The more degrees of mobility a robot has the more complex this description become, Figure~\ref{fig:ros-tf} shows all the possible coordinate frame in a THORMANG3 robot. Each joint of the robot can move with respect to the previous one, therefore every point on the robot and in space can be defined with respect to a multitude of coordinates system, since each of these systems defines a new rigid transformation. The complexity of managing all the coordinate systems grows dramatically every time a new one is defined, and the number of total frame may increase dynamically during execution, since any new interactive element in the environment (\eg, an obstacle to avoid or an object to grasp)  may create a new one. Given how central coordinate frames are when developing a robot, ROS provides its own set of tools to manage them: \textit{transformation frames}, commonly referred as \textit{tf}.
@@ -105,7 +105,7 @@ ROS is designed to be a meta-operating system, and its focus is on accessibility
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.95\textwidth]{gfx/ros/tf_tree}
-    \caption{TODO}\label{fig:ros-tf-tree}
+    \caption{An example of a complete \textit{tf} tree for a mobile robot.}\label{fig:ros-tf-tree}
 \end{figure}
 
 Of course, \textit{tf} cannot replace the designer in defining the correct reference frames for each element of the robot. However, what it does is to create a distributed system to manage coordinates that free the developer from worrying about conversions between one and another. Thanks to \textit{tf}, at any moment in time, the developer can define a location in space in a specific coordinate system and easily convert it in a different one. To achieve this, it is necessary to maintain a consistent transformation tree, an example is shown in Figure~\ref{fig:ros-tf-tree}. \textit{tf} provides conversion from any frame to another (\eg, from \texttt{map} to \texttt{right\_wheel}) at any point in time, but only if a complete chain of transformation between the two frames exist in the correct time frame.
@@ -152,7 +152,7 @@ As for topics, services are strongly typed by the service message they use. In t
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.95\textwidth]{gfx/ros/action}
-    \caption{TODO}\label{fig:ros-action}
+    \caption{Communication interface of the ROS \textit{actionlib}.}\label{fig:ros-action}
 \end{figure}
 
 \paragraph{Action} Services implement a synchronous client/server protocol, this means that after sending the request, the client needs to wait until the server provides the response. This approach is suitable for short interactions, when the waiting time is not detrimental to the correct execution of the client, however, it is incompatible with requests that trigger long multi-step procedures. The ROS answer to an asynchronous client/server protocol is the \textit{actionlib} package, or ``actions''.

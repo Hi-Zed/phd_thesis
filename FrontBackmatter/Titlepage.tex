@@ -4,34 +4,27 @@
 \begin{titlepage}
     %\pdfbookmark[1]{\myTitle}{titlepage}
     % if you want the titlepage to be centered, uncomment and fine-tune the line below (KOMA classes environment)
-    \begin{addmargin}[-1cm]{-3cm}
+    %\begin{addmargin}[-1cm]{-3cm}
     \begin{center}
-        \large
 
-        \hfill
+        \includegraphics[width=4cm]{gfx/Logo_Politecnico_Milano} \\ \bigskip
+        \spacedlowsmallcaps{\myDegree} \\
+        \spacedlowsmallcaps{\myDepartment} \\
+        \noindent\rule{\textwidth}{0.4pt}
+        \vfill
+        \LARGE\spacedallcaps{\myTitle} \Large \\
+        \rule{4cm}{0.4pt} \\ \medskip
+        \spacedallcaps{\mySubtitle} \\ \bigskip\bigskip
+
+        \normalsize\spacedlowsmallcaps{\myName}
 
         \vfill
 
-        \begingroup
-            \color{CTtitle}\spacedallcaps{\myTitle} \\ \bigskip
-        \endgroup
-
-        \spacedlowsmallcaps{\myName}
-
-        \vfill
-
-        \includegraphics[width=6cm]{gfx/TFZsuperellipse_bw} \\ \medskip
-
-        \mySubtitle \\ \medskip
-        %\myDegree \\
-        %\myDepartment \\
         %\myFaculty \\
         %\myUni \\ \bigskip
 
-        \myTime\ -- \myVersion
-
-        \vfill
+        \myTime \medskip
 
     \end{center}
-  \end{addmargin}
+%  \end{addmargin}
 \end{titlepage}

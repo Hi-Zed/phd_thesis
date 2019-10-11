@@ -23,7 +23,7 @@ In this chapter, we present two experimental evaluations that we used to test an
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.95\textwidth]{gfx/pmk/pmk_plat}
-\caption{TODO}
+\caption{The Twist T4 2x2 wheelchair modified using the Personal Mobility Kit.}
 \label{fig:pmk}
 \end{figure}
 
@@ -73,7 +73,7 @@ The first step of the design of an architecture is to create the model. We did s
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.7\textwidth]{gfx/pmk/overseer}
-\caption{TODO}
+\caption{Graphical representation showing how two different nodes interact with the global state machine. TODO}
 \label{fig:pmk-gsm}
 \end{figure}
 
@@ -89,7 +89,7 @@ To automatically generate custom nodes that are compilation-ready, it is necessa
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.95\textwidth]{gfx/pmk/ratp}
-\caption{TODO}
+\caption{Simplified (\ie, focusing only on custom defined thread) graphical representation of the AADL description modelling the ratp\_node}
 \label{fig:pmk-ratp}
 \end{figure}
 
@@ -108,7 +108,7 @@ In conclusion, while this node requires a direct intervention of the developer t
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.95\textheight]{gfx/pmk/softwarearchitecture}
-	\caption{TODO}
+	\caption{Original design of the architecture of the autonomous wheelchair.}
 	\label{fig:pmk-doc}
 	\end{figure}
 \end{landscape}
@@ -117,7 +117,7 @@ In conclusion, while this node requires a direct intervention of the developer t
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.95\textheight]{gfx/pmk/hand-graph}
-	\caption{TODO}
+	\caption{Runtime ROS graph of the hand-written architecture.}
 	\label{fig:pmk-graph}
 	\end{figure}
 \end{landscape}
@@ -126,7 +126,7 @@ In conclusion, while this node requires a direct intervention of the developer t
 	\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.95\textheight]{gfx/pmk/gen-graph}
-	\caption{TODO}
+	\caption{Runtime ROS graph of the automatically generated architecture.}
 	\label{fig:gen-graph}
 	\end{figure}
 \end{landscape}
@@ -134,7 +134,7 @@ In conclusion, while this node requires a direct intervention of the developer t
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.95\textwidth]{gfx/pmk/path-followed}
-\caption{TODO}
+\caption{Comparison between the trajectory followed by the robot equipped with the hand-written software (in red) and the automatically generated implementation (in blue).}
 \label{fig:path}
 \end{figure}
 
@@ -162,7 +162,7 @@ Analysing the ROS graph it is useful to provide an overview of the quality of th
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.9\textwidth]{gfx/onto/web}
-    \caption{TODO}\label{fig:web-api}
+    \caption{The web interface used to interact with the capabilities evoked by the robot.}\label{fig:web-api}
 \end{figure}
 
 \section{Web interface}
@@ -230,7 +230,7 @@ no. cap  & 1     & 2     & 4     & 4 \tabularnewline
 $\overline{t}$ & \makecell{1:16 \\ $\pm$ 3s} & \makecell{01:16 \\ $\pm$ 8s} & \makecell{4:05 \\ $\pm$ 15s} & \makecell{5:47 \\ $\pm$ 1:39} \tabularnewline
 \bottomrule
 \end{tabularx}
-\caption{Results for the \texttt{s}-variant and the \texttt{r}-variant.}
+\caption{Results obtained by the non-experts for the \texttt{s}-variant and the \texttt{r}-variant.}
 \label{tab:results-users}
 \end{table}
 
@@ -256,7 +256,7 @@ no. com & 1 & 2 & 4 & 4 \tabularnewline
 no. msg  & 1 & 2 & 3 & 3 \tabularnewline
 \bottomrule
 \end{tabularx}
-\caption{Results for the \texttt{s}-variant and the \texttt{r}-variant.}
+\caption{Results obtained by the expert for the \texttt{s}-variant and the \texttt{r}-variant.}
 \label{tab:results-expert}
 \end{table}
 

@@ -110,7 +110,7 @@ While describing the relationship between component behaviours and ROS node impl
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.95\textwidth]{gfx/essential}
-    \caption{TODO}\label{fig:essential}
+    \caption{Graphical representation of the AADL description modelling the base structure of the enhanced ROS component.}\label{fig:essential}
 \end{figure}
 
 \subsection{Modelling a ROS node in AADL}
@@ -157,7 +157,9 @@ public
 			Source_Text => ("Pose.asn");
 	end Pose;
 end geometry_msgs;
+\end{lstlisting}
 
+\begin{lstlisting}[language=AADL,caption={TODO},label=lst:message-use-example]
 package publisher_subscriber
 public
 	with std_msgs, geometry_msgs;
@@ -175,12 +177,12 @@ public
 end publisher_subscriber;
 \end{lstlisting}
 
-Listing~\ref{lst:message-example} shows a fragment of AADL code where data components associated to ROS messages are declared and used to specify the data type of the ports of the node presented in Figure~\ref{fig:sample-node}. More details about ROS messages and their definition in the model will be discussed in Section~\ref{sec:data}.
+Listing~\ref{lst:message-example} shows a fragment of AADL code where data components associated to ROS messages are declared. Listing~\ref{lst:message-use-example} shows how the same messages are included and used to specify the data type of the ports of the node presented in Figure~\ref{fig:sample-node}. More details about ROS messages and their definition in the model will be discussed in Section~\ref{sec:data}.
 
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.95\textwidth]{gfx/sample_node}
-    \caption{TODO}\label{fig:sample-node}
+    \caption{Graphical representation of the AADL description modelling a complete ROS node. The design includes two subscribers and two publishers.}\label{fig:sample-node}
 \end{figure}
 
 \subsection{Modelling a ROS architecture in AADL}
@@ -192,7 +194,7 @@ In Section~\ref{sec:aadl-robot}, we presented multiple reasons why AADL is a sui
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.95\textwidth]{gfx/mini_arch}
-    \caption{TODO}\label{fig:mini-arch}
+    \caption{Graphical representation of the AADL description modelling a ROS-based teleoperation subsystem.}\label{fig:mini-arch}
 \end{figure}
 
 What is different in a robotic system is that sensors and actuators are integral part of it, to model them it is possible to use AADL devices. A \textit{device} represents an interface between the physical world and the architecture, it can be modelled as a simple interface or to include the inner functionalities and characteristics of the physical component (\eg, type of communication, computational power, data type).  Devices can connect to processes using ports or accesses, in the same way as processes connect to each other. When modelling a ROS architecture, the fact that physical devices and software components communicate using the same interface rises the issue of differentiate between a topic-based connection and other types of connections; the solution comes in the shape of AADL physical and virtual buses. A \textit{virtual bus} can be used to model abstract communication channels, like ROS topics, while a \textit{bus} can be used for physical connections, like Ethernet and USB. Figure~\ref{fig:mini-arch} shows how this two categories, together with a device, can be used to model a simple joypad-based teleoperation subsystem where a physical bus called \textit{usb\_bus} is bound to the physical connection between the device modelling the joypad and its driver, and a virtual bus called \textit{ROS\_bus} is bound to all the connections representing topics.
@@ -291,44 +293,18 @@ end callback;
 \begin{lstlisting}[language=AADL,caption={TODO},label=lst:impl-proto]
 process implementation complex_node.impl extends ros::node.impl
 subcomponents
-	subscriber: thread ros::callback.impl (message => data std_msgs::String);
+	callback: thread ros::callback.impl (message => data std_msgs::String);
 	publisher: thread ros::publisher.impl (message => data std_msgs::String);
-	sub_pub: thread ros::call_pub.impl
+	callback_pub: thread ros::call_pub.impl
 		(message_in => data geometry_msgs::Pose,
 		message_out => data geometry_msgs::Pose);
 connections
-	pub_in: port msg_in -> subscriber.msg;
-	sub_out: port msg_in -> subscriber.msg;
-	sub_pub_in: port msg_in -> subscriber.msg;
-	sub_pub_out: port msg_in -> subscriber.msg;
-properties
-	Queue_size => 1 applies to subscriber.msg;
-	topic_properties::Default_Name => "/in_chat" applies to msg_in;
-	Source_Text => ("listener.schema.json") applies to internal_state;
-	Source_Text => ("listener.h") applies to subscriber.function;
-	Source_Name => "listen" applies to subscriber.function;
+	pub_out: port publisher.msg -> publisher_out;
+	cb_in: port callback_in -> callback.msg;
+	cb_pub_out: port callback_pub.msg_out -> callback_pub_out;
+	cb_pub_in: port callback_pub_in -> callback_pub.msg_in;
 end listener.impl;
 \end{lstlisting}
-
-%
-%package publisher_subscriber
-%public
-%	with std_msgs, geometry_msgs;
-%
-%	process complex_node
-%		features
-%			callback_in: in event data port std_msgs::String;
-%			publisher_out: out data port std_msgs::String;
-%			callback_pub_in:  in event data port geometry_msgs::Pose;
-%			callback_pub_out: out data port geometry_msgs::Pose;
-%			close: in event port;
-%			notify_state: requires subprogram access state_manager;
-%	end complex_node;
-%
-%end publisher_subscriber;
-%\end{lstlisting}
-
-%%%%%%%%%%%%%%%%%%%%%%TODO%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Listing~\ref{lst:callback-proto} shows how prototypes are defined for the \textit{callback} thread, a similar approach is used for all the other pre-defined threads. Listing~\ref{lst:impl-proto} shows how they can be used to define the implementation of the node shown in Figure~\ref{fig:sample-node} and Listings~\ref{lst:message-example}.
 
@@ -348,21 +324,21 @@ These are all the situations in which data modelling is integral part of the des
 CustomPackage DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 	IMPORTS Pose FROM Geometry_msgs;
 	CustomMessage ::= SEQUENCE {
-		x	INTEGER(1 .. 10),
-		y	REAL,
-		pose	Pose
+		x INTEGER(1 .. 10),
+		y REAL,
+		pose Pose
 	}
 	CustomService ::= SEQUENCE {
 		request SEQUENCE {
-			a  INTEGER(-10 .. 200),
-			b  SEQUENCE (SIZE (1..10)) OF INTEGER
+			a INTEGER(-10 .. 200),
+			b SEQUENCE (SIZE (1..10)) OF INTEGER
 		},
 		response SEQUENCE { sum INTEGER }
 	}
 	CustomAction ::= SEQUENCE {
-		goal SEQUENCE { },
-		result SEQUENCE { },
-		feedback SEQUENCE { }
+		goal SEQUENCE { pose Pose },
+		result SEQUENCE { success BOOLEAN},
+		feedback SEQUENCE { pose Pose }
 	}
 END
 \end{lstlisting}
@@ -377,19 +353,19 @@ Messages are the most straightforward to define, since they do not have any inte
 \begin{lstlisting}[float,language=ASN1,caption={Internal state of a node modelled using ASN.1},label=lst:asn1-ros-is]
 InternalState DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 	Complex ::= SEQUENCE {
-		type	UTF8String,
-		include	UTF8String
+		type UTF8String,
+		include UTF8String
 	}
 	Parameters ::= SEQUENCE {
-		size	INTEGER DEFAULT 1,
-		dimensions	SEQUENCE {
+		size INTEGER DEFAULT 1,
+		dimensions SEQUENCE {
 			height	REAL DEFAULT 1.0,
 			width	REAL DEFAULT 2.0
 		}
 	}
 	Variables ::= SEQUENCE {
-		counter	INTEGER,
-		map	Complex
+		counter INTEGER,
+		map Complex
 	}
 END
 \end{lstlisting}
@@ -402,7 +378,7 @@ params Parameters ::= {
 
 value Variables ::= { 
 	counter 0,
-	map {type "test", include "test"}
+	map {type "costmap_2d::Costmap2D", include "costmap_2d.h"}
 }
 \end{lstlisting}
 
@@ -525,7 +501,7 @@ As before, messages are the simplest to model, since they do not have any nested
   },
   "Variables": {
     "counter": 0,
-    "map": { "type": "test", "include": "test" }
+    "map": { type "costmap_2d::Costmap2D", include "costmap_2d.h" }
   }
 }
 \end{lstlisting}
