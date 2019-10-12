@@ -1,7 +1,21 @@
 %************************************************
-\chapter[Conclusions]{Conclusions}\label{ch:Conclusions}
+\chapter[Conclusions and Future works]{Conclusions and Future works}\label{ch:Conclusions}
 %************************************************
 
-I tried so hard, and got so far, but in the end it does\st{n't even} matter.
+\begin{flushright}{\slshape I tried so hard and got so far, but in the end, it does\st{n't even} matter} \\ \medskip
+    ---  In the end, Linkin Park
+\end{flushright}
 
+
+In this thesis we provided a collection of methodologies, techniques and tools, that the multiple actors involved in the design and development of robotic architectures and applications can use to support, guide and assist their work. In particular, we created a model-based approach for robotics using AADL, a complete toolchain for automatic code generation targeting ROS, and a ontology-based abstraction  to extract capabilities from a robot.
+
+The \textit{system designer} can use AADL in combination with a data modelling language, in our work we support ASN.1 and JSON schema, to design the architecture of the robot. Our aim was to provide a general approach by using an existing modelling language instead of creating a specific one or constraining a general-purpose language. Conceptually, we provide a mapping between AADL concepts and robotic architectural artefacts. While demonstrating that a powerful modelling language as AADL can be used to completely model a robotic architecture is already a contribution, the real achievement of this work is to provide a hierarchy of modelling templates that the designer can use, at the same time, to create complex robotic architecture and to exploit the functionalities of the language. This solves the usual training trade-off when switching from traditional development to model-driven approaches. The templates hide the complexity of the language leaving only the most intuitive and necessary elements. Additionally, we argue that the level of detail (\ie, modelling the internal functionalities of the components) provided by our approach is on par with framework-specific solutions while maintaining a general approach only loosely tied with the target platform.
+
+The \textit{component developer} takes advantage of the automatic code generation process to start the development of the component from a partially implemented ROS node. The output of the generator is more than just a code skeleton, is a full-fledged ROS component implementing advanced functionalities such as the internal life cycle and a clear separation between framework code, internal state and problem-specific implementation. In most scenarios, the \textit{component developer} does not even need to open the auto-generated source file, but can implement all the necessary execution code in separate libraries automatically embedded in the generated component. Additionally, while the code generator targets ROS, it was design using a two-steps approach to create a more accessible (\ie, based on XML instead of AADL) intermediate representation, that can be used to implement different generators for different targets.
+
+The \textit{application developer} can exploit capabilities as they were high-level APIs representing robot functionalities. While the motivating scenario was interoperability between a robot and a centralised control system, the concept of capabilities fits wonderfully with the necessity of an \textit{application developer}. Applications do not need to be robotic applications to exploit robot functionalities, by implementing the abstraction layer a robot can be used as it was a library, without any knowledge of the physical configuration, underlying architecture, framework, or any other robot-specific detail, except for those evoked by the capabilities. 
+
+In summary, we created a continuous development environment where the \textit{system designer} can use AADL to model the architecture of the robot, from the topology to the inner functionalities of the component. This model is the input of the code generator, and the output is used by the \textit{component developer} as a starting point to implement the functionalities of the robot. These functionalities are abstracted using an ontology-based approach to allow the \textit{application developer} to interact with the robot.
+
+Given the generality and the modularity of our work, there are various elements that can be extended. 
 %*****************************************
