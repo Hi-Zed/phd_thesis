@@ -404,118 +404,105 @@ A complete description based on JSON schema is composed by the schema, created f
 
 As before, messages are the simplest to model, since they do not have any nested structure, and if they do, it is based on a different type. With JSON schema it is possible to directly define the list of field of the message and specify their type. The available basic types are: \texttt{string}, for a string of character of a specified length eventually matching a pattern, \texttt{number}, any type of real number where it is possible to specify the boundaries, \texttt{integer}, a subset of integer numbers, \texttt{boolean}, for a filed that can either be true or false, and \texttt{null}, for empty fields. Additionally a field can be of type \texttt{array} when it represent an array, in JSON there is no restriction on the type of the elements of an array, therefore JSON schema supports multiple options ranging from all the elements having the same type to each element has a different type. In ROS, only same-type array are admitted, in Listing~\ref{lst:json-ros-srv} we modelled an example of a 10-elements integer array. JSON schema supports referencing external schemas, this can be used to model how in ROS message field can be of the type of a previously defined message. Additionally, most JSON schema validators support the use of URL as \texttt{\$id} and \texttt{\$ref}, this means it is possible to use the online location of a schema definition as the id and then use the same location during validation. In summary, only the custom message schema has to be parsed directly, everything else can be remotely checked only when necessary. As always, this raise the problem of generating the schema of all the existing messages, but not only this can be done automatically, they can be collected in a single online library (\eg, ROSWiki) or hosted in the same repository together with the ROS source code. Regarding the description of types, services are defined in the same way as messages. They can use basic types, arrays or reference existing messages. However, their schema is divided in two section defined as two different objects: \textit{request} and \textit{response}. As before, the former describe the message sent to the server to trigger the service and the latter models the answer received by the client. The same structure based on sub-objects is followed by the action description, this time divided in three different parts: \textit{goal}, \textit{result} and \textit{feedback}. Each subsection follows the same rules of the message, can have multiple field as basic types, arrays or reference existing definitions. One significant difference between JSON schema and ASN.1 is how they describe empty messages. In JSON schema empty brackets (\ie, \textit{\{ \}}) represent the wildcard (\ie, it matches every sequence), the correct way to specify an existing, yet empty, field is to declare it as type \texttt{null}, as seen in Listing~\ref{lst:json-ros-act} for the result of the action.
 
-\begin{lstlisting}[frame=tb,caption={ROS message definition using JSON schema},label=lst:json-ros-msg]
+\begin{lstlisting}[language=JSON, caption={ROS message definition using JSON schema},label=lst:json-ros-msg]
 {
-  "$id": "custom_package/CustomMessage.schema.json",
-  "type": "object",
-  "properties": {
-    "x": { "type": "integer", "minimum": 1, "maximum": 10 },
-    "y": { "type": "number" },
-    "pose": { "$ref": "geometry_msgs/Pose.schema.json" }
-  }
+	"$id": "custom_package/CustomMessage.schema.json",
+	"type": "object",
+	"properties": {
+		"x": { "type": "integer", "minimum": 1, "maximum": 10 },
+		"y": { "type": "number" },
+		"pose": { "$ref": "geometry_msgs/Pose.schema.json" }
+	}
 }
 \end{lstlisting}
 
-\begin{lstlisting}[frame=tb,caption={ROS service definition using JSON schema},label=lst:json-ros-srv]
+\begin{lstlisting}[language=JSON, caption={ROS service definition using JSON schema},label=lst:json-ros-srv]
 {
-  "$id": "custom_package/CustomService.schema.json",
-  "type": "object",
-  "properties": {
-    "request": {
-      "type": "object",
-      "properties": {
-        "a": { "type": "integer", "minimum": 1, "maximum": 10 },
-        "b": { "type": "array", "minItems": 1, "maxItems": 10, "items": { "type": "number" } }
-      }
-    },
-    "response": {
-      "type": "object",
-      "properties": { "sum": { "type": "integer" } }
-    }
-  }
+	"$id": "custom_package/CustomService.schema.json",
+	"type": "object",
+	"properties": {
+	"request": { "type": "object",
+		"properties": {
+			"a": { "type": "integer", "minimum": 1, "maximum": 10 },
+			"b": { "type": "array", "minItems": 1, "maxItems": 10,
+						"items": { "type": "number" } }
+		}
+	},
+	"response": { "type": "object",
+		"properties": { "sum": { "type": "integer" } }
+	}
+	}
 }
 \end{lstlisting}
 
-\begin{lstlisting}[frame=tb,caption={ROS action definition using JSON schema},label=lst:json-ros-act]
+\begin{lstlisting}[language=JSON, caption={ROS action definition using JSON schema},label=lst:json-ros-act]
 {
-  "$id": "custom_package/CustomAction.schema.json",
-  "type": "object",
-  "properties": {
-    "goal": { "type": "object", 
-    "properties": { "pose": { "$ref": "geometry_msgs/Pose.schema.json" } } },
-    "result": { "type": "null" },
-    "feedback": { "type": "object",
-    "properties": { "pose": { "$ref": "geometry_msgs/Pose.schema.json" } } }
-  }
+	"$id": "custom_package/CustomAction.schema.json",
+	"type": "object",
+	"properties": {
+		"goal": { "type": "object", 
+			"properties": { "pose": {"$ref": "geometry_msgs/Pose.schema.json"} }
+		},
+		"result": { "type": "null" },
+		"feedback": { "type": "object",
+			"properties": { "pose": {"$ref": "geometry_msgs/Pose.schema.json"} }
+		}
+	}
 }
 \end{lstlisting}
 
 As mentioned before, when describing the internal state we have to use both the instance, representing the actual values of the parameters and variables, and the schema, the model that validates the structure of the instance to ensure its compatibility with the component. When using JSON schema we opted for a hierarchical approach based on a double validation. First, we validate the instance to verify the general structure, and then we use the component-specific schema to validate the content. Listing~\ref{lst:json-is-base} shows the schema used for the first step of the validation. The designer has to follow this model, but he does not have to implement or provide it, since it is embedded in the validation and code generation process. The base schema is used to verify that the instance follows the structure where the internal state is divided in two, and no more (see \texttt{additionalProperties} set to false), subsections: parameters, values that are initialised at the beginning of the life cycle of the node and are not subject to changes, and variables, values used to capture the evolution of the internal state of the component. Listing~\ref{lst:json-is} represent the schema of an hypothetical internal state of a component, and it is the definition used in the second step of the validation process. Following the structure enforced by the base schema, parameters and variables are defined each in their own object. Since parameters are defined using basic types and nested records, their description is quite straightforward. JSON schema types are used to define their implementation-specific counterparts, while the \texttt{object} type can be used to define nested records. For variables definition, the process is mostly the same, basic types variables are defined directly using JSON schema types, and it is possible to create nested structures to organise them. Similarly to ASN.1, we defined an new object to capture ``complex'' variables. This object has exactly (enforced by setting \texttt{additionalProperties} to false) two values: type, defines the actual complex type of the variable, and include, in a C/C++ specific implementation it provides the resource to be included to correctly use the complex type. The \textit{complex} object can be redefined to match the requirements of different programming languages, for example, Python does not require a type but may need to specify which resource to import. The schema presented in Listing~\ref{lst:json-is} represents only half of the necessary description to completely model the internal state of a node; it is the static design and it is completed by the JSON instance. An example of an instance compatible with the two schemas presented is in Listing~\ref{lst:json-inst}.
 
-\begin{lstlisting}[frame=tb,caption={Base schema of the internal state defined using JSON schema},label=lst:json-is-base]
+\begin{lstlisting}[language=JSON, caption={Base schema of the internal state defined using JSON schema},label=lst:json-is-base]
 {
-  "$ref": "#/InternalStateBase",
-  "InternalState": {
-    "additionalProperties": false,
-    "type": "object",
-    "properties": {
-      "Parameters": {
-        "type": "object",
-        "additionalProperties": true
-      },
-      "Variables": {
-        "type": "object",
-        "additionalProperties": true
-      }
-    }
-  }
+	"$ref": "#/InternalStateBase",
+	"InternalState": { "type": "object", "additionalProperties": false,
+		"properties": {
+			"Parameters": { "type": "object", "additionalProperties": true },
+			"Variables": { "type": "object", "additionalProperties": true }
+		}
+	}
 }
 \end{lstlisting}
 
-\begin{lstlisting}[frame=tb,caption={Internal state defined using JSON schema},label=lst:json-is]
+\begin{lstlisting}[language=JSON, caption={Internal state defined using JSON schema},label=lst:json-is]
 {
-  "$ref": "#/CustomInternalState",
-  "InternalState": { "type": "object",
-    "properties": {
-      "Parameters": { "type": "object",
-        "properties": {
-          "dimensions": { "type": "object",
-            "properties": {
-              "height": { "type": "number", "default": 1.0 },
-              "width": { "type": "number", "default": 2.0 }
-            }
-          },
-          "size": { "type": "integer", "default": 1 }
-        }
-      },
-      "Variables": { "type": "object",
-        "properties": {
-          "counter": { "type": "integer" },
-          "map": { "$ref": "#/complex" }
-        }
-      }
-    }
-  },
-  "complex": { "type": "object",
-    "additionalProperties": false,
-    "properties": {
-      "type": { "type": "string" },
-      "include": { "type": "string" }
-    }
-  }
+"$ref": "#/CustomInternalState",
+	"InternalState": { "type": "object",
+	"properties": {
+		"Parameters": { "type": "object",
+		"properties": {
+			"dimensions": { "type": "object",
+			"properties": {
+				"height": { "type": "number", "default": 1.0 },
+				"width": { "type": "number", "default": 2.0 }
+			} },
+			"size": { "type": "integer", "default": 1 }
+		} },
+		"Variables": { "type": "object",
+		"properties": {
+			"counter": { "type": "integer" },
+			"map": { "$ref": "#/complex" }
+		} }
+	} },
+	"complex": { "type": "object", "additionalProperties": false,
+	"properties": {
+		"type": { "type": "string" },
+		"include": { "type": "string" }
+	} }
 }
 \end{lstlisting}
 
-\begin{lstlisting}[frame=tb,caption={Internal state instance defined in JSON},label=lst:json-inst]
+\begin{lstlisting}[language=JSON, caption={Internal state instance defined in JSON},label=lst:json-inst]
 {
-  "Parameters": {
-    "dimensions": { "height": 2.0, "width": 3.0 },
-    "size": 2
-  },
-  "Variables": {
-    "counter": 0,
-    "map": { type "costmap_2d::Costmap2D", include "costmap_2d.h" }
-  }
+	"Parameters": {
+		"dimensions": { "height": 2.0, "width": 3.0 },
+		"size": 2
+	},
+	"Variables": {
+		"counter": 0,
+		"map": { type "costmap_2d::Costmap2D", include "costmap_2d.h" }
+	}
 }
 \end{lstlisting}
 
