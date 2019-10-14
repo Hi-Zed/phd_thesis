@@ -68,7 +68,7 @@ This ontology was defined independently from the modelling approach defined in C
 
 To understand how an instance of a topic is defined with respect to the corresponding nodes, we  can take as an example a simple pair of nodes implementing a local planner feeding a control system with velocity set-points. They are connected by a named topic (\texttt{/cmd\_vel}) and exchange a specific type of message (\textit{geometry\_msgs/Twist}). The local planner implements a publisher, while the control system implements a subscriber. The resulting representation is in Listing~\ref{lst:onto-topic}.
 
-\begin{lstlisting}[frame=tb,caption={TODO},label=lst:onto-topic]
+\begin{lstlisting}[frame=tb,caption={Instance of a topic-based communication according to the ontology.},label=lst:onto-topic]
 @prefix ros: <onto-ros/class#>
 @prefix : <onto-ros/resource/>
 :setpoints a ros:TopicCommunication;
@@ -89,7 +89,7 @@ synchronous approach, messages exchanged during the execution of a service are d
 
 Listing~\ref{lst:onto-service} provides a small example on how an instance of a service is represented using the ontology. In the example there is a global planner that needs to synchronously request an occupancy grid from the map server. They interact using a named channel (\texttt{/map}), the client (\ie, the global planner) send an empty message (\textit{std\_msgs/Empty}) as a request to the server (\ie, the map server) to trigger the delivery of the map through the response (\textit{nav\_msgs/OccupancyGrid}). Each node, depending on its role, implements a service client or a service server.
 
-\begin{lstlisting}[frame=tb,caption={TODO},label=lst:onto-service]
+\begin{lstlisting}[frame=tb,caption={Instance of a service-based communication according to the ontology.},label=lst:onto-service]
 @prefix ros: <onto-ros/class#>
 @prefix : <onto-ros/resource/>
 :map-service a ros:ServiceCommunication;

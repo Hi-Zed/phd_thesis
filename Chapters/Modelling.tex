@@ -385,7 +385,7 @@ InternalState DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 END
 \end{lstlisting}
 
-\begin{lstlisting}[language=ASN1,caption={TODO},label=lst:asn1-ros-is1]
+\begin{lstlisting}[language=ASN1,caption={Internal state instance defined in ASN.1},label=lst:asn1-ros-is1]
 params Parameters ::= {
 	size 2, 
 	dimensions { height 2.0, width 3.0 }
@@ -409,8 +409,7 @@ As before, messages are the simplest to model, since they do not have any nested
   "$id": "custom_package/CustomMessage.schema.json",
   "type": "object",
   "properties": {
-    "x": { "type": "integer",
-      "minimum": 1, "maximum": 10 },
+    "x": { "type": "integer", "minimum": 1, "maximum": 10 },
     "y": { "type": "number" },
     "pose": { "$ref": "geometry_msgs/Pose.schema.json" }
   }
@@ -425,11 +424,8 @@ As before, messages are the simplest to model, since they do not have any nested
     "request": {
       "type": "object",
       "properties": {
-        "a": { "type": "integer",
-          "minimum": 1, "maximum": 10 },
-        "b": { "type": "array",
-          "minItems": 1, "maxItems": 10,
-          "items": { "type": "number" } }
+        "a": { "type": "integer", "minimum": 1, "maximum": 10 },
+        "b": { "type": "array", "minItems": 1, "maxItems": 10, "items": { "type": "number" } }
       }
     },
     "response": {
@@ -445,9 +441,11 @@ As before, messages are the simplest to model, since they do not have any nested
   "$id": "custom_package/CustomAction.schema.json",
   "type": "object",
   "properties": {
-    "goal": { },
-    "result": { },
-    "feedback": { }
+    "goal": { "type": "object", 
+    "properties": { "pose": { "$ref": "geometry_msgs/Pose.schema.json" } } },
+    "result": { "type": "null" },
+    "feedback": { "type": "object",
+    "properties": { "pose": { "$ref": "geometry_msgs/Pose.schema.json" } } }
   }
 }
 \end{lstlisting}

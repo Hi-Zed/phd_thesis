@@ -112,7 +112,9 @@ This is the first step of the code generation approach, it is a model-to-model t
 
 Listing~\ref{lst:comp-aadl} shows a small example of a system containing a single process as subcomponent, this is the minimal AADL architecture that we can model and instantiate. In Listing~\ref{lst:comp-aaxml} presents the AAXML counterpart of the model, where the properties described are encoded in an XML-based format. In this minimal structure, no information is lost when converting the model from AADL to AAXML.
 
-\begin{lstlisting}[language=AADL,caption={TODO caption},label=lst:comp-aadl]
+\bigskip
+
+\begin{lstlisting}[language=AADL,caption={Minimal AADL model},label=lst:comp-aadl]
 system root_system
 end root_system;
 
@@ -122,7 +124,7 @@ system implementation root_system.impl
 end root_system.impl;
 \end{lstlisting}
 
-\begin{lstlisting}[language=XML,caption={TODO caption},label=lst:comp-aaxml]
+\begin{lstlisting}[language=XML,caption={AAXML representation of the minimal AADL model},label=lst:comp-aaxml]
 <system>
 	<type> root_system.impl </type>
 	<category> system </category>
@@ -142,14 +144,14 @@ end root_system.impl;
 
 Listing~\ref{lst:feature-aadl} show the interface model of the component included in the system presented in Listing~\ref{lst:comp-aadl}. It defines a single event data port exchanging messages with a specific data type. Given this definition the AAXML file can be extended as shown in Listing~\ref{lst:feature-aaxml}, the \textit{features} tag is a child of the \textit{component} tag, while this replicates the feature information in multiple places in the file, it also streamlines the code generation process in the next phase.
 
-\begin{lstlisting}[language=AADL,caption={TODO caption},label=lst:feature-aadl]
+\begin{lstlisting}[language=AADL,caption={Minimal AADL model containing features},label=lst:feature-aadl]
 process custom_process
 	features
 		a_port: out event data port pkg::some_data;
 end custom_process;
 \end{lstlisting}
 
-\begin{lstlisting}[language=XML,caption={TODO caption},label=lst:feature-aaxml]
+\begin{lstlisting}[language=XML,caption={AAXML description of AADL features},label=lst:feature-aaxml]
 <component>
 	[...]
 	<features>
@@ -169,7 +171,7 @@ end custom_process;
 
 Listing~\ref{lst:con-aadl} shows the modelling of the implementation of a system where two processes are connected, one with an output port and the other with an input port. Listing~\ref{lst:con-aaxml} presents how this connection is mapped on the AAXML file, since the system is the root of the hierarchy, the \textit{connections} tag is defined directly as a child of the root \textit{system} tag.
 
-\begin{lstlisting}[language=AADL,caption={TODO caption},label=lst:con-aadl]
+\begin{lstlisting}[language=AADL,caption={Minimal AADL model containing connections.},label=lst:con-aadl]
 system implementation root_system.impl
 	subcomponents
 		cmpA: process pkg::processA;
@@ -179,7 +181,7 @@ system implementation root_system.impl
 end root_system.impl;
 \end{lstlisting}
 
-\begin{lstlisting}[language=XML,caption={TODO caption},label=lst:con-aaxml]
+\begin{lstlisting}[language=XML,caption={AAXML description of AADL connections},label=lst:con-aaxml]
 <system>
 	[...]
 	<connections>
@@ -204,7 +206,7 @@ end root_system.impl;
 
 Listing~\ref{lst:pro-aadl} shows a definition of the implementation of a process component, it has a thread as a subcomponent and this thread has an output port on his frontier. As said before, it is possible, in the properties section of the process to specify both the properties of the subcomponent (\ie, \textit{Period}) and of the feature (\ie, \textit{Queue\_size}). Listing~\ref{lst:pro-aaxml} presents a portion of the AAXML file modelling the properties, while they were defined in the property section of the process, the \textit{component} tag in the listing references the thread, since it is the owner of both the feature and the \textit{Period} property. 
 
-\begin{lstlisting}[language=AADL,caption={TODO caption},label=lst:pro-aadl]
+\begin{lstlisting}[language=AADL,caption={Minimal AADL model containing properties},label=lst:pro-aadl]
 process implementation componentA.impl
 	[...]
 	properties
@@ -213,7 +215,7 @@ process implementation componentA.impl
 end componentA.impl;
 \end{lstlisting}
 
-\begin{lstlisting}[language=XML,caption={TODO caption},label=lst:pro-aaxml]
+\begin{lstlisting}[language=XML,caption={AAXML description of AADL properties},label=lst:pro-aaxml]
 <component>
 	[...]
 	<features><feature>
@@ -289,7 +291,7 @@ Now that we have completely defined how to model a ROS architecture with a combi
 
 The micro architecture in question is the first introductory tutorial provided by the ROS wiki\footnote{http://wiki.ros.org/ROS/Tutorials}, slightly modified to include a custom message: a talker node implementing a publisher and a listener node implementing a subscriber connected through a topic and exchanging messages. Figure~\ref{fig:usecase-publisher} show the graphical representation of the model of the \textit{talker} ROS node. It evokes a \textit{source} component behaviour by generating messages and publishing them on a topic. Additionally to the recurring subcomponents identifying our engineered ROS node (\ie, state machine, main thread and internal state), it models a publisher thread of type \texttt{ros::publisher.impl} communicating with the external environment using a data port specified by the message type. Not visible from the graphical representation are the properties of the node, they are shown in Listing~\ref{lst:tlk-properties}.
 
-\begin{lstlisting}[language=AADL,caption={TODO},label=lst:tlk-properties]
+\begin{lstlisting}[language=AADL,caption={Properties of the talker node.},label=lst:tlk-properties]
 Period => 10 ms applies to publisher;
 topic_properties::Default_Name => "/out_chat" applies to msg_out;
 Source_Text => ("talker.schema.json") applies to internal_state;
@@ -307,7 +309,7 @@ Source_Name => "talk" applies to publisher.function;
 
 Figure~\ref{fig:usecase-subscriber} presents the \textit{listener} ROS node graphical AADL model. Since it receives the messages produced by the \textit{talker}, it implements a \textit{sink} component behaviour. As before, the model is composed by the elements characterising the engineered ROS node plus a subscriber thread of type \texttt{ros::callback.impl} receiving data from outside the component through an event data port that triggers the execution of the thread and it is specialised by a specific data component. As for the \textit{talker} node, properties are used to refine the definition of the process, they are detailed in Listing~\ref{lst:lst-properties}
 
-\begin{lstlisting}[language=AADL,caption={TODO},label=lst:lst-properties]
+\begin{lstlisting}[language=AADL,caption={Properties of the listener node.},label=lst:lst-properties]
 Queue_Size => 1 applies to subscriber.msg;
 topic_properties::Default_Name => "/in_chat" applies to msg_in;
 Source_Text => ("listener.schema.json") applies to internal_state;
@@ -319,7 +321,7 @@ The properties of \textit{listener} and \textit{talker} are very similar. \texti
 
 Listing~\ref{lst:system} shows the missing element necessary to complete the architecture. At the beginning, the definition of the data component representing the ROS message. The \textit{ChitChat} component is only an interface, its internal structure is defined through a property that points to the JSON schema file used by the code generator to create the ROS message. Follows the implementation of the container, since this is a small architecture with only two components, the root is also the only system. Here the two process instances are declared as subcomponent of the \textit{talking.ros} system, moreover their topic communication is defined using a connection going from the output port of the \textit{talker} to the input port of the \textit{listener}. The properties of the system are used to define the specific runtime configuration of the architecture. \textit{topic\_properties::Name} applied to the connection specifies the remapping of the topic from the original default name used in the implementations. The two \textit{Source\_Text} properties applied directly to the processes are used to define a JSON file that contains a node configuration matching the schema applied in the definition of the components. 
 
-\begin{lstlisting}[language=AADL,caption={TODO},label=lst:system]
+\begin{lstlisting}[language=AADL,caption={Message and system definition.},label=lst:system]
 data ChitChat
 	properties
 		Source_Text => ("ChitChat.schema.json");
