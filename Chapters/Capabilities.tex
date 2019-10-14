@@ -154,6 +154,12 @@ In the \textit{cap:Robot Knowledge} subclass fall all those capabilities that ar
 
 The \textit{cap:Acting} subclass may be the simplest to define, any capability that cause an action of the robot falls here. Any direct or indirect interaction with the environment, or change of configuration of the robot can be considered part of the \textit{cap:Acting} subclass. Again, we focus mostly on mobile navigation, therefore our taxonomy includes movement-related capabilities, like \textit{cap:Navigation} or \textit{cap:Teleoperation}. However, any other form of interaction can be categorized in this subclass, for instance, speech, grasping or visualisation (\eg, a robot equipped with an onboard tablet).
 
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.6\textwidth]{gfx/onto/robot_api5}
+    \caption{Structure of the Robot APIs system.}\label{fig:robot-api}
+\end{figure}
+
 \section{Robot APIs} 
 A formal definition of robot capabilities (functionalities, actions, tasks, \etc) is a topic often discussed, but very difficult to frame and resolve. We do not have the audacity of suggesting that our approach is the only possible solution, and more importantly, we know for sure that the taxonomy we presented is far from being exhaustive. However, our aim was never to provide the definitive classification for robot capabilities, it was a more practical one: to create an abstraction layer between the functionalities provided by modern robotic middleware and a potential \textit{application developer}. What we want to achieve is to view the robot architecture as a whole, a system providing a set of entry points that a developer can use to create high-level applications exploiting the capabilities of the robot.
 
@@ -164,12 +170,6 @@ To better clarify the role of robots in the smart-city as actors of the integrat
 With the current technology landscape for robotics this application would require the development of a series of ad hoc interfaces between each of the robot involved and the centralised data management system. In the particular example presented there is the additional complication that the delivery robots are owned by a private company, which is not keen to disclose the internal functioning of its machines.  All these problems can be resolved by introducing an abstraction layer. 
 
 In this section, we present all the necessary tools we developed to create a set of robot APIs based on our definition of capabilities that can be used to completely abstract a ROS-based architecture. Figure~\ref{fig:robot-api} shows an overview of the complete system. Some elements are ROS-bound and are used to setup the abstraction layer, others are independent from the architecture and define the agnostic APIs to interact with the robot.
-
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=0.8\textwidth]{gfx/placeholder}
-    \caption{TODO}\label{fig:robot-api}
-\end{figure}
 
 \subsection{ROS-bound interface}
 Figure~\ref{fig:robot-api} presents the complete set of elements necessary to interact with the robot. Three of them are enclosed in a container labelled \textit{ROS}. The reason of this distinction is because those three elements require a ROS-enabled environment to work. The first one is, reasonably, the robot, the collection of all the software and hardware components necessary to implement the functionalities provided by the system. There is no required on the structure of the architecture to be compatible with our approach, any ROS-based robot can be used. The only caveat is that our process, as described in Section~\ref{sec:cap-ext}, is based on the assumption that some specific ROS messages are used as expected from their semantic (\eg, \textit{Twist} is used for velocity). Directly connected to the robot, there is the \textit{Analyzer} and the \textit{Dynamic node}.
