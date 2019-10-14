@@ -31,16 +31,16 @@ What we want to achieve with our abstraction is to extract from a running robot 
 
 \begin{figure}
     \myfloatalign
-    \subfloat[TODO]
+    \subfloat[Core ROS functionalities]
     {\label{subfig:basic}%
-    	\includegraphics[width=.47\textwidth]{gfx/onto/basic}} 
-    \subfloat[TODO]
+    	\includegraphics[width=.4601\textwidth]{gfx/onto/basic}} 
+    \subfloat[ROS topics]
     {\label{subfig:topic}%
-    	\includegraphics[width=.47\textwidth]{gfx/onto/topic}} \\
-    \subfloat[TODO]
+    	\includegraphics[width=.5299\textwidth]{gfx/onto/topic}} \\
+    \subfloat[ROS services]
     {\label{subfig:service}%
-    	\includegraphics[width=.47\textwidth]{gfx/onto/service}}
-    \caption[TODO]{TODO}\label{fig:ros-onto}
+    	\includegraphics[width=.5507\textwidth]{gfx/onto/service}}
+    \caption{Ontological description of the ROS middleware}\label{fig:ros-onto}
 \end{figure}
 
 \subsection{ROS description}
@@ -125,8 +125,8 @@ As said before, the final aim of this approach is to create a system to automati
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.70\textwidth]{gfx/onto/comptocapa}
-\caption{TODO}
+\includegraphics[width=\textwidth]{gfx/onto/comptocapa1}
+\caption{Ontology defining capabilities and their relation with ROS messages.}
 \label{fig:onto-capa}
 \end{figure}
 
@@ -135,22 +135,22 @@ Given all these considerations, the resulting ontology to relate capabilities wi
 \subsection{Capabilities taxonomy}
 In the previous sections, we defined the ontological superstructure necessary to formalise a ROS-based system (\ie, Figure~\ref{fig:ros-onto}), to define the relation between ROS elements and capabilities (\ie, Figure~\ref{fig:onto-capa}), and to extract capabilities from a running system (\ie, binding between messages and capabilities). This approach is completely general and not bound to any specific definition of the concept of capability other than \textit{``something the robot is capable of''}, it can be as high-level as \textit{``navigate to a goal''} or as low-level as \textit{``last fix of the GPS''}. However, to be able to apply this approach to a real robotic system, we defined a potential taxonomy of capabilities; the result is presented in Figure~\ref{fig:taxo}.
 
-\begin{figure}[t]
+\begin{figure}
     \myfloatalign
-    \subfloat[TODO]
-    {\includegraphics[width=.45\textwidth]{gfx/onto/taxo1}} 
-    \subfloat[TODO]
-    {\includegraphics[width=.45\textwidth]{gfx/onto/taxo2}} \\
-    \subfloat[TODO]
-    {\includegraphics[width=.80\textwidth]{gfx/onto/taxo3}}
-    \caption[TODO]{TODO}\label{fig:taxo}
+    \subfloat[Sensing subclass]
+    {\includegraphics[width=\textwidth]{gfx/onto/sensing}} \\
+    \subfloat[Robot knowledge subclass]
+    {\includegraphics[width=.8347\textwidth]{gfx/onto/knowledge}} \\
+    \subfloat[Acting subclass]
+    {\includegraphics[width=.6695\textwidth]{gfx/onto/acting}}
+    \caption[Capability Taxonomy.]{Capability Taxonomy. Each subclass is child of the general root \textit{cap:Capability}.}\label{fig:taxo}
 \end{figure}
 
 The root of the taxonomy is a general unspecified capability. From this there are three possible subclasses: sensing, robot knowledge, and acting. These three subclasses are meant to recall the \textit{sense-plan-act} paradigm, and focus on the three main characteristics of a robot: the ability of understand the environment through sensor, the ability of process the inputs and represent them, and the ability to interact with the environment through actuators.
 
 In the \textit{cap:Sensing} subclass there are capabilities covering different type of sensing, both for perception (\eg, \textit{cap:Vision}) and proprioception (\eg, \textit{cap:Battery}). In this taxonomy, the sensing capabilities are directly connected to a specific sensor (\eg, a magnetometer for \textit{cap:Magnetic Field}), however, under this macro-category it is possible to fit capabilities obtained after one or multiple processing steps, if they provide direct information about the environment. For instance, AR tags detection could be a \textit{cap:Sensing} capability, since it provides the position of a particular object in space after processing an image. It is difficult to define the frontier where an input has received enough processing to lose the status of sensing, an option is to consider the need of external knowledge.  A GPS driver process an input stream using a standardised process, therefore is sensing, however, estimating the position of the robot from a velocity measurement requires specific information about the kinematic of the robot, hence it cannot be sensing.
 
-In the \textit{cap:Robot Knowledge} subclass fall all those capabilities that are related to any internal representation used by the robot (\eg, \textit{cap:Map representation}), or any intermediate processing done to achieve the interaction with the environment (\eg, \textit{cap:Gobal planning}). This is potentially the largest subclass, since it encompass anything in between the sensors and the actuators, this is done on purpose, since it is difficult to categorise the functionality of a robot. In our version of the taxonomy, we mostly focus on mobile navigation, by including capabilities related to the robot position, the mapping of the environment and the physical shape of the robot. Most of these capabilities may not be relevant for a different type of robot, for example a manipulator may include object classification, grasping configuration estimation or inverse kinematic.
+In the \textit{cap:Robot Knowledge} subclass fall all those capabilities that are related to any internal representation used by the robot (\eg, \textit{cap:Map representation}), or any intermediate processing done to achieve the interaction with the environment (\eg, \textit{cap:Planning}). This is potentially the largest subclass, since it encompass anything in between the sensors and the actuators, this is done on purpose, since it is difficult to categorise the functionality of a robot. In our version of the taxonomy, we mostly focus on mobile navigation, by including capabilities related to the robot position, the mapping of the environment and the physical shape of the robot. Most of these capabilities may not be relevant for a different type of robot, for example a manipulator may include object classification, grasping configuration estimation or inverse kinematic.
 
 The \textit{cap:Acting} subclass may be the simplest to define, any capability that cause an action of the robot falls here. Any direct or indirect interaction with the environment, or change of configuration of the robot can be considered part of the \textit{cap:Acting} subclass. Again, we focus mostly on mobile navigation, therefore our taxonomy includes movement-related capabilities, like \textit{cap:Navigation} or \textit{cap:Teleoperation}. However, any other form of interaction can be categorized in this subclass, for instance, speech, grasping or visualisation (\eg, a robot equipped with an onboard tablet).
 

@@ -1,7 +1,3 @@
-3.3 master interaction, put together material from ROS website
 4.1 simple C/C architecture: line following + teleoperation (use osate?)
 4.7 ROS version of figure 4.1 (use osate?)
-6.1 Fix up the ontologies
-6.2 Fix up this one too
-6.3 More fixing
 6.4 Structure of APIs, use powerpoint or something
