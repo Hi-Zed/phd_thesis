@@ -317,14 +317,19 @@
       % \microtypesetup{expansion=false}
       \microtypesetup{protrusion=true,expansion=true}
       \DeclareRobustCommand{\spacedallcaps}[1]{\textls[160]{\ct@caps\MakeTextUppercase{#1}}}
+      \DeclareRobustCommand{\allcaps}[1]{\textls[80]{\ct@caps\MakeTextUppercase{#1}}}
       \DeclareRobustCommand{\spacedlowsmallcaps}[1]{\textls[80]{\ct@caps\MakeTextLowercase{#1}}}
+      \DeclareRobustCommand{\lowsmallcaps}[1]{\textls[40]{\ct@caps\MakeTextLowercase{#1}}}
+      \DeclareRobustCommand{\forcesans}[1]{\ct@altfont{#1}}
       }{\relax}
 
     \ifthenelse{\boolean{xetex}}{ % use fontspec features; \OR\boolean{luatex} does not work well
       \PackageInfo{classicthesis}{Using fontspec for character spacing.}%
       \microtypesetup{expansion=false}
       \DeclareRobustCommand{\spacedallcaps}[1]{{\addfontfeature{LetterSpace=18.0}\ct@caps\MakeTextUppercase{#1}}}% WordSpace=1.8
+      \DeclareRobustCommand{\allcaps}[1][1]{{\addfontfeature{LetterSpace=9.0}\ct@caps\MakeTextUppercase{#1}}}% WordSpace=1.8
       \DeclareRobustCommand{\spacedlowsmallcaps}[1]{{\addfontfeatures{LetterSpace=14.0}\ct@caps\MakeTextLowercase{#1}}}% WordSpace=1.8
+      \DeclareRobustCommand{\lowsmallcaps}[1]{{\addfontfeatures{LetterSpace=7.0}\ct@caps\MakeTextLowercase{#1}}}% WordSpace=1.8
       }{\relax}
 
 % ********************************************************************

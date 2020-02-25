@@ -1,36 +1,28 @@
 %*******************************************************
 % Titlepage
 %*******************************************************
+\newcommand{\supervisorcell}{{\footnotesize \lowsmallcaps{supervisor:}}\\ {\forcesans{\mySupervisor}}}
+\newcommand{\candidatecell}{{\footnotesize \lowsmallcaps{Doctoral dissertation of:}}\\ {\forcesans{\myName}}}
 \begin{titlepage}
     %\pdfbookmark[1]{\myTitle}{titlepage}
     % if you want the titlepage to be centered, uncomment and fine-tune the line below (KOMA classes environment)
     %\begin{addmargin}[-1cm]{-3cm}
-    \begin{center}
+	\begin{center}
+		\includegraphics[width=4cm]{gfx/Logo_Politecnico_Milano} \\ \bigskip
+		\spacedlowsmallcaps{\myDegree} \\
+		\spacedlowsmallcaps{\myDepartment} \\
+		\rule{\textwidth}{0.4pt} \\
+		\vspace{3.3cm}	
+		\doublespacing {\Large\allcaps{\myTitle}} \\[-0.5cm] \singlespacing
+		\rule{5.5cm}{0.4pt} \\ \medskip
+		{\large\allcaps{\mySubtitle}} \\
+		\vspace{3.3cm}
+		\begin{tabularx}{\textwidth}{X X}
+		\makecell[l]{\supervisorcell} & \makecell[r]{\candidatecell}
+		\end{tabularx}
 
-        \includegraphics[width=4cm]{gfx/Logo_Politecnico_Milano} \\ \bigskip
-        \spacedlowsmallcaps{\myDegree} \\
-        \spacedlowsmallcaps{\myDepartment} \\
-        \noindent\rule{\textwidth}{0.4pt}
-        \vfill
-        {\Large\spacedallcaps{\myTitle}} \\
-        \rule{4cm}{0.4pt} \\ \medskip
-        \spacedallcaps{\mySubtitle} \\
-        
-        \vfill
-        
-        
-        { \spacedlowsmallcaps{candidate:}} \\
-        \spacedlowsmallcaps{\myName} \\ \bigskip
-        {\small \spacedlowsmallcaps{supervisor:}} \\
-        \spacedlowsmallcaps{\mySupervisor}
-
-        \bigskip\bigskip
-
-        %\myFaculty \\
-        %\myUni \\ \bigskip
-
-        \myTime
-
-    \end{center}
-%  \end{addmargin}
+		\vfill
+		{\small \forcesans{\myTime}}
+	\end{center}
+%\end{addmargin}
 \end{titlepage}
